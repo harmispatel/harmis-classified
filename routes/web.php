@@ -64,9 +64,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/logout",[LoginController::class,"logout"])->name("logout");
 });
 
-// Frontend Routes
-// Route::view('/','frontend.common.layout');
-
 Route::get('/userlogout',[UserLoginController::class,'logout'])->name('userLogout');
 
 // Property Routes
