@@ -13,13 +13,26 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $showPropertyData = Property::with(['hasOneCountry','haseOneState','hasOneCategory'])->get();
+        // print_r($request->toArray());
         $propertyMaxPrice = Property::max('price');
         $propertyMinPrice = Property::min('price');
+        $PropertyMidPrice = Property::avg('price');
 
-        return view('frontend.property',compact('showPropertyData','propertyMaxPrice','propertyMinPrice'));
+            $property = Property::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice]);
+
+            $property = Property::with(['hasOneCountry','haseOneState','hasOneCategory']);
+
+            $property = $property->skip(0)->take(10)->get();
+        // echo "<pre>";
+        // print_r($property->toArray());exit;
+        $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
+
+
+            return view('frontend.property',compact('property','propertyMaxPrice','propertyMinPrice','PropertyMidPrice'));
+
+
     }
 
     /**
@@ -41,6 +54,8 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $addProperty = $request->except('_token','confirmPassword');
+        // echo "<pre>";
+        // print_r($request);exit;
         $addProperty['latitude'] = 'latitude';
         $addProperty['longitude'] = 'longitude';
         $addPropertyData = Property::create($addProperty);
@@ -110,5 +125,62 @@ class PropertyController extends Controller
     {
         $deleteProprtieData = Property::find($id)->delete();
         return redirect('/property');
+    }
+
+    public function getpropertybyprice(Request $request)
+    {
+        $propertyMaxPrice = $request->price;
+        $propertyMinPrice = Property::min('price');
+        // prx($propertyMinPrice);
+        $PropertyMidPrice = Property::avg('price');
+        $property = Property::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->get();
+// prx($property);
+
+        $html = "";
+            foreach($property as $showProperty)
+            {
+                $html .= ' <div class="post-wrap col-lg-6 col-md-6">
+                            <div class="post-item card ">
+                                <a href="#" class="img-inr">
+                                    <img src=" '.asset ("image/house1.png").'" class="img-fluid card-img " alt="">
+                                    <div class="img-pri-abo">
+                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
+                                    </div>
+                                    <div class="re-img">
+                                        <div class="re-text">
+                                            <span>';
+                                                if($showProperty["status"] == 0)
+                                                {
+                                                    $html .='Inactive';
+                                                }
+                                                else
+                                                {
+                                                    $html .='Active';
+                                                }
+                                            $html .='</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card-body jo-card">
+                                    <div class="jo-card-bor">
+                                        <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
+                                        <p class="post-item-text font-weight-light font-sm">'.$showProperty->hasOneCountry["name"].', '. $showProperty->haseOneState["name"].', '. $showProperty->address.'</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+
+            }
+
+
+            return response()->json([
+                'html' => $html
+            ]);
+
+    }
+
+    public function infiniteScroll()
+    {
+        prx('hello');
     }
 }

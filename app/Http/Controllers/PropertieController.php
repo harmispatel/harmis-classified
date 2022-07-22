@@ -113,7 +113,7 @@ class PropertieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(storePropertie $request, $id)
     {
         $updateCategoryData = Propertie::find($id);
         $updateCategoryData->name = $request->name;
@@ -126,9 +126,7 @@ class PropertieController extends Controller
         $updateCategoryData->latitude ='latitude';
         $updateCategoryData->longitude ='longitude';
         $updateCategoryData->status = $request->status;
-        // echo "<pre>";
-        // print_r($updateCategoryData);
-        // exit();
+
         $updateCategoryData->update();
 
         return redirect('propertie');

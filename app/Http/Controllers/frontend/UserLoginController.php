@@ -38,4 +38,7 @@ class UserLoginController extends Controller
         auth()->logout();
         return redirect('/userloginform');
     }
+    public function userLogout(){
+        return redirect('/');
+    }
 }

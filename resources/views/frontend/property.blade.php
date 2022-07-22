@@ -46,7 +46,9 @@
                         <form>
                           <div class="form-group">
                             <label for="formControlRange"></label>
-                            <input type="range" name="priceRange" onchange="getPricewiseProperty()" class="form-control-range" id="formControlRange">
+                            <span style="font-weight: bold;">$.</span>
+                            <input style="border: none;background:none; font-weight: bold;" type="text" id="textInput" value="{{$propertyMaxPrice}}">
+                            <input type="range" alert(priceVal) min="{{$propertyMinPrice}}" max="{{$propertyMaxPrice}}" name="priceRange" value="{{$propertyMaxPrice}}" onchange="getPricewiseProperty(this.value)" class="form-control-range" id="formControlRange">
                           </div>
                         </form>
                     </div>
@@ -129,7 +131,7 @@
             <div class="col-md-9">
                 <div class="row post-grid">
 
-                    @foreach ($showPropertyData as $showProperty)
+                    @foreach ($property as $showProperty)
                         <div class="post-wrap col-lg-6 col-md-6">
                             <div class="post-item card ">
                                 <a href="#" class="img-inr">
@@ -150,26 +152,23 @@
                                         <h3 class="card-title mb-1"><a href="#">{{$showProperty->name}}</a></h3>
                                         <p class="post-item-text font-weight-light font-sm">{{$showProperty->hasOneCountry['name']}}, {{$showProperty->haseOneState['name']}}, {{$showProperty->address}}</p>
                                     </div>
-                                    <div class="jo-in-card">
-                                        <div class="post-item-meta d-flex align-items-center justify-content-between">
-                                            <div class="font-xs text-muted post-item-date d-flex justify-content-center mr-auto jo-card-inr">
-                                                <i class="fa-solid fa-bed"></i> <p>3 bed</p>
-                                            </div>
-                                            <div class="font-xs text-muted post-item-date d-flex justify-content-center mr-auto jo-card-inr">
-                                                <i class="fa-solid fa-bath"></i> <p>2 bath</p>
-                                            </div>
-                                            <div class="font-xs text-muted post-item-date d-flex justify-content-center jo-card-inr">
-                                                <i class="fa-solid fa-car"></i> <p>2 Parking</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="her-abo">
-                                        <i class="fa-solid fa-heart"></i>
-                                    </a>
+
                                 </div>
                             </div>
                         </div>
                     @endforeach
+                    <div>
+                        <button id="load" onclick="infinetScroller()"> Load More </button>
+                    </div>
+                    {{-- <div id="page-pagination">
+                    {!! $property->links() !!}
+                    <style>
+                        .w-5{
+                        display:none;
+                        }
+                        </style>
+
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -180,18 +179,34 @@
 <script>
 
 
-    function getPricewiseProperty()
+    function getPricewiseProperty(val)
     {
         var priceVal = $('#formControlRange').val();
-        $( "#slider-range" ).slider({
-        range: true,
-        min: $propertyMinPrice,
-        max: $propertyMaxPrice,
-        // values: [ 75, 300 ],
-        slide: function( event, ui ) {
-            $("#formControlRange").val();
+        var ajaxId = 1;
+        document.getElementById('textInput').value=val;
+        $.ajax({
+            type:"POST",
+            url: "/getpropertybyprice",
+            dataType:   'json',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "price": priceVal,
+                "ajaxId":ajaxId
+            },
+            dataType: 'json',
+            success: function(res){
+                // alert(priceVal)
+                // console.log(res);
+                $('.post-grid').html('');
+                $('.post-grid').append(res.html);
+                jQuery("#page-pagination").html(res.homePagination)
+           }
+        });
     }
-});
+
+    function infinetScroller(val)
+    {
 
     }
 </script>
+

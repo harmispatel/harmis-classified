@@ -26,9 +26,13 @@
         <div class="dropdown-divider"></div>
         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         <li class="nav-item">
-            <a href="{{route('logout')}}" class="nav-link">
+            <form action="{{ route('userLogout') }}" method="POST">
+                @csrf
+                <button style="border: none;background:none;" name="submit">Logout</button>
+            </form>
+            {{-- <a href="{{route('logout')}}" class="nav-link">
               <p>Logout</p>
-            </a>
+            </a> --}}
           </li>
       </div>
     </li>

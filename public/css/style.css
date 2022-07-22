@@ -524,6 +524,12 @@ a.img-inr{
     padding: 60px 0;
 }
 
+.listing-check{
+    position: sticky;
+    top: 20%;
+    /* z-index: 999; */
+}
+
 .listing-inr-top {
     margin-bottom: 20px;
 }

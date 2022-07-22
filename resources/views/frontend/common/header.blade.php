@@ -11,7 +11,11 @@
           </div>
           <div class="header-top-right">
                 @if (Auth::check())
-                    <a href="{{ route('userLogout') }}" class="nav-link">logout</a>
+                <form action="{{ route('userLogout') }}" method="POST">
+                    @csrf
+                    <button style="border: none;background:none;" name="submit">Logout</button>
+                </form>
+                    {{-- <a href="{{ route('userLogout') }}" class="nav-link">logout</a> --}}
                 @else
                     <a href="/registerform" class="nav-link re-nav-link">Register</a>
                     <a href="{{ route('userLoginForm') }}" class="nav-link">login</a>

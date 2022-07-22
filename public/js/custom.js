@@ -18,7 +18,7 @@ $(function () {
                 $('.scroll-to-top').fadeOut(500);
             }
         }
-  
+
     });
 
 
@@ -42,3 +42,24 @@ $(function () {
         keyboard: false,
     })
 })
+
+jQuery( "#load" ).click(function() {
+    var token = document.getElementsByName("_token")[0].value;
+    // alert(token)
+    $.ajax({
+        type:"POST",
+        url: "/infinitescroll",
+        dataType:   'json',
+        data: {
+            "_token": token,
+
+        },
+        dataType: 'json',
+        success: function(res){
+            // alert(priceVal)
+            // console.log(res);
+
+       }
+    });
+    alert( "Handler for .click() called." );
+  });

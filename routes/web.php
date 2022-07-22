@@ -61,13 +61,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('getState',[PropertieController::class,'getState'])->name('getState');
 
     //Logout Route
-    Route::get("/logout",[LoginController::class,"logout"])->name("logout");
+    Route::get("/logout",[LoginController::class,"adminLogout"]);
+    Route::post("/logout",[LoginController::class,"logout"])->name("logout");
 });
 
-Route::get('/userlogout',[UserLoginController::class,'logout'])->name('userLogout');
+Route::post('/userlogout',[UserLoginController::class,'logout'])->name('userLogout');
+Route::get('/userlogout',[UserLoginController::class,'userLogout'])->name('userLog');
 
 // Property Routes
 Route::get('/',[PropertyController::class,'index'])->name('showProperty');
+Route::post('/getpropertybyprice',[PropertyController::class,'getpropertybyprice'])->name('getpropertybyprice');
+Route::post('/infinitescroll',[PropertyController::class,'infiniteScroll'])->name('infinitescroll');
 // Route::get('/create', [PropertyController::class,'create'])->name('create');
 // Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
