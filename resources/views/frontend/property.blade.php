@@ -1,143 +1,149 @@
 @extends('frontend.common.layout')
 
 @section('content')
-
-<section class="pro-details-main">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 li-page">
-                <div class="listing-check">
-                    <div class="list-op">
-                        <h3>Other Options</h3>
-                        <div class="list-inr-op">
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck01">
-                              <label class="custom-control-label" for="customCheck01">Flat</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck02">
-                              <label class="custom-control-label" for="customCheck02">Villa / House</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck03">
-                              <label class="custom-control-label" for="customCheck03">Land</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck04">
-                              <label class="custom-control-label" for="customCheck04">Farm</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="list-op">
-                        <h3>Other Options</h3>
-                        <div class="list-inr-op">
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck05">
-                              <label class="custom-control-label" for="customCheck05">In Installments</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck06">
-                              <label class="custom-control-label" for="customCheck06">Directly From Owner</label>
+    <section class="pro-details-main">
+        <div class="container">
+            <div class="row" style="justify-content: center;">
+                @if (!empty($showProperty))
+                  <div class="col-lg-3 li-page">
+                    <div class="listing-check">
+                        <div class="list-op">
+                            <h3>Other Options</h3>
+                            <div class="list-inr-op">
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck01">
+                                    <label class="custom-control-label" for="customCheck01">Flat</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck02">
+                                    <label class="custom-control-label" for="customCheck02">Villa / House</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck03">
+                                    <label class="custom-control-label" for="customCheck03">Land</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck04">
+                                    <label class="custom-control-label" for="customCheck04">Farm</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="pri-range">
-                        <h3>Price</h3>
-                        <form>
-                          <div class="form-group">
-                            <label for="formControlRange"></label>
-                            <span style="font-weight: bold;">$.</span>
-                            <input style="border: none;background:none; font-weight: bold;" type="text" id="textInput" value="{{$propertyMaxPrice}}">
-                            <input type="range" alert(priceVal) min="{{$propertyMinPrice}}" max="{{$propertyMaxPrice}}" name="priceRange" value="{{$propertyMaxPrice}}" onchange="getPricewiseProperty(this.value)" class="form-control-range" id="formControlRange">
-                          </div>
-                        </form>
-                    </div>
-                    <div class="bulid-info">
-                        <h3>Number Of Bedrooms</h3>
-                        <div class="nu-inr">
-                            <a herf="#" class="badge nu-inr-st">Studio</a>
-                            <a herf="#" class="badge nu-inr-st active">1</a>
-                            <a herf="#" class="badge nu-inr-st">2</a>
-                            <a herf="#" class="badge nu-inr-st">3</a>
-                            <a herf="#" class="badge nu-inr-st">4</a>
-                            <a herf="#" class="badge nu-inr-st">5+</a>
-                        </div>
-                    </div>
-                    <div class="list-op">
-                        <h3>Other Options</h3>
-                        <div class="list-inr-op">
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck1">
-                              <label class="custom-control-label" for="customCheck1">Used</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck2">
-                              <label class="custom-control-label" for="customCheck2">New</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck3">
-                              <label class="custom-control-label" for="customCheck3">Furnished</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck4">
-                              <label class="custom-control-label" for="customCheck4">Unfurnished</label>
+                        <div class="list-op">
+                            <h3>Other Options</h3>
+                            <div class="list-inr-op">
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck05">
+                                    <label class="custom-control-label" for="customCheck05">In Installments</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck06">
+                                    <label class="custom-control-label" for="customCheck06">Directly From Owner</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="list-op">
-                        <h3>Floor</h3>
-                        <div class="list-inr-op">
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck6">
-                              <label class="custom-control-label" for="customCheck6">Settlement</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck7">
-                              <label class="custom-control-label" for="customCheck7">Semi ground</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck8">
-                              <label class="custom-control-label" for="customCheck8">My land</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck9">
-                              <label class="custom-control-label" for="customCheck9">The First</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck10">
-                              <label class="custom-control-label" for="customCheck10">The Second</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck11">
-                              <label class="custom-control-label" for="customCheck11">The Third</label>
-                            </div>
-                            <div class="custom-control custom-checkbox op-inr">
-                              <input type="checkbox" class="custom-control-input" id="customCheck12">
-                              <label class="custom-control-label" for="customCheck12">Fourth +</label>
+                        <div class="pri-range">
+                            <h3>Price</h3>
+                            <form>
+                                <div class="form-group">
+                                    <label for="formControlRange"></label>
+                                    <span style="font-weight: bold;">$.</span>
+                                    <input style="border: none;background:none; font-weight: bold;" type="text"
+                                        id="textInput" value="{{ $propertyMaxPrice }}">
+                                    <input type="range" alert(priceVal) min="{{ $propertyMinPrice }}"
+                                        max="{{ $propertyMaxPrice }}" name="priceRange" value="{{ $propertyMaxPrice }}"
+                                        onchange="getPricewiseProperty(this.value)" class="form-control-range"
+                                        id="formControlRange">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="bulid-info">
+                            <h3>Number Of Bedrooms</h3>
+                            <div class="nu-inr">
+                                <a herf="#" class="badge nu-inr-st">Studio</a>
+                                <a herf="#" class="badge nu-inr-st active">1</a>
+                                <a herf="#" class="badge nu-inr-st">2</a>
+                                <a herf="#" class="badge nu-inr-st">3</a>
+                                <a herf="#" class="badge nu-inr-st">4</a>
+                                <a herf="#" class="badge nu-inr-st">5+</a>
                             </div>
                         </div>
+                        <div class="list-op">
+                            <h3>Other Options</h3>
+                            <div class="list-inr-op">
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Used</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                    <label class="custom-control-label" for="customCheck2">New</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                    <label class="custom-control-label" for="customCheck3">Furnished</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                    <label class="custom-control-label" for="customCheck4">Unfurnished</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-op">
+                            <h3>Floor</h3>
+                            <div class="list-inr-op">
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck6">
+                                    <label class="custom-control-label" for="customCheck6">Settlement</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck7">
+                                    <label class="custom-control-label" for="customCheck7">Semi ground</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck8">
+                                    <label class="custom-control-label" for="customCheck8">My land</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck9">
+                                    <label class="custom-control-label" for="customCheck9">The First</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck10">
+                                    <label class="custom-control-label" for="customCheck10">The Second</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck11">
+                                    <label class="custom-control-label" for="customCheck11">The Third</label>
+                                </div>
+                                <div class="custom-control custom-checkbox op-inr">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck12">
+                                    <label class="custom-control-label" for="customCheck12">Fourth +</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bulid-info">
+                            <h3>Building Area</h3>
+                            <form>
+                                <div class="form-group">
+                                    <label for="formControlRange"></label>
+                                    <input type="range" class="form-control-range" id="formControlRange">
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="bulid-info">
-                        <h3>Building Area</h3>
-                        <form>
-                          <div class="form-group">
-                            <label for="formControlRange"></label>
-                            <input type="range" class="form-control-range" id="formControlRange">
-                          </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="row post-grid">
-
-                    @foreach ($property as $showProperty)
+                  </div>
+                @endif
+                <div class="col-md-9">
+                    <div class="row post-grid">
+                      @forelse ($property as $showProperty)
                         <div class="post-wrap col-lg-6 col-md-6">
                             <div class="post-item card ">
                                 <a href="#" class="img-inr">
-                                    <img src="{{ asset ('image/house1.png')}}" class="img-fluid card-img " alt="">
+                                    <img src="{{ asset('image/house1.png') }}" class="img-fluid card-img "
+                                        alt="">
                                     <div class="img-pri-abo">
-                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. {{$showProperty->price}}</strong></h3>
+                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>.
+                                                {{ $showProperty->price }}</strong></h3>
                                     </div>
                                     <div class="re-img">
                                         <div class="re-text">
@@ -149,64 +155,57 @@
                                 </a>
                                 <div class="card-body jo-card">
                                     <div class="jo-card-bor">
-                                        <h3 class="card-title mb-1"><a href="#">{{$showProperty->name}}</a></h3>
-                                        <p class="post-item-text font-weight-light font-sm">{{$showProperty->hasOneCountry['name']}}, {{$showProperty->haseOneState['name']}}, {{$showProperty->address}}</p>
+                                        <h3 class="card-title mb-1"><a href="#">{{ $showProperty->name }}</a>
+                                        </h3>
+                                        <p class="post-item-text font-weight-light font-sm">
+                                            {{ $showProperty->hasOneCountry['name'] }},
+                                            {{ $showProperty->haseOneState['name'] }}, {{ $showProperty->address }}</p>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                    <div>
-                        <button id="load" onclick="infinetScroller()"> Load More </button>
-                    </div>
-                    {{-- <div id="page-pagination">
-                    {!! $property->links() !!}
-                    <style>
-                        .w-5{
-                        display:none;
-                        }
-                        </style>
+                      @empty
+                        <div class="post-wrap col-lg-12 col-md-12 text-center">
+                          <span class="text-secondary">No Properties Available.</span>
+                        </div>
+                      @endforelse
 
-                    </div> --}}
+                      @if (!empty($showProperty))
+                        <div>
+                          <button id="load" onclick="infinetScroller()"> Load More </button>
+                        </div>
+                      @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 @endsection
 <script>
-
-
-    function getPricewiseProperty(val)
-    {
+    function getPricewiseProperty(val) {
         var priceVal = $('#formControlRange').val();
         var ajaxId = 1;
-        document.getElementById('textInput').value=val;
+        document.getElementById('textInput').value = val;
         $.ajax({
-            type:"POST",
+            type: "POST",
             url: "/getpropertybyprice",
-            dataType:   'json',
+            dataType: 'json',
             data: {
                 "_token": "{{ csrf_token() }}",
                 "price": priceVal,
-                "ajaxId":ajaxId
+                "ajaxId": ajaxId
             },
             dataType: 'json',
-            success: function(res){
-                // alert(priceVal)
-                // console.log(res);
+            success: function(res) {
                 $('.post-grid').html('');
                 $('.post-grid').append(res.html);
                 jQuery("#page-pagination").html(res.homePagination)
-           }
+            }
         });
     }
 
-    function infinetScroller(val)
-    {
+    function infinetScroller(val) {
 
     }
 </script>
-

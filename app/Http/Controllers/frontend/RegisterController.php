@@ -4,34 +4,38 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+// Models
+use App\Models\{User, Role};
+
+// Facades
 use Illuminate\Support\Facades\Hash;
-//Request Class
+
+// Request Class
 use App\Http\Requests\StoreRegister;
 
 class RegisterController extends Controller
 {
     public function index()
     {
-        return redirect()->route('register');
+        // Get the Roles Apart from Admin Role
+        $roles = Role::where('id', '!=', 1)->get();
+
+        return view('frontend.auth.register', compact('roles'));
     }
+
     public function create(storeRegister $request)
     {
-        // prx($request->all());
-        $register = $request->except('_token','confirmPassword');
-        $register['password'] = Hash::make($request->password);
-        $register['role_id'] = 9;
-        $register['gender'] = 'male';
-        // dd($register);
-        $addRagisterData = User::create($register);
-        return redirect('userloginform');
-        // $addRagisterData = new Register;
-        // $addRagisterData->name = $request->name;
-        // $addRagisterData->mobile = $request->mobile;
-        // $addRagisterData->email = $request->email;
-        // $addRagisterData->address = $request->address;
-        // $addRagisterData->password = Hash::make($request->password);
-        // $addRagisterData->status = $request->status;
-        // $addRagisterData->save();
+        try {
+            // Set password and removed unused fields
+            $register = $request->except('_token', 'confirmPassword');
+            $register['password'] = Hash::make($request->password);
+         
+            // Create the User
+            User::create($register);
+         
+            return back()->with('success', 'User Registered Successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Something went wrong, Please try later!');
+        }
     }
 }

@@ -29,8 +29,8 @@ Route::group(['middleware' => ['guest']], function () {
     Route::post('/userlogin',[UserLoginController::class,'login'])->name('userLogin');
     Route::get('/userloginform',[UserLoginController::class,'show'])->name('userLoginForm');
 
-    Route::post('/register',[RegisterController::class,'create'])->name('userRegister');
-    Route::view('/registerform','frontend.auth.register');
+    Route::post('/register', [RegisterController::class, 'create'])->name('userRegister');
+    Route::get('/registerform', [RegisterController::class, 'index'])->name('register');
 });
 
 // Dashboard Route:
@@ -72,6 +72,7 @@ Route::get('/userlogout',[UserLoginController::class,'userLogout'])->name('userL
 Route::get('/',[PropertyController::class,'index'])->name('showProperty');
 Route::post('/getpropertybyprice',[PropertyController::class,'getpropertybyprice'])->name('getpropertybyprice');
 Route::post('/infinitescroll',[PropertyController::class,'infiniteScroll'])->name('infinitescroll');
+
 // Route::get('/create', [PropertyController::class,'create'])->name('create');
 // Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
