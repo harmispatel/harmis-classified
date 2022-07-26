@@ -1,5 +1,5 @@
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset ('image/favicon.ico')}}" type="image/x-icon">
+    {{-- <link rel="shortcut icon" href="{{ asset ('image/favicon.ico')}}" type="image/x-icon"> --}}
 
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
@@ -16,6 +16,9 @@
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
