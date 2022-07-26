@@ -7,16 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class storeRegister extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -24,13 +14,28 @@ class storeRegister extends FormRequest
     public function rules()
     {
         return [
-            'name'     => 'required',
-            'mobile'   => 'required',
-            'email'    => 'required',
-            // 'address'  => 'required',
-            'password' => 'required',
+            'name'            => 'required',
+            'mobile'          => 'required',
+            'email'           => 'required',
+            'password'        => 'required',
             'confirmPassword' => 'required|same:password'
+        ];
+    }
 
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required'            => 'Name is required',
+            'email.required'           => 'Email is required',
+            'email.email'              => 'Please enter a valid email address',
+            'mobile.required'          => 'Mobile No. is required',
+            'password.required'        => 'Password is required',
+            'confirmPassword.required' => 'Password Confirmation is required',
         ];
     }
 }
