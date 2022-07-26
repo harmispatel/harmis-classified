@@ -12,13 +12,15 @@
     top: 0;
 }
 .form-main{
-    padding: 80px 0;
+    padding-bottom: 80px;
+    margin-top: 150px;
 }
 .form-main .form-inr {
     background-color: white;
     box-shadow: 0 2px 10px #00000040;
     padding: 30px 40px;
     border-radius: 5px;
+    /* margin-top: 95px; */
 }
 .form-main .form-inr .form-group{
     margin-bottom: 15px;

@@ -15,18 +15,6 @@
     
     @include('frontend.common.header')
 
-    <section class="property-main page-title-bg">
-      <div class="container">
-        <div class="page-title">
-            <h2>PROPERTIES PAGE</h2>
-            <ol class="breadcrumb">
-                <li><a href="#">HOME</a></li>
-                <li class="active"><a href="">PROPERTIES</a></li>
-            </ol>
-        </div>
-      </div>
-    </section>
-    
     @yield('content')
     
     @include('frontend.common.js')
