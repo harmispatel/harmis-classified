@@ -129,34 +129,9 @@
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="row post-grid">
+                <div class="row post-grid" >
 
-                    @foreach ($property as $showProperty)
-                        <div class="post-wrap col-lg-6 col-md-6">
-                            <div class="post-item card ">
-                                <a href="#" class="img-inr">
-                                    <img src="{{ asset ('image/house1.png')}}" class="img-fluid card-img " alt="">
-                                    <div class="img-pri-abo">
-                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. {{$showProperty->price}}</strong></h3>
-                                    </div>
-                                    <div class="re-img">
-                                        <div class="re-text">
-                                            <span>
-                                                {{ $showProperty['status'] == 0 ? 'Inactive' : 'Active' }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="card-body jo-card">
-                                    <div class="jo-card-bor">
-                                        <h3 class="card-title mb-1"><a href="#">{{$showProperty->name}}</a></h3>
-                                        <p class="post-item-text font-weight-light font-sm">{{$showProperty->hasOneCountry['name']}}, {{$showProperty->haseOneState['name']}}, {{$showProperty->address}}</p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    @include('frontend.data')
                     <div>
                         <button id="load" onclick="infinetScroller()"> Load More </button>
                     </div>
@@ -170,12 +145,17 @@
 
                     </div> --}}
                 </div>
+                <div class="ajax-load text-center" style="display:none">
+                    <p><img src="{{asset('img/loader.png')}}">Load More Post...</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+
 @endsection
+
 <script>
 
 
@@ -195,7 +175,7 @@
             },
             dataType: 'json',
             success: function(res){
-                // alert(priceVal)
+                alert(ajaxId)
                 // console.log(res);
                 $('.post-grid').html('');
                 $('.post-grid').append(res.html);
@@ -204,9 +184,40 @@
         });
     }
 
-    function infinetScroller(val)
-    {
 
-    }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function loadMoreData(page)
+   {
+      $.ajax({
+         url:'?page=' + page,
+         type:'get',
+         beforeSend: function()
+         {
+            $(".ajax-load").show();
+         }
+      })
+      .done(function(data){
 
+         if(data.html == ""){
+            $('.ajax-load').html("No more Posts Found!");
+            return;
+         }
+         $('.ajax-load').hide();
+         $(".post-grid").append(data.html);
+      });
+
+
+   }
+   //function for Scroll Event
+   var page =1;
+   $(window).scroll(function(){
+      if($(window).scrollTop() + $(window).height() >= $(document).height()){
+         page++;
+         loadMoreData(page);
+      }
+   });
+</script>

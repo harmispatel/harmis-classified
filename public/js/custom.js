@@ -45,13 +45,15 @@ $(function () {
 
 jQuery( "#load" ).click(function() {
     var token = document.getElementsByName("_token")[0].value;
-    // alert(token)
+    var name = "yogesh";
+
     $.ajax({
         type:"POST",
         url: "/infinitescroll",
         dataType:   'json',
         data: {
             "_token": token,
+            // "name": name,
 
         },
         dataType: 'json',
@@ -61,5 +63,5 @@ jQuery( "#load" ).click(function() {
 
        }
     });
-    alert( "Handler for .click() called." );
+    // alert( token );
   });

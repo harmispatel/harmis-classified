@@ -30,7 +30,7 @@ class UserLoginController extends Controller
             return redirect('/');
         } else {
             // echo "you are not login";exit;
-            return redirect('/register');
+            return redirect('/userloginform');
         }
     }
     public function logout()

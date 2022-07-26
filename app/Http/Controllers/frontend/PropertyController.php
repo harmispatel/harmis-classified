@@ -22,9 +22,12 @@ class PropertyController extends Controller
 
             $property = Property::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice]);
 
-            $property = Property::with(['hasOneCountry','haseOneState','hasOneCategory']);
-
-            $property = $property->skip(0)->take(10)->get();
+            $property = Property::with(['hasOneCountry','haseOneState','hasOneCategory'])->paginate(4);
+            // prx($request->ajax());
+            if($request->ajax()){
+                $view = view('frontend.data',compact('property'))->render();
+                return response()->json(['html'=>$view]);
+            }
         // echo "<pre>";
         // print_r($property->toArray());exit;
         $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
@@ -179,8 +182,9 @@ class PropertyController extends Controller
 
     }
 
-    public function infiniteScroll()
+    public function infiniteScroll(Request $request)
     {
-        prx('hello');
+
+        print_r($request->all());
     }
 }
