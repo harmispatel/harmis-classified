@@ -22,7 +22,7 @@ class PropertyController extends Controller
 
             $property = Property::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice]);
 
-            $property = Property::with(['hasOneCountry','haseOneState','hasOneCategory'])->paginate(4);
+            $property = Property::with(['hasOneCountry','haseOneState','hasOneCategory'])->get();
             // prx($request->ajax());
             if($request->ajax()){
                 $view = view('frontend.data',compact('property'))->render();

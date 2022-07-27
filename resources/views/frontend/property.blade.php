@@ -15,7 +15,7 @@
     <section class="pro-details-main">
         <div class="container">
             <div class="row" style="justify-content: center;">
-                @if (!empty($showProperty))
+                {{-- @if (!empty($showProperty)) --}}
                     <div class="col-lg-3 li-page">
                         <div class="listing-check">
                             <div class="list-op">
@@ -57,7 +57,7 @@
                                 <form>
                                     <div class="form-group">
                                         <label for="formControlRange"></label>
-                                        <span style="font-weight: bold;">$.</span>
+                                        <span style="font-weight: bold;"></span>
                                         <input style="border: none;background:none; font-weight: bold;" type="text"
                                             id="textInput" value="{{ $propertyMaxPrice }}">
                                         <input type="range" alert(priceVal) min="{{ $propertyMinPrice }}"
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
                 <div class="col-md-9">
                     <div class="row post-grid">
                         @forelse ($property as $showProperty)
