@@ -11,7 +11,7 @@
                         <form action="{{ route('userLogin') }}" method="POST" id="loginForm">
                             @csrf
                             <div class="form-group">
-                                <label for="email">Email</label>
+                                <label for="email">{{__('labels.email')}}</label>
                                 <input type="email" class="form-control" id="email" name="email">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -19,7 +19,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">{{__('labels.password')}}</label>
                                 <input type="password" class="form-control" id="password" name="password">
                                 @if ($errors->has('password'))
                                     <span class="text-danger">{{ $errors->first('password') }}</span>
@@ -27,8 +27,8 @@
                             </div>
 
                             <div class="mt-4 align-items-center d-flex justify-content-between">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                                <a href="{{ route('register') }}" style="text-decoration: none;">Register</a>
+                                <button type="submit" class="btn btn-primary">{{__('labels.login')}}</button>
+                                <a href="{{ route('register') }}" style="text-decoration: none;">{{__('labels.register')}}</a>
                             </div>
                         </form>
                     </div>

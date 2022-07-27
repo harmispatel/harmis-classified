@@ -3,7 +3,7 @@
 @section('title', 'Register')
 
 @section('content')
-    <section class="form-main">       
+    <section class="form-main">
         <div class="container">
             <div class="row justify-content-center">
                 <!-- Success Message -->
@@ -14,7 +14,7 @@
                         </div>
                     </div>
                 @endif
-                
+
                 <!-- Error Message -->
                 @if (session('error'))
                     <div class="d-flex justify-content-end">
@@ -52,7 +52,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="gender">{{ __('labels.gender') }}</label>
                                 <select name="gender" id="gender" class="form-control">
@@ -85,7 +85,7 @@
                                     <span class="text-danger">{{ $errors->first('confirmPassword') }}</span>
                                 @endif
                             </div>
-                            
+
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary">{{ __('labels.register') }}</button>
                             </div>

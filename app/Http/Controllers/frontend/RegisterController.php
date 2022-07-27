@@ -29,10 +29,10 @@ class RegisterController extends Controller
             // Set password and removed unused fields
             $register = $request->except('_token', 'confirmPassword');
             $register['password'] = Hash::make($request->password);
-         
+
             // Create the User
             User::create($register);
-         
+
             return back()->with('success', 'User Registered Successfully!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Something went wrong, Please try later!');
