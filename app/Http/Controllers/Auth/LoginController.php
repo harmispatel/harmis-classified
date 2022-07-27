@@ -17,10 +17,11 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $user = $request->only('email', 'password');
+        $user['role_id'] = 1;
+        $credentials = $user;
         
-        if (Auth::attempt($credentials))
-        {
+        if (Auth::attempt($credentials)) {
             return redirect('/dashboard');
         } else {
             return redirect("/login");

@@ -177,7 +177,7 @@
                             </div>
                         @empty
                             <div class="post-wrap col-lg-12 col-md-12 text-center">
-                                <span class="text-secondary">No Properties Available.</span>
+                                <span class="text-secondary">{{__('labels.empty_properties')}}</span>
                             </div>
                         @endforelse
 
