@@ -4,7 +4,8 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\frontend\Property;
+use App\Models\Propertie;
+// use App\Models\frontend\Property;
 
 class PropertyController extends Controller
 {
@@ -16,13 +17,13 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         // print_r($request->toArray());
-        $propertyMaxPrice = Property::max('price');
-        $propertyMinPrice = Property::min('price');
-        $PropertyMidPrice = Property::avg('price');
+        $propertyMaxPrice = Propertie::max('price');
+        $propertyMinPrice = Propertie::min('price');
+        $PropertyMidPrice = Propertie::avg('price');
 
-            $property = Property::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice]);
+            $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice]);
 
-            $property = Property::with(['hasOneCountry','haseOneState','hasOneCategory'])->get();
+            $property = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->get();
             // prx($request->ajax());
             if($request->ajax()){
                 $view = view('frontend.data',compact('property'))->render();
@@ -61,7 +62,7 @@ class PropertyController extends Controller
         // print_r($request);exit;
         $addProperty['latitude'] = 'latitude';
         $addProperty['longitude'] = 'longitude';
-        $addPropertyData = Property::create($addProperty);
+        $addPropertyData = Propertie::create($addProperty);
     }
 
     /**
@@ -83,7 +84,7 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        $editPropertyData = Property::find($id);
+        $editPropertyData = Propertie::find($id);
         // prx($editPropertyData->toArray());
         return view('frontend.editProperty',compact('editPropertyData'));
     }
@@ -97,7 +98,7 @@ class PropertyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updatePropertyData = Property::find($id);
+        $updatePropertyData = Propertie::find($id);
         $updatePropertyData->name = $request->name;
         // $updatePropertyData->category_id = $request->category;
         $updatePropertyData->category_id =3;
@@ -126,17 +127,17 @@ class PropertyController extends Controller
      */
     public function destroy($id)
     {
-        $deleteProprtieData = Property::find($id)->delete();
+        $deleteProprtieData = Propertie::find($id)->delete();
         return redirect('/property');
     }
 
     public function getpropertybyprice(Request $request)
     {
         $propertyMaxPrice = $request->price;
-        $propertyMinPrice = Property::min('price');
+        $propertyMinPrice = Propertie::min('price');
         // prx($propertyMinPrice);
-        $PropertyMidPrice = Property::avg('price');
-        $property = Property::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->get();
+        $PropertyMidPrice = Propertie::avg('price');
+        $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->get();
 // prx($property);
 
         $html = "";

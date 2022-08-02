@@ -41,7 +41,7 @@
                                                     </td>
                                                     <td class="text-right">
                                                         <a href="{{ route('show_role.edit',$roleData->id) }}" title="Edit" class="mr-2"><i class="fas fa-edit"></i></a>
-                                                        <i class="fa fa-trash text-danger" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" title="Delete"></i>
+                                                        <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" data-target-id="{{ route('show_role.destroy',$roleData->id) }}" title="Delete"></i>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -58,15 +58,15 @@
                                             </button>
                                             </div>
                                             <div class="modal-body">
-                                                Are you sure you want to delete?
+                                                Are you sure you want to this role?
                                             </div>
                                             <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <form action="{{ route('show_role.destroy',$roleData->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger" type="submit">Delete</button>
-                                            </form>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <form action="" id="deleteForm" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                                </form>
                                             </div>
                                         </div>
                                         </div>
@@ -77,6 +77,15 @@
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+                integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script>
+                $(".deleteBtn").click(function(){
+                    var url = $(this).attr("data-target-id")
+                    $("#deleteForm").attr('action',url)
+                });
+            </script>
         </div>
     </div>
 

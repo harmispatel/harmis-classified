@@ -101,9 +101,9 @@ class PropertieController extends Controller
     {
         $editPropertiesData = Propertie::find($id);
         $categoryId = Category::get();
-        $countryId = Country::get();
-        $stateId = State::get();
-        return view('settings.editProperties',compact('editPropertiesData','categoryId','countryId','stateId'));
+        $country = Country::get();
+        $state = State::get();
+        return view('settings.editProperties',compact('editPropertiesData','categoryId','country','state'));
     }
 
     /**

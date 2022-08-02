@@ -20,14 +20,14 @@ class LoginController extends Controller
         $user = $request->only('email', 'password');
         $user['role_id'] = 1;
         $credentials = $user;
-        
+
         if (Auth::attempt($credentials)) {
             return redirect('/dashboard');
         } else {
             return redirect("/login");
         }
     }
-    
+
     public function logout(Request $request)
     {
         auth()->logout();

@@ -15,6 +15,10 @@
                         </div>
                         <form action="{{route('propertie.update',$editPropertiesData->id)}}" id="quickForm" method="POST">
                             @csrf
+                            {{-- @php
+                                echo "<pre>";
+                                print_r($editPropertiesData);exit;
+                            @endphp --}}
                             {{ method_field('PUT') }}
                             <div class="card-body">
                             <div class="form-group">
@@ -24,10 +28,11 @@
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
+
                             <div class="form-group">
                                 <label for="exampleInputCategory">Category</label>
                                 <select class="form-control" name="category_id">
-                                    {{-- <option value="1">Hello</option> --}}
+
                                     @foreach ($categoryId as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
@@ -40,22 +45,37 @@
                                     <span class="text-danger">{{ $errors->first('price') }}</span>
                                 @endif
                             </div>
+                            @php
+                                $countryId = $editPropertiesData->country_id;
+                                $countryName = getCountryName($countryId);
+                                // prx($countryName);
+                            @endphp
                             <div class="form-group">
                                 <label for="exampleInputCountry">Country</label>
                                 <select id="country" class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" name="country_id">
-                                    <option value="">-- Select Country --</option>
-                                    @foreach ($countryId as $country)
-                                        <option  value="{{$country->id}}">{{$country->name}}</option>
+                                    <option value="{{$countryName->id}}" style="display: none" selected>{{$countryName->name}}</option>
+                                    @foreach ($country as $countrys)
+                                        <option  value="{{$countrys->id}}">{{$countrys->name}}</option>
                                     @endforeach
+
                                 </select>
                                 @if ($errors->has('country_id'))
                                     <span class="text-danger">{{ $errors->first('country_id') }}</span>
                                 @endif
                             </div>
-
+                            @php
+                                $stateId = $editPropertiesData->state_id;
+                                $stateName = getStateName($stateId, $countryId);
+                                $countryOnState = getCountryOnState($countryId);
+                                // prx($stateName);
+                            @endphp
                             <div class="form-group">
                                 <label for="exampleInputState">State</label>
                                 <select  class="form-control" name="state_id" id="state_id">
+                                    <option value="{{$stateName->id}}" style="display: none" selected>{{$stateName->name}}</option>
+                                    @foreach ($countryOnState as $state)
+                                        <option value="{{$state->id}}">{{$state->name}}</option>
+                                    @endforeach
                                 </select>
                                 @if ($errors->has('state_id'))
                                     <span class="text-danger">{{ $errors->first('state_id') }}</span>

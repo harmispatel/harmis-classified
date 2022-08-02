@@ -20,8 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $userId = Auth::user();
+        $userId = user::with(['hasOneRole']);
         $rolePermission = PermissionRole::where('role_id',isset($userId->role_id) ? $userId->role_id : '')->get();
+
         // echo "<pre>";
         // print_r($rolePermition->toArray());
         // exit;
@@ -48,7 +49,7 @@ class UserController extends Controller
         // $userId->addRole()->get();
 
         // $showUserData = User::where('id', '!=', '1')->orderBy('id', 'desc')->get();
-        $showUserData = User::get();
+        $showUserData = User::where('id', '!=', 1 )->get();
         return view('user_management.user',compact('showUserData','rolePermission'));
     }
 

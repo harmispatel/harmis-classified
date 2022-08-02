@@ -33,7 +33,7 @@ class RegisterController extends Controller
             // Create the User
             User::create($register);
 
-            return back()->with('success', 'User Registered Successfully!');
+            return view("frontend.auth.login")->with('success', 'User Registered Successfully!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Something went wrong, Please try later!');
         }

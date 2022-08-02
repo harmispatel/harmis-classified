@@ -49,7 +49,7 @@
                             <td class="text-right">
 
                                     <a href="{{ route('propertie.edit',$propertiesData->id) }}" class="mr-2" title="Edit"><i class="fas fa-edit"></i></a>
-                                <i class="fa fa-trash text-danger" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" title="Delete"></i>
+                                <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" data-target-id="{{ route('propertie.destroy',$propertiesData->id) }}" title="Delete"></i>
                             </td>
                             {{-- model --}}
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,11 +62,11 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            Are you sure to delete this user?
+                                            Are you sure to delete this property?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <form action="{{ route('propertie.destroy', $propertiesData->id) }}" method="POST" class="d-inline">
+                                            <form action="" id="deleteForm" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger" type="submit">Delete</button>
@@ -86,7 +86,16 @@
             </div>
         </div><!-- /.container-fluid -->
         </section>
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+                integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+        <script>
+            $(".deleteBtn").click(function(){
+                var url = $(this).attr("data-target-id")
+                $("#deleteForm").attr("action",url)
+            })
+        </script>
     </div>
   </div>
 
