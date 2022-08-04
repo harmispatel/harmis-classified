@@ -59,14 +59,14 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     //Propertie Route
     Route::resource('propertie', 'PropertieController');
 
-    //Country Route In Ajax Call
-    Route::post('getState', [PropertieController::class, 'getState'])->name('getState');
 
     //Logout Route
     Route::get("/logout", [LoginController::class, "adminLogout"]);
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");
 });
 
+//Country Route In Ajax Call
+Route::post('getState', [PropertieController::class, 'getState'])->name('getState');
 Route::post('/userlogout', [UserLoginController::class, 'logout'])->name('userLogout');
 Route::get('/userlogout', [UserLoginController::class, 'userLogout'])->name('userLog');
 
@@ -75,8 +75,11 @@ Route::get('/', [PropertyController::class, 'index'])->name('showProperty');
 Route::post('/getpropertybyprice', [PropertyController::class, 'getpropertybyprice'])->name('getpropertybyprice');
 Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->name('infinitescroll');
 
-// Route::get('/create', [PropertyController::class,'create'])->name('create');
-// Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
+
+    Route::get('/create', [PropertyController::class,'create'])->name('create');
+    Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
+
+
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
 // Route::post('upadteproperty/{id}',[PropertyController::class,'update'])->name('updateProperty');
 // Route::get('delete/property/{id}',[PropertyController::class,'destroy'])->name('deleteProperty');

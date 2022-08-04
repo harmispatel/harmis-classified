@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Propertie, Category, State, Country};
+use App\Models\{Propertie, Category, State, Country, User};
 
 use Illuminate\Http\Response;
 //Requests Class
@@ -31,9 +31,10 @@ class PropertieController extends Controller
     public function create(Request $request)
     {
         $countryId = Country::get();
+        $userId = User::where('role_id', '!=', 10 )->get();
 
         $categoryId = Category::get();
-        return view('settings.createProperties',compact('categoryId','countryId'));
+        return view('settings.createProperties',compact('categoryId', 'countryId', 'userId'));
     }
 
     public function getState(Request $request)
@@ -65,17 +66,18 @@ class PropertieController extends Controller
         // print_r($countryName->toArray());exit;
         // $addCategoryData = Propertie::create($request->all());
 
-        $addCategoryData = new Propertie;
-        $addCategoryData->name = $request->name;
-        $addCategoryData->category_id = $request->category_id;
-        $addCategoryData->price = $request->price;
-        $addCategoryData->country_id = $request->country_id;
-        $addCategoryData->state_id = $request->state_id;
-        $addCategoryData->address = $request->address;
-        $addCategoryData->latitude ='latitude';
-        $addCategoryData->longitude ='longitude';
-        $addCategoryData->status = $request->status;
-        $addCategoryData->save();
+        $addPropertyData = new Propertie;
+        $addPropertyData->name = $request->name;
+        $addPropertyData->category_id = $request->category_id;
+        $addPropertyData->user_id = $request->user_id;
+        $addPropertyData->price = $request->price;
+        $addPropertyData->country_id = $request->country_id;
+        $addPropertyData->state_id = $request->state_id;
+        $addPropertyData->address = $request->address;
+        $addPropertyData->latitude ='latitude';
+        $addPropertyData->longitude ='longitude';
+        $addPropertyData->status = $request->status;
+        $addPropertyData->save();
 
         return redirect('propertie');
     }
@@ -101,9 +103,10 @@ class PropertieController extends Controller
     {
         $editPropertiesData = Propertie::find($id);
         $categoryId = Category::get();
+        $userId = User::where('role_id', '!=', 10 )->get();
         $country = Country::get();
         $state = State::get();
-        return view('settings.editProperties',compact('editPropertiesData','categoryId','country','state'));
+        return view('settings.editProperties',compact('editPropertiesData', 'categoryId', 'country', 'state', 'userId'));
     }
 
     /**
@@ -115,19 +118,20 @@ class PropertieController extends Controller
      */
     public function update(storePropertie $request, $id)
     {
-        $updateCategoryData = Propertie::find($id);
-        $updateCategoryData->name = $request->name;
-        $updateCategoryData->category_id = $request->category_id;
+        $updatePropertyData = Propertie::find($id);
+        $updatePropertyData->name = $request->name;
+        $updatePropertyData->category_id = $request->category_id;
+        $updatePropertyData->user_id = $request->category_id;
 
-        $updateCategoryData->price = $request->price;
-        $updateCategoryData->country_id = $request->country_id;
-        $updateCategoryData->state_id = $request->state_id;
-        $updateCategoryData->address = $request->address;
-        $updateCategoryData->latitude ='latitude';
-        $updateCategoryData->longitude ='longitude';
-        $updateCategoryData->status = $request->status;
+        $updatePropertyData->price = $request->price;
+        $updatePropertyData->country_id = $request->country_id;
+        $updatePropertyData->state_id = $request->state_id;
+        $updatePropertyData->address = $request->address;
+        $updatePropertyData->latitude ='latitude';
+        $updatePropertyData->longitude ='longitude';
+        $updatePropertyData->status = $request->status;
 
-        $updateCategoryData->update();
+        $updatePropertyData->update();
 
         return redirect('propertie');
     }
@@ -143,4 +147,5 @@ class PropertieController extends Controller
         $deleteProprtieData = Propertie::find($id)->delete();
         return redirect()->route('propertie.index');
     }
+
 }

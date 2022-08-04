@@ -20,60 +20,58 @@
               <p>Dashboard</p>
             </a>
           </li>
-        <li class="nav-item menu-open">
-
-            <a href="/" class="nav-link {{ Route::currentRouteName() == 'show_user.index' || Route::currentRouteName() == 'show_role.index' ? 'active' : '' }}">
-            {{-- <a href="/" class="nav-link"> --}}
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                User Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('show_user.index')}}" class="nav-link">
-                  <i class="far fa-user"></i>
-                  <p>Users</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('show_role.index')}}" class="nav-link">
-                  <i class="fab fa-critical-role"></i>
-                  <p>Roles</p>
-                </a>
-              </li>
-
-            </ul>
-          </li>
-
             <li class="nav-item menu-open">
-                <a href="/" class="nav-link {{ Route::currentRouteName() == 'country.index'|| Route::currentRouteName() == 'propertie.index' || Route::currentRouteName() == 'show_role.index' || Route::currentRouteName() == 'show_role.index' ? 'active' : '' }}">
+
+                <a href="/" class="nav-link {{ Route::currentRouteName() == 'show_user.index' || Route::currentRouteName() == 'show_role.index' ? 'active' : '' }}">
+                {{-- <a href="/" class="nav-link"> --}}
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    User Management
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{route('show_user.index')}}" class="nav-link {{ Route::currentRouteName() == 'show_user.index' ? 'active' : '' }}">
+                    <i class="far fa-user"></i>
+                    <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item" >
+                    <a href="{{route('show_role.index')}}" class="nav-link {{ Route::currentRouteName() == 'show_role.index' ? 'active' : ''}}">
+                    <i class="fab fa-critical-role"></i>
+                    <p>Roles</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
+            <li class="nav-item menu-open">
+                <a href="/" class="nav-link {{ Route::currentRouteName() == 'country.index'|| Route::currentRouteName() == 'propertie.index' || Route::currentRouteName() == 'category.index' || Route::currentRouteName() == 'state.index' ? 'active' : '' }}">
                 {{-- <a href="/" class="nav-link"> --}}
                 <i class="nav-icon fas fa-users"></i>
                 <p>Settings<i class="right fas fa-angle-left"></i></p>
                 </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{route('country.index')}}" class="nav-link">
+                    <a href="{{route('country.index')}}" class="nav-link {{ Route::currentRouteName() == 'country.index' ? 'active' : '' }}">
                     <i class="far fa-user"></i>
                     <p>Countries</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('state.index')}}" class="nav-link">
+                    <a href="{{route('state.index')}}" class="nav-link {{ Route::currentRouteName() == 'state.index' ? 'active' : '' }}">
                     <i class="fab fa-critical-role"></i>
                     <p>States</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('propertie.index')}}" class="nav-link">
+                    <a href="{{route('propertie.index')}}" class="nav-link {{ Route::currentRouteName() == 'propertie.index' ? 'active' : '' }}">
                     <i class="fab fa-critical-role"></i>
                     <p>Properties</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('category.index')}}" class="nav-link">
+                    <a href="{{route('category.index')}}" class="nav-link {{ Route::currentRouteName() == 'category.index' ? 'active' : '' }}">
                     <i class="fab fa-critical-role"></i>
                     <p>category</p>
                     </a>
@@ -85,3 +83,7 @@
     </nav>
   </div>
 </aside>
+<script async src="https://docs.opencv.org/master/opencv.js" type="text/javascript"></script>
+<script>
+
+</script>

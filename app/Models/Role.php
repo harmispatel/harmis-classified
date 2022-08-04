@@ -18,4 +18,8 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+    public function inversUser()
+    {
+        return $this->belongsTo(User::class,'role_id','id');
+    }
 }

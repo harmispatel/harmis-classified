@@ -11,6 +11,7 @@ class UserLoginController extends Controller
 {
     public function index()
     {
+
         return view('frontend.common.layout');
     }
 

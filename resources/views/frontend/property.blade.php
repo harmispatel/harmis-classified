@@ -181,11 +181,7 @@
                             </div>
                         @endforelse
 
-                        @if (!empty($showProperty))
-                            <div>
-                                <button id="load" onclick="infinetScroller()"> Load More </button>
-                            </div>
-                        @endif
+
                     </div>
                 </div>
                 <div class="ajax-load text-center" style="display:none">

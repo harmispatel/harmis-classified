@@ -9,9 +9,9 @@
 
         <!-- Main content -->
         <div style = "padding-top:25px">
-            <div class="text-right mr-3 mb-2">
+            {{-- <div class="text-right mr-3 mb-2">
                 <a href="#" class="btn btn-primary">Add Country</a>
-            </div>
+            </div> --}}
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
@@ -27,7 +27,7 @@
                                             <tr>
                                             <th>Name</th>
                                             <th>Status</th>
-                                            <th class="text-right">Actions</th>
+                                            {{-- <th class="text-right">Actions</th> --}}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -39,10 +39,10 @@
                                                             {{ $countryData['status'] == 0 ? 'Inactive' : 'Active' }}
                                                         </span>
                                                     </td>
-                                                    <td class="text-right">
-                                                        {{-- <a href="{{ route('country.edit',$countryData->id) }}" title="Edit" class="mr-2"><i class="fas fa-edit"></i></a> --}}
-                                                        {{-- <i class="fa fa-trash text-danger" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" title="Delete"></i> --}}
-                                                    </td>
+                                                    {{-- <td class="text-right">
+                                                        <a href="{{ route('country.edit',$countryData->id) }}" title="Edit" class="mr-2"><i class="fas fa-edit"></i></a>
+                                                        <i class="fa fa-trash text-danger" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" title="Delete"></i>
+                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>

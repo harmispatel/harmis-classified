@@ -28,13 +28,24 @@
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
-
                             <div class="form-group">
                                 <label for="exampleInputCategory">Category</label>
                                 <select class="form-control" name="category_id">
-
                                     @foreach ($categoryId as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @php
+                                $user_id = $editPropertiesData->user_id;
+                                $userName = getUserName($user_id);
+                            @endphp
+                            <div class="form-group">
+                                <label for="exampleInputUser">User</label>
+                                <select class="form-control" name="user_id">
+                                    <option value="{{$userName->id}}" style="display: none" selected>{{$userName->name}}</option>
+                                    @foreach ($userId as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

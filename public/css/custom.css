@@ -11,6 +11,9 @@
     position: fixed !important;
     top: 0;
 }
+.brand-link:hover,.brand-link{
+    text-decoration: none !important;
+}
 .form-main{
     padding-bottom: 80px;
     margin-top: 150px;

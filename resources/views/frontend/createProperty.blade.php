@@ -35,80 +35,108 @@
       <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="form-inr">
-                <form action="{{ route('addProperty') }}" method="POST">
+                <form action="{{route('addProperty')}}" id="quickForm" method="POST">
                     @csrf
+                    <div class="card-body">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <label for="exampleInputName">Name</label>
+                        <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Enter Name">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
-                      </div>
+                    </div>
                     <div class="form-group">
-                      <label for="category">Category</label>
-                      {{-- <input type="text" class="form-control" id="category" name="category"> --}}
-                        <select class="form-control" id="category" name="category_id">
+                        <label for="exampleInputCategory">Category</label>
+                        <select class="form-control" name="category_id">
                             {{-- <option value="1">Hello</option> --}}
-                            {{-- @foreach ($categoryId as $category)
+                            @foreach ($categoryId as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
-                            @endforeach --}}
-                            <option value="1">category</option>
+                            @endforeach
                         </select>
                     </div>
+
                     <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="price" class="form-control" id="price" name="price">
+                        <label for="exampleInputPrice">Price</label>
+                        <input type="text" name="price" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
                         @if ($errors->has('price'))
-                        <span class="text-danger">{{ $errors->first('price') }}</span>
-                      @endif
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label for="country">Country</label>
-                        {{-- <input type="text" class="form-control" id="category" name="category"> --}}
-                          <select class="form-control" id="country" name="country_id">
-                              {{-- <option value="1">Hello</option> --}}
-                              {{-- @foreach ($categoryId as $category)
-                                  <option value="{{$category->id}}">{{$category->name}}</option>
-                              @endforeach --}}
-                              <option value="1">Country</option>
-                          </select>
-                      </div>
-                      <div class="form-group">
-                        <label for="state">State</label>
-                        {{-- <input type="text" class="form-control" id="category" name="category"> --}}
-                          <select class="form-control" id="state" name="state_id">
-                              {{-- <option value="1">Hello</option> --}}
-                              {{-- @foreach ($categoryId as $category)
-                                  <option value="{{$category->id}}">{{$category->name}}</option>
-                              @endforeach --}}
-                              <option value="1">state</option>
-                          </select>
-                      </div>
+                        <label for="exampleInputCountry">Country</label>
+                        <select id="country" class="form-control {{ $errors->has('country') ? 'is-invalid' : '' }}" name="country_id">
+                            <option value="">-- Select Country --</option>
+                            @foreach ($countryId as $country)
+                                <option value="{{$country->id}}">{{$country->name}}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('country_id'))
+                            <span class="text-danger">{{ $errors->first('country_id') }}</span>
+                        @endif
+                    </div>
+
                     <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea name="address" class="form-control" id="address"></textarea>
+                        <label for="exampleInputState">State</label>
+                        <select  class="form-control" name="state_id" id="state_id">
+                        </select>
+                        @if ($errors->has('state_id'))
+                            <span class="text-danger">{{ $errors->first('state_id') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputAddress">address</label>
+                        <textarea id="address" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" name="address" rows="3"></textarea>
                         @if ($errors->has('address'))
-                        <span class="text-danger">{{ $errors->first('address') }}</span>
-                      @endif
+                            <span class="text-danger">{{ $errors->first('address') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <label for="status">Status</label>
-                        <select name="status" id="status" class="form-control">
+                        <label for="exampleInputStatus">Status</label>
+                        <select class="form-control" name="status">
                             <option value="1">Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="0">InActive</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ route('propertie.index') }}" class="btn btn-secondary">Back</a>
+                        <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </form>
             </div>
         </div>
       </div>
     </div>
   </section>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+        $('#country').change(function (){
+            var countryId  = $(this).val();
+            // console.log(countryId);
+            $.ajax({
+                    url : "{{ route('getState') }}",
+                    data : {
+                        "_token": "{{ csrf_token() }}",
+                        'countryId' : countryId
+
+                    },
+                    type : 'post',
+                    dataType : 'json',
+                    success : function(result){
+                        console.log(result);
+                        $("#state_id").html('');
+                        $("#state_id").append(result.html);
+                    }
+
+                });
+        });
+    });
+</script>
 
 
   <!-- jQuery library -->
-  <script src="{{ asset ('js/jquery.min.js')}}"></script>
+  {{-- <script src="{{ asset ('js/jquery.min.js')}}"></script> --}}
   <script src="{{ asset ('js/bootstrap.min.js')}}"></script>
 
   </body>

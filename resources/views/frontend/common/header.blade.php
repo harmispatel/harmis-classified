@@ -14,6 +14,7 @@
                         <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English</option>
                         <option value="fr" {{ session()->get('locale') == 'fr' ? 'selected' : '' }}>French</option>
                     </select>
+
                     @if (Auth::check())
                         <form action="{{ route('userLogout') }}" method="POST">
                             @csrf
@@ -41,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="index.html">{{ __('labels.home') }}</a>
+                            <a class="nav-link" aria-current="page" href="#">{{ __('labels.home') }}</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -52,6 +53,15 @@
                                 <li><a class="dropdown-item active" href="{{ route('showProperty') }}">{{ __('labels.properties') }}</a>
                                 </li>
                                 <li><a class="dropdown-item" href="#">{{ __('labels.property_details') }}</a></li>
+                                @auth
+                                @php
+                                $role = Auth::user();
+                                $aroleId = $role['role_id'];
+                                @endphp
+                                    @if ($aroleId == 9 )
+                                        <li><a class="dropdown-item" href="{{ route ('create')}}">Add Property</a></li>
+                                    @endif
+                                @endauth
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -77,7 +87,7 @@
 ></script>
 <script>
     var url = "{{ route('changeLang') }}";
-  
+
     $(".changeLang").change(function(){
         window.location.href = url + "?lang="+ $(this).val();
     });

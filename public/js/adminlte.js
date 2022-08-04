@@ -2955,9 +2955,11 @@
       var collapsedEvent = $__default["default"].Event(EVENT_COLLAPSED);
       parentLi.removeClass(CLASS_NAME_IS_OPENING + " " + CLASS_NAME_OPEN);
       treeviewMenu.stop().slideUp(this._config.animationSpeed, function () {
+        //   console.log("hello");
         $__default["default"](_this2._element).trigger(collapsedEvent);
         treeviewMenu.find(SELECTOR_OPEN + " > " + SELECTOR_TREEVIEW_MENU).slideUp();
         treeviewMenu.find(SELECTOR_OPEN).removeClass(CLASS_NAME_IS_OPENING + " " + CLASS_NAME_OPEN);
+        // console.log("hyyy");
       });
     };
 

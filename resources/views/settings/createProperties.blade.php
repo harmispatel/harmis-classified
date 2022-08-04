@@ -33,6 +33,15 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputUser">User</label>
+                                <select class="form-control" name="user_id">
+                                    {{-- <option value="1">Hello</option> --}}
+                                    @foreach ($userId as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>
                                 <input type="text" name="price" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
                                 @if ($errors->has('price'))

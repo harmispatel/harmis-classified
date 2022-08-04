@@ -4,9 +4,11 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Propertie;
 // use App\Models\frontend\Property;
+use App\Models\{Propertie, Country, Category};
 
+//use validation Request Class
+use App\Http\Requests\storePropertie;
 class PropertyController extends Controller
 {
     /**
@@ -44,9 +46,30 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('frontend.createProperty');
+        $countryId = Country::get();
+        // $userId = User::where('role_id', '!=', 10 )->get();
+
+        $categoryId = Category::get();
+        return view('frontend.createProperty',compact('categoryId', 'countryId'));
+    }
+
+    public function getState(Request $request)
+    {
+        $countryId = $request->countryId;
+        $states = State::where('country_id',$countryId)->get();
+
+        $html = '';
+
+        foreach($states as $state)
+        {
+            $html .= '<option value="'.$state->id.'">'.$state->name.'</option>';
+        }
+
+        return response()->json([
+            'html' => $html
+        ]);
     }
 
     /**
@@ -55,14 +78,39 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    // public function store(Request $request)
+    // {
+    //     $addProperty = $request->except('_token','confirmPassword');
+    //     // echo "<pre>";
+    //     // print_r($request);exit;
+    //     $addProperty['latitude'] = 'latitude';
+    //     $addProperty['longitude'] = 'longitude';
+    //     $addPropertyData = Propertie::create($addProperty);
+    // }
+
+    public function store(storePropertie $request)
     {
-        $addProperty = $request->except('_token','confirmPassword');
+
         // echo "<pre>";
-        // print_r($request);exit;
-        $addProperty['latitude'] = 'latitude';
-        $addProperty['longitude'] = 'longitude';
-        $addPropertyData = Propertie::create($addProperty);
+        // print_r($countryName->toArray());exit;
+        // $addCategoryData = Propertie::create($request->all());
+        $user = auth()->User();
+        $userId = $user->id;
+        // prx($userId);
+        $addPropertyData = new Propertie;
+        $addPropertyData->name = $request->name;
+        $addPropertyData->category_id = $request->category_id;
+        $addPropertyData->user_id = $userId;
+        $addPropertyData->price = $request->price;
+        $addPropertyData->country_id = $request->country_id;
+        $addPropertyData->state_id = 1;
+        $addPropertyData->address = $request->address;
+        $addPropertyData->latitude ='latitude';
+        $addPropertyData->longitude ='longitude';
+        $addPropertyData->status = $request->status;
+        $addPropertyData->save();
+
+        return redirect('/');
     }
 
     /**
@@ -100,13 +148,13 @@ class PropertyController extends Controller
     {
         $updatePropertyData = Propertie::find($id);
         $updatePropertyData->name = $request->name;
-        // $updatePropertyData->category_id = $request->category;
-        $updatePropertyData->category_id =3;
+        $updatePropertyData->category_id = $request->category;
+        // $updatePropertyData->category_id =3;
         $updatePropertyData->price = $request->price;
-        // $updatePropertyData->country_id = $request->country;
-        $updatePropertyData->country_id =98;
-        // $updatePropertyData->state_id = $request->state;
-        $updatePropertyData->state_id =1405;
+        $updatePropertyData->country_id = $request->country;
+        // $updatePropertyData->country_id =98;
+        $updatePropertyData->state_id = $request->state;
+        // $updatePropertyData->state_id =1405;
         $updatePropertyData->address = $request->address;
         $updatePropertyData->latitude ='latitude';
         $updatePropertyData->longitude ='longitude';

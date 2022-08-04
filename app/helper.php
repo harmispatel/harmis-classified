@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{Permission, Country, State};
+use App\Models\{Permission, Country, State, User};
 // use App\Models\Country;
 
 
@@ -34,4 +34,9 @@ function getCountryOnState($id)
 {
     $countryOnState = State::where('country_id',$id)->get();
     return $countryOnState;
+}
+function getUserName($id)
+{
+    $getUserId = User::where('id',$id)->first();
+    return $getUserId;
 }

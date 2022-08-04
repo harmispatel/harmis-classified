@@ -71,6 +71,7 @@
                                         </div>
                                         </div>
                                     </div>
+                                {{-- Model --}}
                                 </div>
                             </div>
                         </div>
