@@ -42,15 +42,15 @@
                                 <h3>Other Options</h3>
                                 <div class="list-inr-op">
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input name="propertyType" onclick="getPropertyType();" value="" type="radio" class="custom-control-input customCheck05">
+                                        <input name="propertyType" onclick="getPricewiseProperty();" value="" type="radio" class="custom-control-input customCheck05" checked/>
                                         <label class="custom-control-label" for="customCheck05">For Both</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input name="propertyType" onclick="getPropertyType();" value="1" type="radio" class="custom-control-input customCheck05">
+                                        <input name="propertyType" onclick="getPricewiseProperty();" value="1" type="radio" class="custom-control-input customCheck05">
                                         <label class="custom-control-label" for="customCheck05">For Rent</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input name="propertyType" onclick="getPropertyType();" value="2" type="radio" class="custom-control-input customCheck05">
+                                        <input name="propertyType" onclick="getPricewiseProperty();" value="2" type="radio" class="custom-control-input customCheck05">
                                         <label class="custom-control-label" for="customCheck05">For Sales</label>
                                     </div>
                                 </div>
@@ -62,8 +62,12 @@
                                         <label for="formControlRange"></label>
                                         <span style="font-weight: bold;"></span>
                                         <input style="border: none;background:none; font-weight: bold;" type="text"
-                                            id="textInput" value="{{ $propertyMaxPrice }}">
-                                        <input type="range" alert(priceVal) min="{{ $propertyMinPrice }}"
+                                            id="textInput" value="{{$propertyMaxPrice}}">
+                                            @php
+                                                // echo "<pre>";
+                                                // print_r($propertyMaxPrice);exit;
+                                            @endphp
+                                        <input type="range" min="{{ $propertyMinPrice }}"
                                             max="{{ $propertyMaxPrice }}" name="priceRange" value="{{ $propertyMaxPrice }}"
                                             onchange="getPricewiseProperty(this.value)" class="form-control-range"
                                             id="formControlRange">
@@ -198,8 +202,12 @@
         function getPricewiseProperty(val) {
             var priceVal = $('#formControlRange').val();
             var rentSelsPrice = $('input[name="propertyType"]:checked').val();
+            var selectPrice = $('input[name="priceRange"]').val();
             var ajaxId = 1;
-            document.getElementById('textInput').value = val;
+
+            // set value in inpute box (price):
+            document.getElementById('textInput').value = selectPrice;
+
             $.ajax({
                 type: "POST",
                 url: "/getpropertybyprice",
@@ -208,7 +216,8 @@
                     "_token": "{{ csrf_token() }}",
                     "price": priceVal,
                     "ajaxId": ajaxId,
-                    "rentSelsPrice": rentSelsPrice
+                    "rentSelsPrice": rentSelsPrice,
+                    "selectPrice": selectPrice
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -219,23 +228,5 @@
             });
         }
 
-        function getPropertyType(val){
-            var rent = $('input[name="propertyType"]:checked').val();
-            var priceValue = $('#formControlRange').val();
-            $.ajax({
-                url: "{{ route('getRent')}}",
-                type: "POST",
-                data: {
-                    '_token': "{{ csrf_token() }}",
-                    'rent': rent,
-                    'priceValue': priceValue
-                },
-                success: function(res) {
-                $('.post-grid').html('');
-                $('.post-grid').append(res.html);
-                jQuery("#page-pagination").html(res.homePagination)
-            }
-            });
-        }
     </script>
 @endsection
