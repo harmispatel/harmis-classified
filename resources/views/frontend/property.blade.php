@@ -15,7 +15,6 @@
     <section class="pro-details-main">
         <div class="container">
             <div class="row" style="justify-content: center;">
-                {{-- @if (!empty($showProperty)) --}}
                     <div class="col-lg-3 li-page">
                         <div class="listing-check">
                             <div class="list-op">
@@ -43,12 +42,16 @@
                                 <h3>Other Options</h3>
                                 <div class="list-inr-op">
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck05">
-                                        <label class="custom-control-label" for="customCheck05">In Installments</label>
+                                        <input name="propertyType" onclick="getPropertyType();" value="" type="radio" class="custom-control-input customCheck05">
+                                        <label class="custom-control-label" for="customCheck05">For Both</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck06">
-                                        <label class="custom-control-label" for="customCheck06">Directly From Owner</label>
+                                        <input name="propertyType" onclick="getPropertyType();" value="1" type="radio" class="custom-control-input customCheck05">
+                                        <label class="custom-control-label" for="customCheck05">For Rent</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox op-inr">
+                                        <input name="propertyType" onclick="getPropertyType();" value="2" type="radio" class="custom-control-input customCheck05">
+                                        <label class="custom-control-label" for="customCheck05">For Sales</label>
                                     </div>
                                 </div>
                             </div>
@@ -143,23 +146,21 @@
                             </div>
                         </div>
                     </div>
-                {{-- @endif --}}
                 <div class="col-md-9">
                     <div class="row post-grid">
                         @forelse ($property as $showProperty)
                             <div class="post-wrap col-lg-6 col-md-6">
                                 <div class="post-item card ">
                                     <a href="#" class="img-inr">
-                                        <img src="{{ asset('image/house1.png') }}" class="img-fluid card-img "
-                                            alt="">
+                                        <img src="{{ asset('image/house1.png') }}" class="img-fluid card-img "alt="">
                                         <div class="img-pri-abo">
                                             <h3><i class="fa-solid fa-rupee-sign"></i> <strong>.
-                                                    {{ $showProperty->price }}</strong></h3>
+                                            {{ $showProperty->price }}</strong></h3>
                                         </div>
                                         <div class="re-img">
                                             <div class="re-text">
                                                 <span>
-                                                    {{ $showProperty['status'] == 0 ? 'Inactive' : 'Active' }}
+                                                    {{ $showProperty['property_type'] == 1 ? 'For Rent' : 'For Sales' }}
                                                 </span>
                                             </div>
                                         </div>
@@ -170,7 +171,8 @@
                                             </h3>
                                             <p class="post-item-text font-weight-light font-sm">
                                                 {{ $showProperty->hasOneCountry['name'] }},
-                                                {{ $showProperty->haseOneState['name'] }}, {{ $showProperty->address }}</p>
+                                                {{ $showProperty->haseOneState['name'] }}, {{ $showProperty->address }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -191,30 +193,49 @@
         </div>
     </section>
 @endsection
+@section('js')
+    <script>
+        function getPricewiseProperty(val) {
+            var priceVal = $('#formControlRange').val();
+            var rentSelsPrice = $('input[name="propertyType"]:checked').val();
+            var ajaxId = 1;
+            document.getElementById('textInput').value = val;
+            $.ajax({
+                type: "POST",
+                url: "/getpropertybyprice",
+                dataType: 'json',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "price": priceVal,
+                    "ajaxId": ajaxId,
+                    "rentSelsPrice": rentSelsPrice
+                },
+                dataType: 'json',
+                success: function(res) {
+                    $('.post-grid').html('');
+                    $('.post-grid').append(res.html);
+                    jQuery("#page-pagination").html(res.homePagination)
+                }
+            });
+        }
 
-<script>
-    function getPricewiseProperty(val) {
-        var priceVal = $('#formControlRange').val();
-        var ajaxId = 1;
-        document.getElementById('textInput').value = val;
-        $.ajax({
-            type: "POST",
-            url: "/getpropertybyprice",
-            dataType: 'json',
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "price": priceVal,
-                "ajaxId": ajaxId
-            },
-            dataType: 'json',
-            success: function(res) {
+        function getPropertyType(val){
+            var rent = $('input[name="propertyType"]:checked').val();
+            var priceValue = $('#formControlRange').val();
+            $.ajax({
+                url: "{{ route('getRent')}}",
+                type: "POST",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'rent': rent,
+                    'priceValue': priceValue
+                },
+                success: function(res) {
                 $('.post-grid').html('');
                 $('.post-grid').append(res.html);
                 jQuery("#page-pagination").html(res.homePagination)
             }
-        });
-    }
-
-    function infinetScroller(val) {
-    }
-</script>
+            });
+        }
+    </script>
+@endsection

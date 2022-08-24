@@ -50,6 +50,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputProperty_type">Property Type</label>
+                                <select class="form-control" name="property_type">
+                                    <option {{ ($editPropertiesData->property_type) == '1' ? 'selected' : '' }} value="1">For Rent</option>
+                                    <option {{ ($editPropertiesData->property_type) == '2' ? 'selected' : '' }} value="1">For Seles</option>
+                                    {{-- <option value="2">For Sale</option> --}}
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>
                                 <input type="text" name="price" value="{{$editPropertiesData->price}}" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
                                 @if ($errors->has('price'))

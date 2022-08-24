@@ -52,7 +52,7 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item active" href="{{ route('showProperty') }}">{{ __('labels.properties') }}</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#">{{ __('labels.property_details') }}</a></li>
+                                <li><a class="dropdown-item" href="#">Property List</a></li>
                                 @auth
                                 @php
                                 $role = Auth::user();

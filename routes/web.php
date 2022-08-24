@@ -11,6 +11,9 @@ use App\Http\Controllers\frontend\UserLoginController;
 use App\Http\Controllers\frontend\PropertyController;
 use App\Http\Controllers\frontend\LanguageController;
 
+// Google map
+use App\Http\Controllers\GoogleController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +26,7 @@ use App\Http\Controllers\frontend\LanguageController;
 |
 */
 Route::group(['middleware' => ['guest']], function () {
+
     Route::post('/login', [LoginController::class, 'login'])->name('login');
     Route::get('/login', [LoginController::class, "index"])->name('login.form');
 
@@ -67,6 +71,8 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
 
 //Country Route In Ajax Call
 Route::post('getState', [PropertieController::class, 'getState'])->name('getState');
+
+//User Logout Route:
 Route::post('/userlogout', [UserLoginController::class, 'logout'])->name('userLogout');
 Route::get('/userlogout', [UserLoginController::class, 'userLogout'])->name('userLog');
 
@@ -76,10 +82,16 @@ Route::post('/getpropertybyprice', [PropertyController::class, 'getpropertybypri
 Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->name('infinitescroll');
 
 
-    Route::get('/create', [PropertyController::class,'create'])->name('create');
-    Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
+Route::get('/create', [PropertyController::class,'create'])->name('create');
+Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
 
 
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
 // Route::post('upadteproperty/{id}',[PropertyController::class,'update'])->name('updateProperty');
 // Route::get('delete/property/{id}',[PropertyController::class,'destroy'])->name('deleteProperty');
+
+// Google map api:
+
+// Route::get('google-autocomplete', [GoogleController::class, 'index']);
+
+Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');

@@ -9,6 +9,7 @@ use App\Models\{Propertie, Country, Category};
 
 //use validation Request Class
 use App\Http\Requests\storePropertie;
+
 class PropertyController extends Controller
 {
     /**
@@ -18,7 +19,6 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
-        // print_r($request->toArray());
         $propertyMaxPrice = Propertie::max('price');
         $propertyMinPrice = Propertie::min('price');
         $PropertyMidPrice = Propertie::avg('price');
@@ -26,19 +26,13 @@ class PropertyController extends Controller
             $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice]);
 
             $property = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->get();
-            // prx($request->ajax());
             if($request->ajax()){
                 $view = view('frontend.data',compact('property'))->render();
                 return response()->json(['html'=>$view]);
             }
-        // echo "<pre>";
-        // print_r($property->toArray());exit;
-        $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
-
+            $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
 
             return view('frontend.property',compact('property','propertyMaxPrice','propertyMinPrice','PropertyMidPrice'));
-
-
     }
 
     /**
@@ -49,8 +43,6 @@ class PropertyController extends Controller
     public function create(Request $request)
     {
         $countryId = Country::get();
-        // $userId = User::where('role_id', '!=', 10 )->get();
-
         $categoryId = Category::get();
         return view('frontend.createProperty',compact('categoryId', 'countryId'));
     }
@@ -71,6 +63,71 @@ class PropertyController extends Controller
             'html' => $html
         ]);
     }
+    public function getRent(Request $request)
+    {
+        if($request->ajax())
+        {
+            $propertyType = $request->rent;
+            $propertypri = $request->priceValue;
+            if($propertyType != "")
+            {
+                if($propertyType == 1)
+                {
+                    $getRentData = Propertie::where('property_type','=',$propertyType)
+                                            ->where('price','<=',$propertypri)
+                                            ->get();
+                }
+                else
+                {
+                    $getRentData = Propertie::where('property_type','=',$propertyType)
+                                            ->where('price','<=',$propertypri)
+                                            ->get();
+                }
+            }
+            else
+            {
+
+                $getRentData = Propertie::where('price','<=',$propertypri)->get();
+            }
+            $html = "";
+            foreach($getRentData as $showRentProperty)
+            {
+                $html .= ' <div class="post-wrap col-lg-6 col-md-6">
+                            <div class="post-item card ">
+                                <a href="#" class="img-inr">
+                                    <img src=" '.asset ("image/house1.png").'" class="img-fluid card-img " alt="">
+                                    <div class="img-pri-abo">
+                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showRentProperty->price.'</strong></h3>
+                                    </div>
+                                    <div class="re-img">
+                                        <div class="re-text">
+                                            <span>';
+                                                if($showRentProperty["property_type"] == 1)
+                                                {
+                                                    $html .='For Rent';
+                                                }
+                                                else
+                                                {
+                                                    $html .='For Sales';
+                                                }
+                                            $html .='</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card-body jo-card">
+                                    <div class="jo-card-bor">
+                                        <h3 class="card-title mb-1"><a href="#">'.$showRentProperty->name.'</a></h3>
+                                        <p class="post-item-text font-weight-light font-sm">'.$showRentProperty->hasOneCountry["name"].', '. $showRentProperty->haseOneState["name"].', '. $showRentProperty->address.'</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+            }
+            return response()->json([
+                'html' => $html
+            ]);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -90,20 +147,16 @@ class PropertyController extends Controller
 
     public function store(storePropertie $request)
     {
-
-        // echo "<pre>";
-        // print_r($countryName->toArray());exit;
-        // $addCategoryData = Propertie::create($request->all());
         $user = auth()->User();
         $userId = $user->id;
-        // prx($userId);
         $addPropertyData = new Propertie;
         $addPropertyData->name = $request->name;
         $addPropertyData->category_id = $request->category_id;
         $addPropertyData->user_id = $userId;
+        $addPropertyData->property_type = $request->property_type;
         $addPropertyData->price = $request->price;
         $addPropertyData->country_id = $request->country_id;
-        $addPropertyData->state_id = 1;
+        $addPropertyData->state_id = $request->state_id;
         $addPropertyData->address = $request->address;
         $addPropertyData->latitude ='latitude';
         $addPropertyData->longitude ='longitude';
@@ -119,10 +172,7 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -133,7 +183,6 @@ class PropertyController extends Controller
     public function edit($id)
     {
         $editPropertyData = Propertie::find($id);
-        // prx($editPropertyData->toArray());
         return view('frontend.editProperty',compact('editPropertyData'));
     }
 
@@ -149,19 +198,13 @@ class PropertyController extends Controller
         $updatePropertyData = Propertie::find($id);
         $updatePropertyData->name = $request->name;
         $updatePropertyData->category_id = $request->category;
-        // $updatePropertyData->category_id =3;
         $updatePropertyData->price = $request->price;
         $updatePropertyData->country_id = $request->country;
-        // $updatePropertyData->country_id =98;
         $updatePropertyData->state_id = $request->state;
-        // $updatePropertyData->state_id =1405;
         $updatePropertyData->address = $request->address;
         $updatePropertyData->latitude ='latitude';
         $updatePropertyData->longitude ='longitude';
         $updatePropertyData->status = $request->status;
-        // echo "<pre>";
-        // print_r($updatePropertyData);
-        // exit();
         $updatePropertyData->update();
 
         return redirect('/property');
@@ -179,14 +222,55 @@ class PropertyController extends Controller
         return redirect('/property');
     }
 
+    // Filter price by property:
+
     public function getpropertybyprice(Request $request)
     {
-        $propertyMaxPrice = $request->price;
-        $propertyMinPrice = Propertie::min('price');
-        // prx($propertyMinPrice);
-        $PropertyMidPrice = Propertie::avg('price');
-        $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->get();
-// prx($property);
+        $proPrice = $request->price;
+        $rentSelsPic = $request->rentSelsPrice;
+        if($rentSelsPic != "")
+        {
+            if($rentSelsPic == 1)
+            {
+                $propertyMaxPrice = $request->price;
+                $propertyMinPrice = Propertie::min('price');
+                $PropertyMidPrice = Propertie::avg('price');
+                $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
+                ->where('property_type','=',$rentSelsPic)
+                ->get();
+            }
+            else
+            {
+                if($rentSelsPic == 2)
+                {
+                    $propertyMaxPrice = $request->price;
+                    $propertyMinPrice = Propertie::min('price');
+                    $PropertyMidPrice = Propertie::avg('price');
+                    $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
+                    ->where('property_type','=',$rentSelsPic)
+                    ->get();
+                }
+                else
+                {
+                    $propertyMaxPrice = $request->price;
+                        $propertyMinPrice = Propertie::min('price');
+                        $PropertyMidPrice = Propertie::avg('price');
+                        $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
+                        ->where('property_type','=',$rentSelsPic)
+                        ->get();
+                }
+            }
+
+
+        }
+        else
+        {
+            $propertyMaxPrice = $request->price;
+            $propertyMinPrice = Propertie::min('price');
+            $PropertyMidPrice = Propertie::avg('price');
+            $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->get();
+
+        }
 
         $html = "";
             foreach($property as $showProperty)
@@ -201,13 +285,13 @@ class PropertyController extends Controller
                                     <div class="re-img">
                                         <div class="re-text">
                                             <span>';
-                                                if($showProperty["status"] == 0)
+                                                if($showProperty["property_type"] == 1)
                                                 {
-                                                    $html .='Inactive';
+                                                    $html .='For Rent';
                                                 }
                                                 else
                                                 {
-                                                    $html .='Active';
+                                                    $html .='For Sales';
                                                 }
                                             $html .='</span>
                                         </div>
@@ -221,19 +305,9 @@ class PropertyController extends Controller
                                 </div>
                             </div>
                         </div>';
-
             }
-
-
             return response()->json([
                 'html' => $html
             ]);
-
-    }
-
-    public function infiniteScroll(Request $request)
-    {
-
-        print_r($request->all());
     }
 }

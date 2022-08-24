@@ -70,6 +70,7 @@ class PropertieController extends Controller
         $addPropertyData->name = $request->name;
         $addPropertyData->category_id = $request->category_id;
         $addPropertyData->user_id = $request->user_id;
+        $addPropertyData->property_type = $request->property_type;
         $addPropertyData->price = $request->price;
         $addPropertyData->country_id = $request->country_id;
         $addPropertyData->state_id = $request->state_id;
@@ -122,7 +123,7 @@ class PropertieController extends Controller
         $updatePropertyData->name = $request->name;
         $updatePropertyData->category_id = $request->category_id;
         $updatePropertyData->user_id = $request->category_id;
-
+        $updatePropertyData->property_type = $request->property_type;
         $updatePropertyData->price = $request->price;
         $updatePropertyData->country_id = $request->country_id;
         $updatePropertyData->state_id = $request->state_id;

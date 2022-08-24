@@ -22,14 +22,15 @@
                     <table class="table table-bordered">
                     <thead>
                         <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Price</th>
-                        <th>country</th>
-                        <th>State</th>
-                        <th>Address</th>
-                        <th>Status</th>
-                        <th class="text-right">Actions</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Rent / Sales</th>
+                            <th>country</th>
+                            <th>State</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th class="text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,6 +39,7 @@
                             <td>{{$propertiesData['name']}}</td>
                             <td>{{$propertiesData->hasOneCategory['name']}}</td>
                             <td>{{$propertiesData['price']}}</td>
+                            <td>{{ $propertiesData['property_type'] == 1 ? 'For Rent' : 'For Sale' }}</td>
                             <td>{{$propertiesData->hasOneCountry['name']}}</td>
                             <td>{{$propertiesData->haseOneState['name']}}</td>
                             <td>{{$propertiesData['address']}}</td>

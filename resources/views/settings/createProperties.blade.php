@@ -42,6 +42,13 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputProperty_type">Property Type</label>
+                                <select class="form-control" name="property_type">
+                                    <option value="1">For Rent</option>
+                                    <option value="2">For Sale</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>
                                 <input type="text" name="price" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
                                 @if ($errors->has('price'))

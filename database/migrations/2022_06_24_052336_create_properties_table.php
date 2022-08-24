@@ -18,7 +18,12 @@ class CreatePropertiesTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories');
+
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->decimal('price', 13, 2);
+            $table->tinyInteger('property_type')->nullable();
             $table->unsignedBigInteger('country_id');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->unsignedBigInteger('state_id');

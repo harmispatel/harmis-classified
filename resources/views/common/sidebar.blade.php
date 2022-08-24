@@ -22,7 +22,7 @@
           </li>
             <li class="nav-item menu-open">
 
-                <a href="/" class="nav-link {{ Route::currentRouteName() == 'show_user.index' || Route::currentRouteName() == 'show_role.index' ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ Route::currentRouteName() == 'show_user.index' || Route::currentRouteName() == 'show_role.index' ? 'active' : '' }}">
                 {{-- <a href="/" class="nav-link"> --}}
                 <i class="nav-icon fas fa-users"></i>
                 <p>
@@ -46,7 +46,7 @@
                 </ul>
             </li>
             <li class="nav-item menu-open">
-                <a href="/" class="nav-link {{ Route::currentRouteName() == 'country.index'|| Route::currentRouteName() == 'propertie.index' || Route::currentRouteName() == 'category.index' || Route::currentRouteName() == 'state.index' ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ Route::currentRouteName() == 'country.index'|| Route::currentRouteName() == 'propertie.index' || Route::currentRouteName() == 'category.index' || Route::currentRouteName() == 'state.index' ? 'active' : '' }}">
                 {{-- <a href="/" class="nav-link"> --}}
                 <i class="nav-icon fas fa-users"></i>
                 <p>Settings<i class="right fas fa-angle-left"></i></p>

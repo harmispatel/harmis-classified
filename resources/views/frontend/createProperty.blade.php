@@ -54,7 +54,13 @@
                             @endforeach
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="exampleInputProperty_type">Property Type</label>
+                        <select class="form-control" name="property_type">
+                            <option value="1">For Rent</option>
+                            <option value="2">For Sale</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="exampleInputPrice">Price</label>
                         <input type="text" name="price" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
@@ -90,6 +96,15 @@
                             <span class="text-danger">{{ $errors->first('address') }}</span>
                         @endif
                     </div>
+                    {{-- <div class="form-group">
+                        <label for="exampleInputPrice">Latitude</label>
+                        <input type="text" name="price" class="{{ $errors->has('price') ? 'is-invalid' : '' }}">
+                        <label for="exampleInputPrice">Logitude</label>
+                        <input type="text" name="price" class="{{ $errors->has('price') ? 'is-invalid' : '' }}">
+                        @if ($errors->has('price'))
+                            <span class="text-danger">{{ $errors->first('price') }}</span>
+                        @endif
+                    </div> --}}
                     <div class="form-group">
                         <label for="exampleInputStatus">Status</label>
                         <select class="form-control" name="status">
@@ -128,8 +143,22 @@
                         $("#state_id").html('');
                         $("#state_id").append(result.html);
                     }
-
                 });
+        });
+    });
+
+
+    $(document).ready(function(){
+        var autocomplete;
+        var to = 'location';
+        autocomplete = new google.maps.places.Autocomplete((document.getElementById(to)),{
+            types:['geocode'],
+        });
+        google.maps.event.addListener(autocomplete,'place_changed',function(){
+            var near_place = autocomplete.getPlace();
+
+            $("#latitude").val(near_place.geometry.location.lat());
+            $("#longitude").val(near_place.geometry.location.lng());
         });
     });
 </script>
