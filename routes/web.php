@@ -95,3 +95,5 @@ Route::post('/addproperty', [PropertyController::class,'store'])->name('addPrope
 // Route::get('google-autocomplete', [GoogleController::class, 'index']);
 
 // Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
+
+// Route::view('ind','frontend.HaRealestate.properties');

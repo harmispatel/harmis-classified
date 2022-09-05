@@ -49,6 +49,27 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputProperty_type">Property Condition</label>
+                                <select class="form-control" name="property_condition">
+                                    <option value="1">Used</option>
+                                    <option value="2">New</option>
+                                    <option value="3">Furnished</option>
+                                    <option value="4">Unfurnished</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputProperty_type">Floor</label>
+                                <select class="form-control" name="floor">
+                                    <option value="1">Settlement</option>
+                                    <option value="2">Semi ground</option>
+                                    <option value="3">My land</option>
+                                    <option value="4">The First</option>
+                                    <option value="5">The Second</option>
+                                    <option value="6">The Third</option>
+                                    <option value="7">Fourth +</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>
                                 <input type="text" name="price" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
                                 @if ($errors->has('price'))

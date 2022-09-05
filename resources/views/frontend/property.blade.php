@@ -20,37 +20,31 @@
                             <div class="list-op">
                                 <h3>Other Options</h3>
                                 <div class="list-inr-op">
-                                    <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck01">
-                                        <label class="custom-control-label" for="customCheck01">Flat</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck02">
-                                        <label class="custom-control-label" for="customCheck02">Villa / House</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck03">
-                                        <label class="custom-control-label" for="customCheck03">Land</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck04">
-                                        <label class="custom-control-label" for="customCheck04">Farm</label>
-                                    </div>
+                                    @forelse ($category as $categoryName)
+                                        <div class="custom-control custom-checkbox op-inr">
+                                            <input name="category" onclick="getPricewiseProperty(this);" type="radio" value="{{$categoryName->id}}" class="custom-control-input" id="customRadio04">
+                                            <label class="custom-control-label" for="customCheck04">{{$categoryName->name}}</label>
+                                        </div>
+                                    @empty
+                                        <div class="post-wrap col-lg-12 col-md-12 text-center">
+                                            <span class="text-secondary">{{__('labels.empty_properties')}}</span>
+                                        </div>
+                                    @endforelse
                                 </div>
                             </div>
                             <div class="list-op">
                                 <h3>Other Options</h3>
                                 <div class="list-inr-op">
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input name="propertyType" onclick="getPricewiseProperty();" value="" type="radio" class="custom-control-input customCheck05" checked/>
+                                        <input name="propertyType" onclick="getPricewiseProperty(this);" value="" type="radio" class="custom-control-input customCheck05" checked/>
                                         <label class="custom-control-label" for="customCheck05">For Both</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input name="propertyType" onclick="getPricewiseProperty();" value="1" type="radio" class="custom-control-input customCheck05">
+                                        <input name="propertyType" onclick="getPricewiseProperty(this);" value="1" type="radio" class="custom-control-input customCheck05">
                                         <label class="custom-control-label" for="customCheck05">For Rent</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input name="propertyType" onclick="getPricewiseProperty();" value="2" type="radio" class="custom-control-input customCheck05">
+                                        <input name="propertyType" onclick="getPricewiseProperty(this);" value="2" type="radio" class="custom-control-input customCheck05">
                                         <label class="custom-control-label" for="customCheck05">For Sales</label>
                                     </div>
                                 </div>
@@ -77,31 +71,35 @@
                             <div class="bulid-info">
                                 <h3>Number Of Bedrooms</h3>
                                 <div class="nu-inr">
-                                    <a herf="#" class="badge nu-inr-st">Studio</a>
-                                    <a herf="#" class="badge nu-inr-st active">1</a>
-                                    <a herf="#" class="badge nu-inr-st">2</a>
+                                    <input type="radio" class="badge nu-inr-st">
+                                    <p style="color:black" class="badge nu-inr-st bedroom">1</p>
+                                    <p style="color:black" class="badge nu-inr-st bedroom">2</p>
+                                    <p style="color:black" class="badge nu-inr-st bedroom">3</p>
+                                    <p style="color:black" class="badge nu-inr-st bedroom">4</p>
+                                    <p style="color:black" class="badge nu-inr-st bedroom">5+</p>
+                                    {{-- <a herf="#" class="badge nu-inr-st">2</a>
                                     <a herf="#" class="badge nu-inr-st">3</a>
                                     <a herf="#" class="badge nu-inr-st">4</a>
-                                    <a herf="#" class="badge nu-inr-st">5+</a>
+                                    <a herf="#" class="badge nu-inr-st">5+</a> --}}
                                 </div>
                             </div>
                             <div class="list-op">
                                 <h3>Other Options</h3>
                                 <div class="list-inr-op">
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                        <input name="property_condition" onclick="getPricewiseProperty(this);" value="1" type="radio" class="custom-control-input" id="customRadio1">
                                         <label class="custom-control-label" for="customCheck1">Used</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                        <input name="property_condition" onclick="getPricewiseProperty(this);" value="2" type="radio" class="custom-control-input" id="customRadio2">
                                         <label class="custom-control-label" for="customCheck2">New</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                        <input name="property_condition" onclick="getPricewiseProperty(this);" value="3" type="radio" class="custom-control-input" id="customRadio3">
                                         <label class="custom-control-label" for="customCheck3">Furnished</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                        <input name="property_condition" onclick="getPricewiseProperty(this);" value="4" type="radio" class="custom-control-input" id="customRadio4">
                                         <label class="custom-control-label" for="customCheck4">Unfurnished</label>
                                     </div>
                                 </div>
@@ -110,31 +108,31 @@
                                 <h3>Floor</h3>
                                 <div class="list-inr-op">
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck6">
+                                        <input name="floor" type="radio" value="1" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck6">
                                         <label class="custom-control-label" for="customCheck6">Settlement</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck7">
+                                        <input name="floor" type="radio" value="2" onclick="getPricewiseProperty(this);"  class="custom-control-input" id="customCheck7">
                                         <label class="custom-control-label" for="customCheck7">Semi ground</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck8">
+                                        <input name="floor" type="radio" value="3" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck8">
                                         <label class="custom-control-label" for="customCheck8">My land</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck9">
+                                        <input name="floor" type="radio" value="4" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck9">
                                         <label class="custom-control-label" for="customCheck9">The First</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck10">
+                                        <input name="floor" type="radio" value="5" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck10">
                                         <label class="custom-control-label" for="customCheck10">The Second</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck11">
+                                        <input name="floor" type="radio" value="6" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck11">
                                         <label class="custom-control-label" for="customCheck11">The Third</label>
                                     </div>
                                     <div class="custom-control custom-checkbox op-inr">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck12">
+                                        <input name="floor" type="radio" value="7" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck12">
                                         <label class="custom-control-label" for="customCheck12">Fourth +</label>
                                     </div>
                                 </div>
@@ -153,12 +151,12 @@
                 <div class="col-md-9">
                     <div class="row post-grid">
                         @forelse ($property as $showProperty)
-                            <div class="post-wrap col-lg-6 col-md-6">
+                            <div class="post-wrap col-lg-6 col-md-6" onscroll="getPricewiseProperty()" id="scroll">
                                 <div class="post-item card ">
                                     <a href="#" class="img-inr">
                                         <img src="{{ asset('image/house1.png') }}" class="img-fluid card-img "alt="">
                                         <div class="img-pri-abo">
-                                            <h3><i class="fa-solid fa-rupee-sign"></i> <strong>.
+                                            <h3><i class="fa-solid fa-rupee-sign"></i> <strong>
                                             {{ $showProperty->price }}</strong></h3>
                                         </div>
                                         <div class="re-img">
@@ -180,17 +178,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                {{$showProperty->content}}
                             </div>
                         @empty
                             <div class="post-wrap col-lg-12 col-md-12 text-center">
                                 <span class="text-secondary">{{__('labels.empty_properties')}}</span>
                             </div>
                         @endforelse
-
-
                     </div>
                 </div>
-                <div class="ajax-load text-center" style="display:none">
+
+            </div>
+            <div class="row" style="justify-content: center;">
+                <div class="col-12 ajax-load text-center d-none">
                     <p><img src="{{asset('img/loader.png')}}">Load More Post...</p>
                 </div>
             </div>
@@ -199,14 +199,48 @@
 @endsection
 @section('js')
     <script>
-        function getPricewiseProperty(val) {
+
+        var limit = 4;
+        var start = 0;
+        var page = 1;
+        var total = {{ $totalRecords }};
+        var recent = 0;
+        var bedroom = 0;
+
+        $(window).scroll(function() {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() && total != recent) {
+                page++;
+                limit+=4;
+                getPricewiseProperty("scroll");
+            }
+        });
+
+        function getPricewiseProperty(type="") {
+
+            if(type != "scroll")
+            {
+                page = 1;
+                limit = 4;
+                $('.post-grid').animate({scrollTop: '0px'}, 1000);
+            }
+
+            $('.ajax-load').removeClass('d-none')
+            // get value using id, class, name:
             var priceVal = $('#formControlRange').val();
+            var localData = $('.post-grid').val();
             var rentSelsPrice = $('input[name="propertyType"]:checked').val();
-            var selectPrice = $('input[name="priceRange"]').val();
+            var propertyCondition = $('input[name="property_condition"]:checked').val();
+            var propertyFloor = $('input[name="floor"]:checked').val();
+            // alert(PropertyFloor);
+            var category = $('input[name="category"]:checked').val();
+            // set Two Zero after Price using toFixed(2) method:
+            var selectPrice = parseFloat($('input[name="priceRange"]').val());
+            var afterTwoZero = selectPrice.toFixed(2);
             var ajaxId = 1;
 
             // set value in inpute box (price):
-            document.getElementById('textInput').value = selectPrice;
+
+            document.getElementById('textInput').value = afterTwoZero;
 
             $.ajax({
                 type: "POST",
@@ -215,18 +249,43 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "price": priceVal,
+                    "localData": localData,
                     "ajaxId": ajaxId,
+                    "page":page,
                     "rentSelsPrice": rentSelsPrice,
-                    "selectPrice": selectPrice
+                    "category": category,
+                    "propertyCondition": propertyCondition,
+                    "propertyFloor": propertyFloor,
+                    "selectPrice": selectPrice,
+                    "limit": limit,
+                    "start": start,
+                    "bedroom": bedroom
                 },
+
                 dataType: 'json',
                 success: function(res) {
-                    $('.post-grid').html('');
-                    $('.post-grid').append(res.html);
-                    jQuery("#page-pagination").html(res.homePagination)
+                    console.log(res);
+                    if(res != "")
+                    {
+                        recent = res.records;
+                        total = res.total;
+                        $('.ajax-load').addClass('d-none')
+                        $('.post-grid').html('');
+                        $('.post-grid').append(res.html);
+                        jQuery("#page-pagination").html(res.homePagination)
+                    }
                 }
             });
         }
 
+        $(document).ready(function(){
+            $(".bedroom").click(function() {
+                bedroom = $(this).text();
+                $(".bedroom").removeClass('active');
+                $(this).addClass('active');
+                getPricewiseProperty();
+            });
+        });
     </script>
+
 @endsection

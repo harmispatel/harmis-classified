@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HaRealestate | Home</title>
-    
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 
@@ -13,18 +13,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 
     <!-- css -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>     
-    <link rel="stylesheet" href="assets/css/animate.css"/>     
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css"/>     
+    <link rel="stylesheet" href="{{ asset ('css/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" href="{{ asset ('css/animate.css')}}"/>
+    <link rel="stylesheet" href="{{ asset ('css/swiper-bundle.min.css')}}"/>
 
     <!-- Main style sheet -->
-    <link href="assets/css/custom.css" rel="stylesheet">    
+    <link href="{{ asset ('css/custom.css')}}" rel="stylesheet">
 
-   
+
     <!-- Google Font -->
-    <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>    
+    <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,7 +34,7 @@
     <![endif]-->
 
   </head>
-  <body class="aa-price-range">  
+  <body class="aa-price-range">
     <!-- Pre Loader -->
     <!-- SCROLL TOP BUTTON -->
       <!-- <a class="scrollToTop" href="#"><i class="fa fa-angle-double-up"></i></a> -->
@@ -57,11 +57,11 @@
           </div>
         </div>
       </div>
-      <div class="header-main"> 
+      <div class="header-main">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="container">
             <a class="navbar-brand" href="#">
-              <img src="assets/images/logo.png"/>
+              <img src="{{ asset ('image/logo.png')}}"/>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -102,7 +102,7 @@
           <div class="swiper-slide">
             <strong class="title text-uppercase">welcome to</strong>
             <strong class="sub-title text-capitalize">HaRealestate</strong>
-            <img class="img-fluid" style="background-image: url('./assets/images/real-estate1.png')"/>
+            <img class="img-fluid" style="background-image: url('./assets/image/real-estate1.png')"/>
             <div class="order-online wow animate__fadeInDown" data-wow-duration="1s">
               <strong class="title text-uppercase">Search your Dream House / Villa</strong>
               <input class="form-control" placeholder="House / Villa"/>
@@ -112,7 +112,7 @@
           <div class="swiper-slide">
             <strong class="title text-uppercase">welcome to</strong>
             <strong class="sub-title text-capitalize">HaRealestate</strong>
-            <img class="img-fluid" style="background-image: url('./assets/images/real-estate2.png')"/>
+            <img class="img-fluid" style="background-image: url('./assets/image/real-estate2.png')"/>
             <div class="order-online wow animate__fadeInDown" data-wow-duration="1s">
               <strong class="title text-uppercase">Search for Commercial</strong>
               <input class="form-control" placeholder="Commercial"/>
@@ -122,7 +122,7 @@
           <div class="swiper-slide">
             <strong class="title text-uppercase">welcome to</strong>
             <strong class="sub-title text-capitalize">HaRealestate</strong>
-            <img class="img-fluid" style="background-image: url('./assets/images/real-estate3.png')"/>
+            <img class="img-fluid" style="background-image: url('{{ asset ('image/real-estate3.png')}}')"/>
             <div class="order-online wow animate__fadeInDown" data-wow-duration="1s">
               <strong class="title text-uppercase">Search for Land / Farm</strong>
               <input class="form-control" placeholder="Land / Farm"/>
@@ -132,7 +132,7 @@
           <div class="swiper-slide">
             <strong class="title text-uppercase">welcome to</strong>
             <strong class="sub-title text-capitalize">HaRealestate</strong>
-            <img class="img-fluid" style="background-image: url('./assets/images/real-estate4.png')"/>
+            <img class="img-fluid" style="background-image: url('{{ asset ('image/real-estate4.png')}}')"/>
             <div class="order-online wow animate__fadeInDown" data-wow-duration="1s">
               <strong class="title text-uppercase">Search for Flat</strong>
               <input class="form-control" placeholder="Flat"/>
@@ -143,7 +143,7 @@
         <div class="swiper-button-next"><i class="fas fa-arrow-right"></i></div>
         <div class="swiper-button-prev"><i class="fas fa-arrow-left"></i></div>
       </div>
-      
+
     </section>
 
     <!-- slider-section  -->
@@ -155,7 +155,7 @@
         <div class="row align-items-center">
           <div class="col-md-3">
             <div class="about-img wow animate__backInRight" data-wow-duration="1s">
-              <img src="assets/images/about.jpg" class="w-100">
+              <img src="assets/image/about.jpg" class="w-100">
             </div>
           </div>
           <div class="col-md-9">
@@ -183,7 +183,7 @@
 
     <!--  about section  -->
 
-    
+
       <!-- Featured Real Estate  Start -->
       <section class="fe-rent-main">
           <div class="container">
@@ -196,7 +196,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house1.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house1.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -233,7 +233,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house2.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house2.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -270,7 +270,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house3.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house3.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -327,7 +327,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house1.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house1.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -364,7 +364,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house2.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house2.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -401,7 +401,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house3.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house3.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -458,7 +458,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house1.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house1.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 33,56,456</strong></h3>
                               </div>
@@ -495,7 +495,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house2.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house2.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 30,56,456</strong></h3>
                               </div>
@@ -532,7 +532,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house3.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house3.png')}}" class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 20,56,456</strong></h3>
                               </div>
@@ -589,7 +589,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house1.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house1.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -626,7 +626,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house2.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house2.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -663,7 +663,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house3.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house3.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -720,7 +720,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house1.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house1.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 56,456</strong></h3>
                               </div>
@@ -757,7 +757,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house2.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house2.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 56,000</strong></h3>
                               </div>
@@ -794,7 +794,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house3.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house3.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 86,456</strong></h3>
                               </div>
@@ -838,7 +838,7 @@
           </div>
       </section>
       <!-- Lands and farms for rent end -->
-        
+
         <section class="fe-rent-main fe-sale">
           <div class="container">
               <div class="fe-rent-head">
@@ -850,7 +850,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house1.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house1.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -887,7 +887,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house2.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house2.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -924,7 +924,7 @@
                   <div class="post-wrap col-lg-4 col-md-6">
                       <div class="post-item card ">
                           <a href="#" class="img-inr">
-                              <img src="assets/images/house3.png" class="img-fluid card-img " alt="">
+                              <img src="{{ asset ('image/house3.png"')}} class="img-fluid card-img " alt="">
                               <div class="img-pri-abo">
                                   <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. 12,33,56,456</strong></h3>
                               </div>
@@ -969,13 +969,13 @@
       </section>
 
 
- 
+
     <!-- jQuery library -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/swiper-bundle.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="{{ asset ('js/jquery.min.js')}}"></script>
+    <script src="{{ asset ('js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset ('js/swiper-bundle.min.js')}}.js"></script>
+    <script src="{{ asset ('js/wow.min.js')}}"></script>
+    <script src="{{ asset ('js/custom.js"></')}}script>
     <script>
       new WOW().init();
     </script>

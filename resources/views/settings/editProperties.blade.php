@@ -32,7 +32,7 @@
                                 <label for="exampleInputCategory">Category</label>
                                 <select class="form-control" name="category_id">
                                     @foreach ($categoryId as $category)
-                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        <option {{ ($category->property_type) == $category->id ? 'selected' : '' }} value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,6 +55,27 @@
                                     <option {{ ($editPropertiesData->property_type) == '1' ? 'selected' : '' }} value="1">For Rent</option>
                                     <option {{ ($editPropertiesData->property_type) == '2' ? 'selected' : '' }} value="1">For Seles</option>
                                     {{-- <option value="2">For Sale</option> --}}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputProperty_type">Property Condition</label>
+                                <select class="form-control" name="property_condition">
+                                    <option {{ ($editPropertiesData->property_condition) == '1' ? 'selected' : '' }} value="1">Used</option>
+                                    <option {{ ($editPropertiesData->property_condition) == '2' ? 'selected' : '' }} value="2">New</option>
+                                    <option {{ ($editPropertiesData->property_condition) == '3' ? 'selected' : '' }} value="3">Furnished</option>
+                                    <option {{ ($editPropertiesData->property_condition) == '4' ? 'selected' : '' }} value="4">Unfurnished</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputProperty_type">Floor</label>
+                                <select class="form-control" name="floor">
+                                    <option {{ ($editPropertiesData->floor) == '1' ? 'selected' : '' }} value="1">Settlement</option>
+                                    <option {{ ($editPropertiesData->floor) == '2' ? 'selected' : '' }} value="2">Semi ground</option>
+                                    <option {{ ($editPropertiesData->floor) == '3' ? 'selected' : '' }} value="3">My land</option>
+                                    <option {{ ($editPropertiesData->floor) == '4' ? 'selected' : '' }} value="4">The First</option>
+                                    <option {{ ($editPropertiesData->floor) == '5' ? 'selected' : '' }} value="5">The Second</option>
+                                    <option {{ ($editPropertiesData->floor) == '6' ? 'selected' : '' }} value="6">The Third</option>
+                                    <option {{ ($editPropertiesData->floor) == '7' ? 'selected' : '' }} value="7">Fourth +</option>
                                 </select>
                             </div>
                             <div class="form-group">

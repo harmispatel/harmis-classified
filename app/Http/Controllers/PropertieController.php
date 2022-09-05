@@ -18,7 +18,7 @@ class PropertieController extends Controller
      */
     public function index()
     {
-        $showPropertiesData = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->get();
+        $showPropertiesData = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->paginate(10);
         // prx($showPropertiesData);
         return view('settings.propertie',compact('showPropertiesData'));
     }
@@ -71,6 +71,8 @@ class PropertieController extends Controller
         $addPropertyData->category_id = $request->category_id;
         $addPropertyData->user_id = $request->user_id;
         $addPropertyData->property_type = $request->property_type;
+        $addPropertyData->property_condition = $request->property_condition;
+        $addPropertyData->floor = $request->floor;
         $addPropertyData->price = $request->price;
         $addPropertyData->country_id = $request->country_id;
         $addPropertyData->state_id = $request->state_id;
@@ -124,6 +126,8 @@ class PropertieController extends Controller
         $updatePropertyData->category_id = $request->category_id;
         $updatePropertyData->user_id = $request->category_id;
         $updatePropertyData->property_type = $request->property_type;
+        $updatePropertyData->property_condition = $request->property_condition;
+        $updatePropertyData->floor = $request->floor;
         $updatePropertyData->price = $request->price;
         $updatePropertyData->country_id = $request->country_id;
         $updatePropertyData->state_id = $request->state_id;

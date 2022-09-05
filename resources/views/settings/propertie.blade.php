@@ -25,7 +25,7 @@
                             <th>Name</th>
                             <th>Category</th>
                             <th>Price</th>
-                            <th>Rent / Sales</th>
+                            <th>Type</th>
                             <th>country</th>
                             <th>State</th>
                             <th>Address</th>
@@ -35,53 +35,56 @@
                     </thead>
                     <tbody>
                         @foreach ($showPropertiesData as $propertiesData)
-                        <tr>
-                            <td>{{$propertiesData['name']}}</td>
-                            <td>{{$propertiesData->hasOneCategory['name']}}</td>
-                            <td>{{$propertiesData['price']}}</td>
-                            <td>{{ $propertiesData['property_type'] == 1 ? 'For Rent' : 'For Sale' }}</td>
-                            <td>{{$propertiesData->hasOneCountry['name']}}</td>
-                            <td>{{$propertiesData->haseOneState['name']}}</td>
-                            <td>{{$propertiesData['address']}}</td>
-                            <td>
-                                <span class="{{ $propertiesData['status'] == 0 ? 'badge badge-danger' : 'badge badge-success' }}">
-                                    {{ $propertiesData['status'] == 0 ? 'Inactive' : 'Active' }}
-                                </span>
-                            </td>
-                            <td class="text-right">
+                            <tr>
+                                <td>{{$propertiesData['name']}}</td>
+                                <td>{{$propertiesData->hasOneCategory['name']}}</td>
+                                <td>{{$propertiesData['price']}}</td>
+                                <td>{{ $propertiesData['property_type'] == 1 ? 'For Rent' : 'For Sale' }}</td>
+                                <td>{{$propertiesData->hasOneCountry['name']}}</td>
+                                <td>{{$propertiesData->haseOneState['name']}}</td>
+                                <td>{{$propertiesData['address']}}</td>
+                                <td>
+                                    <span class="{{ $propertiesData['status'] == 0 ? 'badge badge-danger' : 'badge badge-success' }}">
+                                        {{ $propertiesData['status'] == 0 ? 'Inactive' : 'Active' }}
+                                    </span>
+                                </td>
+                                <td class="text-right">
 
-                                    <a href="{{ route('propertie.edit',$propertiesData->id) }}" class="mr-2" title="Edit"><i class="fas fa-edit"></i></a>
-                                <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" data-target-id="{{ route('propertie.destroy',$propertiesData->id) }}" title="Delete"></i>
-                            </td>
-                            {{-- model --}}
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure to delete this property?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <form action="" id="deleteForm" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger" type="submit">Delete</button>
-                                            </form>
+                                        <a href="{{ route('propertie.edit',$propertiesData->id) }}" class="mr-2" title="Edit"><i class="fas fa-edit"></i></a>
+                                    <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" data-target-id="{{ route('propertie.destroy',$propertiesData->id) }}" title="Delete"></i>
+                                </td>
+                                {{-- model --}}
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure to delete this property?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <form action="" id="deleteForm" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- model --}}
-                        </tr>
+                                {{-- model --}}
+                            </tr>
                         @endforeach
                     </tbody>
                     </table>
+
+                        {!! $showPropertiesData->links() !!}
+
                 </div>
                 </div>
             </div>

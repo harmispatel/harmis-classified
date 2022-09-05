@@ -41,7 +41,7 @@
                                                     </td>
                                                     <td class="text-right">
                                                         <a href="{{ route('category.edit',$categoryData->id) }}" title="Edit" class="mr-2"><i class="fas fa-edit"></i></a>
-                                                        <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" data-target-id="{{ route('propertie.destroy',$categoryData->id) }}" title="Delete"></i>
+                                                        <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" data-target-id="{{ route('category.destroy',$categoryData->id) }}" title="Delete"></i>
                                                     </td>
                                                 </tr>
                                             @endforeach

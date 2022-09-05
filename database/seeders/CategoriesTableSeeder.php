@@ -16,9 +16,10 @@ class CategoriesTableSeeder extends Seeder
     {
 
         $categories = array(
-        array('name' => 'Test1','status' => '1'),
-        array('name' => 'Test2','status' => '1'),
-        array('name' => 'Test2','status' => '1'),
+        array('name' => 'Flat','status' => '1'),
+        array('name' => 'Villa / House','status' => '1'),
+        array('name' => 'Land','status' => '1'),
+        array('name' => 'Farm','status' => '1'),
         );
         // Save The Categories:
         Category::insert($categories);

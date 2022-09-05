@@ -11,6 +11,8 @@ class Propertie extends Model
     use HasFactory;
     protected $table = "properties";
 
+    const USED_CONDITION = 1;
+
     // protected $guarded = [];
     protected $fillable = [
         'name',
@@ -19,7 +21,9 @@ class Propertie extends Model
         'country',
         'state',
         'address',
-        'status'
+        'status',
+        'property_condition',
+        'floor'
     ];
 
     public function hasOneCountry()
