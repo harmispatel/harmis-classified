@@ -3,29 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Language;
+
+// Models
+use App\Models\{ Language };
+
+// Request Class
+use App\Http\Requests\{ LanguageRequest };
 
 class LanguageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Listing of the Languages.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $showLanguage = Language::get();
-        return view('language',compact('showLanguage'));
+        try {
+            // Display the Languages
+            $languages = Language::get();
+            return view('languages.list', compact('languages'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Language.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('createLanguage');
+        try {
+            // Show the Language Form for Add
+            $type = 'Add';
+            return view('languages.add_edit', compact('type'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
@@ -34,9 +50,15 @@ class LanguageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LanguageRequest $request)
     {
-        //
+        try {
+            // Create the Languages
+            Language::create($request->all());
+            return back()->with('success', 'Language saved successfully!');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Something went wrong, please try later.');
+        }
     }
 
     /**
@@ -58,29 +80,62 @@ class LanguageController extends Controller
      */
     public function edit($id)
     {
-        //
+        try {
+            // Show the Language Form for Edit
+            $type = 'Update';
+            $language = Language::find(decrypt($id));
+
+            return view('languages.add_edit', compact('type', 'language'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LanguageRequest $request, $id)
     {
-        //
+        try {
+            // Update the Specific Language
+            $input = $request->except('_token', '_method');
+            $language = Language::find($id);
+
+            if (!empty($language)) {
+                $language->update($input);
+                return back()->with('success', 'Language updated successfully!');
+            } else {
+                return back()->with('error', 'Record not found!');
+            }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Something went wrong, please try later.');
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Language.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        try {
+            // Delete the specific Language
+            $language = Language::find(decrypt($id));
+
+            if (!empty($language)) {
+                $language->delete();
+                return back()->with('success', 'Language deleted successfully!');
+            } else {
+                return back()->with('error', 'Record not found!');
+            }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Something went wrong, please try later.');
+        }
     }
 }

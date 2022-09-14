@@ -79,7 +79,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/language" class="nav-link {{ Route::currentRouteName() == 'language' ? 'active' : '' }}">
+            <a href="{{route('languages.index')}}" class="nav-link {{ Route::currentRouteName() == 'languages' ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Language</p>
             </a>

@@ -63,8 +63,8 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     //Propertie Route
     Route::resource('propertie', 'PropertieController');
 
-    //Language Route
-    Route::resource('language', 'LanguageController');
+    // Language Routes
+    Route::resource('languages', 'LanguageController');
 
     //Logout Route
     Route::get("/logout", [LoginController::class, "adminLogout"]);
@@ -83,19 +83,14 @@ Route::get('/', [PropertyController::class, 'index'])->name('showProperty');
 Route::post('/getpropertybyprice', [PropertyController::class, 'getpropertybyprice'])->name('getpropertybyprice');
 Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->name('infinitescroll');
 
-
 Route::get('/create', [PropertyController::class,'create'])->name('create');
 Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
-
 
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
 // Route::post('upadteproperty/{id}',[PropertyController::class,'update'])->name('updateProperty');
 // Route::get('delete/property/{id}',[PropertyController::class,'destroy'])->name('deleteProperty');
 
 // Google map api:
-
 // Route::get('google-autocomplete', [GoogleController::class, 'index']);
-
 // Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
-
 // Route::view('ind','frontend.HaRealestate.properties');
