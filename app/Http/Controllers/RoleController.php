@@ -47,9 +47,6 @@ class RoleController extends Controller
      */
     public function store(StoreRole $request)
     {
-        // $validated = $request->validated();
-        // $validated = $request->safe()->only(['name']);
-
         $permissionArray = $request->permission;
 
         // Save Role
@@ -100,16 +97,12 @@ class RoleController extends Controller
         $validated = $request->safe()->only(['name']);
 
         $permissionArray = $request->permission;
-        // echo "<pre>";
-        // print_r($permissionArray);exit;
-        // Update Role
         $updateRoleData = Role::find($id);
         $updateRoleData->name = $request->name;
         $updateRoleData->status = $request->status;
 
         $updateRoleData->addRole()->sync($permissionArray);
         $updateRoleData->update();
-        //$message->Users()->attach($newIds);
         return redirect()->route('show_role.index');
     }
 

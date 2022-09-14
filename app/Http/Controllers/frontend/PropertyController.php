@@ -211,11 +211,12 @@ class PropertyController extends Controller
         // Property Filter on Bedrooms
         $property->when(!empty($bedroom), function() use($property, $bedroom, $total) {
             if ($bedroom == '5+') {
+                $total += $property->where('bedroom', '>=', 5)->count();
                 $property->where('bedroom', '>=', 5);
             } else {
+                $total += $property->where('bedroom', $bedroom)->count();
                 $property->where('bedroom', $bedroom);
             }
-            $total += $property->where('bedroom', $bedroom)->count();
         });
 
         $total += $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->count();
@@ -226,6 +227,7 @@ class PropertyController extends Controller
                             ->get();
 
         // Set HTML Content
+
         $html = "";
 
         foreach($property as $showProperty)
@@ -242,11 +244,11 @@ class PropertyController extends Controller
                                         <span>';
                                             if($showProperty["property_type"] == 1)
                                             {
-                                                $html .='For Rent';
+                                                $html .= __('labels.for_rent');
                                             }
                                             else
                                             {
-                                                $html .='For Sales';
+                                                $html .= __('labels.for_sales');
                                             }
                                         $html .='</span>
                                     </div>
@@ -261,8 +263,6 @@ class PropertyController extends Controller
                         </div>
                     </div>';
         }
-
-        // $html .= '<div>Total </div>';
 
         if ($request->ajax()) {
             return response()->json([

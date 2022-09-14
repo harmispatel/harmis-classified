@@ -13,6 +13,8 @@
                     <select class="form-control changeLang mr-3">
                         <option value="en" {{ session()->get('locale') == 'en' ? 'selected' : '' }}>English</option>
                         <option value="fr" {{ session()->get('locale') == 'fr' ? 'selected' : '' }}>French</option>
+                        <option value="ar" {{ session()->get('locale') == 'ar' ? 'selected' : '' }}>Arabic</option>
+                        <option value="ge" {{ session()->get('locale') == 'ge' ? 'selected' : '' }}>German</option>
                     </select>
 
                     @if (Auth::check())
@@ -24,6 +26,7 @@
                         <a href="/registerform" class="nav-link re-nav-link">{{ __('labels.register') }}</a>
                         <a href="{{ route('userLoginForm') }}" class="nav-link">{{ __('labels.login') }}</a>
                     @endif
+
                 </div>
             </div>
         </div>
@@ -50,15 +53,15 @@
                                 {{ __('labels.property') }}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item active" href="{{ route('showProperty') }}">{{ __('labels.properties') }}</a>
+                                <li><a class="dropdown-item" href="{{ route('showProperty') }}">{{ __('labels.properties') }}</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Property List</a></li>
+                                <li><a class="dropdown-item" href="#">{{ __('labels.property_list') }}</a>
                                 @auth
                                 @php
                                 $role = Auth::user();
-                                $aroleId = $role['role_id'];
+                                $roleId = $role['role_id'];
                                 @endphp
-                                    @if ($aroleId == 9 )
+                                    @if ($roleId == 9 )
                                         <li><a class="dropdown-item" href="{{ route ('create')}}">Add Property</a></li>
                                     @endif
                                 @endauth
@@ -83,8 +86,8 @@
 <script
     src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"
-></script>
+    crossorigin="anonymous">
+</script>
 <script>
     var url = "{{ route('changeLang') }}";
 

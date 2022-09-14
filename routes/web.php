@@ -63,6 +63,8 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     //Propertie Route
     Route::resource('propertie', 'PropertieController');
 
+    //Language Route
+    Route::resource('language', 'LanguageController');
 
     //Logout Route
     Route::get("/logout", [LoginController::class, "adminLogout"]);

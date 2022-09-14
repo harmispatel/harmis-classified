@@ -1,5 +1,5 @@
 <?php
-  
+
 return [
     'login' => 'Connexion',
     'logout' => 'Déconnexion',
@@ -7,6 +7,27 @@ return [
     'home' => 'Domicile',
     'property' => 'Propriété',
     'properties' => 'Propriétés',
+    'property_list' => 'Liste des propriétés',
+    'other_options' => 'Autres options',
+    'price' => 'Prix',
+    'number_of_bedrooms' => 'Nombre de chambres',
+    'floor' => 'Sol',
+    'building_area' => 'Zone de construction',
+    'for_both' => 'Pour les deux',
+    'for_rent' => 'A louer',
+    'for_sales' => 'à vendre',
+    'used' => 'Utilisée',
+    'new' => 'Nouvelle',
+    'furnished' => 'Meublée',
+    'unfurnished' => 'Non meublé',
+    'clear' => 'Dégager',
+    'settlement' => 'Règlement',
+    'semi_ground' => 'Semi-sol',
+    'my_land' => 'Mon pays',
+    'the_first' => 'La première',
+    'the_second' => 'La deuxième',
+    'the_third' => 'Le troisième',
+    'fourth_+' => 'Quatrième +',
     'property_details' => 'Détails des propriétés',
     'about_us' => 'À propos de nous',
     'gallery' => 'Galerie',
@@ -22,3 +43,4 @@ return [
     'female' => 'Femelle',
     'empty_properties' => 'Aucune propriété disponible.',
 ];
+?>
