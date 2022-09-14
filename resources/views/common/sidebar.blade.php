@@ -19,7 +19,7 @@
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>Dashboard</p>
             </a>
-          </li>
+        </li>
             <li class="nav-item menu-open">
 
                 <a href="#" class="nav-link {{ Route::currentRouteName() == 'show_user.index' || Route::currentRouteName() == 'show_role.index' ? 'active' : '' }}">
@@ -78,7 +78,12 @@
                 </li>
             </ul>
           </li>
-
+          <li class="nav-item">
+            <a href="/language" class="nav-link {{ Route::currentRouteName() == 'language' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Language</p>
+            </a>
+        </li>
       </ul>
     </nav>
   </div>

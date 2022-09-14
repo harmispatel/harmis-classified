@@ -227,6 +227,7 @@ class PropertyController extends Controller
                             ->get();
 
         // Set HTML Content
+
         $html = "";
 
         foreach($property as $showProperty)
@@ -243,11 +244,11 @@ class PropertyController extends Controller
                                         <span>';
                                             if($showProperty["property_type"] == 1)
                                             {
-                                                $html .='For Rent';
+                                                $html .= __('labels.for_rent');
                                             }
                                             else
                                             {
-                                                $html .='For Sales';
+                                                $html .= __('labels.for_sales');
                                             }
                                         $html .='</span>
                                     </div>
@@ -262,8 +263,6 @@ class PropertyController extends Controller
                         </div>
                     </div>';
         }
-
-        // $html .= '<div>Total </div>';
 
         if ($request->ajax()) {
             return response()->json([
