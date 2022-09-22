@@ -14,65 +14,52 @@ use Auth;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the User.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $userId = user::with(['hasOneRole']);
-        $rolePermission = PermissionRole::where('role_id',isset($userId->role_id) ? $userId->role_id : '')->get();
+        try {
+            $userId = user::with(['hasOneRole']);
+            $rolePermission = PermissionRole::where('role_id',isset($userId->role_id) ? $userId->role_id : '')->get();
+            foreach($rolePermission as $permissionValue)
+            {
+                $parmissionId = $permissionValue->permission_id;
+                $permissionQuery = Permission::where('id',$parmissionId)->first();
 
-        // echo "<pre>";
-        // print_r($rolePermition->toArray());
-        // exit;
-        foreach($rolePermission as $permissionValue)
-        {
-            $parmissionId = $permissionValue->permission_id;
-            $permissionQuery = Permission::where('id',$parmissionId)->first();
-            // echo "<pre>";
-            // print_r($permissionQuery->toArray());exit;
-            // if($permissionQuery->name == 'Add User')
-            // {
-            //     echo "Hiii";
-            // }
-            // if($permissionQuery->name == 'Edit User')
-            // {
-            //     echo "Hello";
-            // }
-            // if($permissionQuery->name == 'Delete User')
-            // {
-            //     echo "How are you";
-            // }
+            }
+            $showUserData = User::where('id', '!=', 1 )->get();
+            return view('user_management.user',compact('showUserData','rolePermission'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
         }
-        // exit;
-        // $userId->addRole()->get();
-
-        // $showUserData = User::where('id', '!=', '1')->orderBy('id', 'desc')->get();
-        $showUserData = User::where('id', '!=', 1 )->get();
-        return view('user_management.user',compact('showUserData','rolePermission'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new User.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $roleIdData = Role::get();
-        return view('user_management.createUser',compact('roleIdData'));
+        try {
+            $roleIdData = Role::get();
+            return view('user_management.createUser',compact('roleIdData'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created User in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(storeUser $request)
     {
-        // try {
+        try {
             $addUserData = new User;
             $addUserData->name = $request->name;
             $addUserData->email=$request->email;
@@ -83,43 +70,34 @@ class UserController extends Controller
 
             $addUserData->password=bcrypt(request('password')) ;
             $addUserData->status=$request->status;
-            // echo "<pre>";
-            // print_r($addUserData);
             $addUserData->save();
-        // } catch (\Throwable $th) {
-        //     return 'The User Cannot be Saved.';
-        // }
+        } catch (\Throwable $th) {
+            return 'The User Cannot be Saved.';
+        }
 
         return redirect('show_user');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified User.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $roleIdData = Role::get();
-        $editUserData = User::find($id);
+        try {
+            $roleIdData = Role::get();
+            $editUserData = User::find($id);
 
-        return view('user_management.editUser',compact('editUserData','roleIdData'));
+            return view('user_management.editUser',compact('editUserData','roleIdData'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified User in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -147,14 +125,18 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified User from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $deleteUserData = User::where('id',$id)->delete();
-        return redirect ()->route('show_user.index');
+        try {
+            $deleteUserData = User::where('id',$id)->delete();
+            return redirect ()->route('show_user.index');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 }

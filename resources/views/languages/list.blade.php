@@ -9,7 +9,7 @@
         <div class="text-right mr-3 mb-2">
             <a href="{{ route('languages.create') }}" class="btn btn-primary">Add Language</a>
         </div>
-        
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -62,7 +62,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
+
                                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -76,7 +76,7 @@
                                             <div class="modal-body">
                                                 Are you sure to delete this Language?
                                             </div>
-                                            
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <form action="" id="deleteForm" method="POST" class="d-inline">

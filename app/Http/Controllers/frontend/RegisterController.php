@@ -17,10 +17,14 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        // Get the Roles Apart from Admin Role
-        $roles = Role::where('id', '!=', 1)->get();
+        try {
+            // Get the Roles Apart from Admin Role
+            $roles = Role::where('id', '!=', 1)->get();
 
-        return view('frontend.auth.register', compact('roles'));
+            return view('frontend.auth.register', compact('roles'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     public function create(storeRegister $request)

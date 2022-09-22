@@ -11,13 +11,20 @@ class UserLoginController extends Controller
 {
     public function index()
     {
-
-        return view('frontend.common.layout');
+        try {
+            return view('frontend.common.layout');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     public function show()
     {
-        return view('frontend.auth.login');
+        try {
+            return view('frontend.auth.login');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
@@ -27,24 +34,36 @@ class UserLoginController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        try {
+            $credentials = $request->only('email', 'password');
 
-        // Login the User
-        if (Auth::attempt($credentials)) {
-            return redirect('/');
-        } else {
-            return back();
+            // Login the User
+            if (Auth::attempt($credentials)) {
+                return redirect('/');
+            } else {
+                return back();
+            }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
         }
     }
 
     public function logout()
     {
-        auth()->logout();
-        return redirect('/');
+        try {
+            auth()->logout();
+            return redirect('/');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     public function userLogout()
     {
-        return redirect('/');
+        try {
+            return redirect('/');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 }

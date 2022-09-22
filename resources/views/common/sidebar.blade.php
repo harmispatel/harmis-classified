@@ -13,7 +13,7 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
             <a href="/dashboard" class="nav-link {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -79,9 +79,15 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{{route('languages.index')}}" class="nav-link {{ Route::currentRouteName() == 'languages' ? 'active' : '' }}">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="{{route('languages.index')}}" class="nav-link {{ Route::currentRouteName() == 'languages.index' ? 'active' : '' }}">
+              <i class="nav-icon fas fa-language" aria-hidden="true"></i>
               <p>Language</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{route('labels.index')}}" class="nav-link {{ Route::currentRouteName() == 'labels.index' ? 'active' : '' }}">
+                <i class="fa-solid fa-tags"></i>
+                <p>Labels</p>
             </a>
         </li>
       </ul>

@@ -8,18 +8,22 @@ use App\Models\State;
 class StateController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the State.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $showStateData = State::get();
-        return view('settings.state',compact('showStateData'));
+        try {
+            $showStateData = State::get();
+            return view('settings.state',compact('showStateData'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new State.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +33,7 @@ class StateController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created State in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,7 +44,7 @@ class StateController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified State.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -51,7 +55,7 @@ class StateController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified State.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -62,7 +66,7 @@ class StateController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified State in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -74,7 +78,7 @@ class StateController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified State from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

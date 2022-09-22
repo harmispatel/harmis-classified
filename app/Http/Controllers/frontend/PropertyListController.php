@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Propertie;
 
-class testController extends Controller
+class PropertyListController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +15,8 @@ class testController extends Controller
      */
     public function index()
     {
-        //
+        $listOfProperty = Propertie::with('hasOneCountry','haseOneState','hasOneCategory')->get();
+        return view('frontend.propertyList', compact('listOfProperty'));
     }
 
     /**

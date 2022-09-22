@@ -13,7 +13,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Add Properties</h3>
                         </div>
-                        <form action="{{route('propertie.update',$editPropertiesData->id)}}" id="quickForm" method="POST">
+                        <form action="{{route('propertie.update',$editPropertiesData->id)}}" id="quickForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             {{-- @php
                                 echo "<pre>";
@@ -29,10 +29,31 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label for="exampleInputImage">Main Image</label>
+                                <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
+                                <img src="{{ url('MainImage/'.$editPropertiesData->image) }}" style="height: 100px; width: 60px; margin-top: 20px;">
+                                @if ($errors->has('image'))
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputMultiImage">Sub Image</label>
+                                <input type="file" name="multiImage[]" class="form-control {{ $errors->has('multiImage') ? 'is-invalid' : '' }}" placeholder="Enter Name" multiple="multiple">
+                                @php
+                                    $multiImage = explode(" ,",$editPropertiesData->multiImage);
+                                @endphp
+                                @foreach ($multiImage as $images)
+                                <img src="{{ url('/multiImage/'.$images) }}" style="height: 100px; width: 100px; margin-top: 20px;">
+                                @endforeach
+                                @if ($errors->has('multiImage'))
+                                    <span class="text-danger">{{ $errors->first('multiImage') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label for="exampleInputCategory">Category</label>
                                 <select class="form-control" name="category_id">
                                     @foreach ($categoryId as $category)
-                                        <option {{ ($category->property_type) == $category->id ? 'selected' : '' }} value="{{$category->id}}">{{$category->name}}</option>
+                                        <option {{ ($editPropertiesData->category_id == $category->id )? 'selected' : '' }} value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -53,7 +74,7 @@
                                 <label for="exampleInputProperty_type">Property Type</label>
                                 <select class="form-control" name="property_type">
                                     <option {{ ($editPropertiesData->property_type) == '1' ? 'selected' : '' }} value="1">For Rent</option>
-                                    <option {{ ($editPropertiesData->property_type) == '2' ? 'selected' : '' }} value="1">For Seles</option>
+                                    <option {{ ($editPropertiesData->property_type) == '2' ? 'selected' : '' }} value="2">For Seles</option>
                                     {{-- <option value="2">For Sale</option> --}}
                                 </select>
                             </div>
@@ -77,6 +98,13 @@
                                     <option {{ ($editPropertiesData->floor) == '6' ? 'selected' : '' }} value="6">The Third</option>
                                     <option {{ ($editPropertiesData->floor) == '7' ? 'selected' : '' }} value="7">Fourth +</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputBedroom">Number Of Bedrooms</label>
+                                <input type="text" name="bedroom" value="{{$editPropertiesData->bedroom}}" class="form-control {{ $errors->has('bedroom') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                @if ($errors->has('bedroom'))
+                                    <span class="text-danger">{{ $errors->first('bedroom') }}</span>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>

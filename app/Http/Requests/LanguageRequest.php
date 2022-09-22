@@ -25,6 +25,7 @@ class LanguageRequest extends FormRequest
     {
         return [
             'name'   => 'required',
+            'code'   => 'required|max:2',
             'status' => 'required'
         ];
     }

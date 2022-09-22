@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Http\Response;
 use App\Models\Category;
+use App\Models\Language;
 
 // request
 use App\Http\Requests\storeCategory;
@@ -13,7 +14,7 @@ use App\Http\Requests\storeCategory;
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Category.
      *
      * @return \Illuminate\Http\Response
      */
@@ -24,25 +25,32 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Category.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
+        $getLanguage = Language::get();
+
         $category = Category::get();
-        return response()->view('categories.CreateCategory',compact('category'));
+        return response()->view('categories.CreateCategory',compact('category','getLanguage'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Category in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(storeCategory $request)
     {
-        $addCategoryData = Category::create($request->all());
+        $getLanguage = Language::get();
+        foreach($getLanguage as $languag)
+        {
+            $language_id = $languag->id;
+            $addCategoryData = Category::create($request->all());
+        }
         return redirect('category');
     }
 
@@ -58,7 +66,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Category.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -70,7 +78,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Category in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -87,7 +95,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Category from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -97,4 +105,5 @@ class CategoryController extends Controller
         $deleteCategoryData = Category::where('id',$id)->delete();
         return redirect('category');
     }
+
 }

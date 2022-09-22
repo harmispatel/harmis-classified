@@ -4,10 +4,10 @@
     <section class="property-main page-title-bg">
         <div class="container">
             <div class="page-title">
-                <h2>PROPERTIES PAGE</h2>
+                <h2>{{__('PROPERTIES PAGE')}}</h2>
                 <ol class="breadcrumb">
-                    <li><a href="#">HOME</a></li>
-                    <li class="active"><a href="">PROPERTIES</a></li>
+                    <li><a href="#">{{__('HOME')}}</a></li>
+                    <li class="active"><a href="">{{__('PROPERTY')}}</a></li>
                 </ol>
             </div>
         </div>
@@ -19,12 +19,12 @@
                     <div class="listing-check">
                         <div class="list-op">
                             {{-- <li><a class="dropdown-item" href="#">{{ __('labels.property_list') }}</a> --}}
-                            <h3>{{ __('labels.other_options') }}</h3>
+                            <h3>{{ __('Other Options') }}</h3>
                             <div class="list-inr-op">
                                 @forelse ($category as $categoryName)
                                     <div class="custom-control custom-checkbox op-inr">
                                         <input name="category" onclick="getPricewiseProperty(this);" type="radio" value="{{$categoryName->id}}" class="custom-control-input" id="customRadio04">
-                                        <label class="custom-control-label" for="customCheck04">{{$categoryName->name}}</label>
+                                        <label class="custom-control-label" for="customCheck04">{{__($categoryName->name)}}</label>
                                     </div>
                                 @empty
                                     <div class="post-wrap col-lg-12 col-md-12 text-center">
@@ -32,28 +32,27 @@
                                     </div>
                                 @endforelse
                             </div>
-                            <button class="btn btn-primary" onclick="clearFilter('category')">{{ __('labels.clear') }}</button>
+                            <button class="btn btn-primary" onclick="clearFilter('category')">{{ __('Clear') }}</button>
                         </div>
                         <div class="list-op">
-
-                            <h3>{{ __('labels.other_options') }}</h3>
+                            <h3>{{ __('Other Options') }}</h3>
                             <div class="list-inr-op">
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="propertyType" onclick="getPricewiseProperty(this);" value="" type="radio" class="custom-control-input customCheck05" checked/>
-                                    <label class="custom-control-label" for="customCheck05">{{ __('labels.for_both') }}</label>
+                                    <label class="custom-control-label" for="customCheck05">{{ __('For Both') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="propertyType" onclick="getPricewiseProperty(this);" value="1" type="radio" class="custom-control-input customCheck05">
-                                    <label class="custom-control-label" for="customCheck05">{{ __('labels.for_rent') }}</label>
+                                    <label class="custom-control-label" for="customCheck05">{{ __('For Rent') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="propertyType" onclick="getPricewiseProperty(this);" value="2" type="radio" class="custom-control-input customCheck05">
-                                    <label class="custom-control-label" for="customCheck05">{{ __('labels.for_sales') }}</label>
+                                    <label class="custom-control-label" for="customCheck05">{{ __('For Sales') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="pri-range">
-                            <h3>{{ __('labels.price') }}</h3>
+                            <h3>{{ __('Price') }}</h3>
                             <form>
                                 <div class="form-group">
                                     <label for="formControlRange"></label>
@@ -68,7 +67,7 @@
                             </form>
                         </div>
                         <div class="bulid-info">
-                            <h3>{{ __('labels.number_of_bedrooms') }}</h3>
+                            <h3>{{ __('Number Of BedRooms') }}</h3>
                             <div class="nu-inr">
                                 <input type="hidden" class="badge nu-inr-st bedroom" value="0" />
                                 <p style="color:black" class="badge nu-inr-st bedroom">1</p>
@@ -77,66 +76,66 @@
                                 <p style="color:black" class="badge nu-inr-st bedroom">4</p>
                                 <p style="color:black" class="badge nu-inr-st bedroom">5+</p>
                             </div>
-                            <button class="btn btn-primary" onclick="clearFilter('bedroom')">{{ __('labels.clear') }}</button>
+                            <button class="btn btn-primary" onclick="clearFilter('bedroom')">{{ __('Clear') }}</button>
                         </div>
                         <div class="list-op">
-                            <h3>{{ __('labels.other_options') }}</h3>
+                            <h3>{{ __('Other Options') }}</h3>
                             <div class="list-inr-op">
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="property_condition" onclick="getPricewiseProperty(this);" value="1" type="radio" class="custom-control-input" id="customRadio1">
-                                    <label class="custom-control-label" for="customCheck1">{{ __('labels.used') }}</label>
+                                    <label class="custom-control-label" for="customCheck1">{{ __('Used') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="property_condition" onclick="getPricewiseProperty(this);" value="2" type="radio" class="custom-control-input" id="customRadio2">
-                                    <label class="custom-control-label" for="customCheck2">{{ __('labels.new') }}</label>
+                                    <label class="custom-control-label" for="customCheck2">{{ __('New') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="property_condition" onclick="getPricewiseProperty(this);" value="3" type="radio" class="custom-control-input" id="customRadio3">
-                                    <label class="custom-control-label" for="customCheck3">{{ __('labels.furnished') }}</label>
+                                    <label class="custom-control-label" for="customCheck3">{{ __('Furnished') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="property_condition" onclick="getPricewiseProperty(this);" value="4" type="radio" class="custom-control-input" id="customRadio4">
-                                    <label class="custom-control-label" for="customCheck4">{{ __('labels.unfurnished') }}</label>
+                                    <label class="custom-control-label" for="customCheck4">{{ __('Unfurnished') }}</label>
                                 </div>
-                                <button class="btn btn-primary" onclick="clearFilter('property_condition')">{{ __('labels.clear') }}</button>
+                                <button class="btn btn-primary" onclick="clearFilter('property_condition')">{{ __('Clear') }}</button>
                             </div>
                         </div>
                         <div class="list-op">
-                            <h3>{{ __('labels.floor') }}</h3>
+                            <h3>{{ __('Floor') }}</h3>
                             <div class="list-inr-op">
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="1" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck6">
-                                    <label class="custom-control-label" for="customCheck6">{{ __('labels.settlement') }}</label>
+                                    <label class="custom-control-label" for="customCheck6">{{ __('Settlement') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="2" onclick="getPricewiseProperty(this);"  class="custom-control-input" id="customCheck7">
-                                    <label class="custom-control-label" for="customCheck7">{{ __('labels.semi_ground') }}</label>
+                                    <label class="custom-control-label" for="customCheck7">{{ __('Semi Ground') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="3" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck8">
-                                    <label class="custom-control-label" for="customCheck8">{{ __('labels.my_land') }}</label>
+                                    <label class="custom-control-label" for="customCheck8">{{ __('My Land') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="4" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck9">
-                                    <label class="custom-control-label" for="customCheck9">{{ __('labels.the_first') }}</label>
+                                    <label class="custom-control-label" for="customCheck9">{{ __('The First') }}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="5" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck10">
-                                    <label class="custom-control-label" for="customCheck10">{{__('labels.the_second')}}</label>
+                                    <label class="custom-control-label" for="customCheck10">{{__('The Second')}}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="6" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck11">
-                                    <label class="custom-control-label" for="customCheck11">{{__('labels.the_third')}}</label>
+                                    <label class="custom-control-label" for="customCheck11">{{__('The Third')}}</label>
                                 </div>
                                 <div class="custom-control custom-checkbox op-inr">
                                     <input name="floor" type="radio" value="7" onclick="getPricewiseProperty(this);" class="custom-control-input" id="customCheck12">
-                                    <label class="custom-control-label" for="customCheck12">{{__('labels.fourth_+')}}</label>
+                                    <label class="custom-control-label" for="customCheck12">{{__('Fourth +')}}</label>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" onclick="clearFilter('floor')">{{__('labels.clear')}}</button>
+                            <button class="btn btn-primary" onclick="clearFilter('floor')">{{__('Clear')}}</button>
                         </div>
                         <div class="bulid-info">
-                            <h3>{{ __('labels.building_area') }}</h3>
+                            <h3>{{ __('Building Area') }}</h3>
                             <form>
                                 <div class="form-group">
                                     <label for="formControlRange"></label>
@@ -148,7 +147,7 @@
                 </div>
                 <div class="col-md-9 filter-message">
                     <div class="post-wrap col-lg-12 col-md-12 text-center">
-                        <span class="text-secondary">{{__('labels.empty_properties')}}</span>
+                        <span class="text-secondary">{{__('Empty Properties')}}</span>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -156,8 +155,8 @@
                         @forelse ($property as $showProperty)
                             <div class="post-wrap col-lg-6 col-md-6" onscroll="getPricewiseProperty()" id="scroll">
                                 <div class="post-item card ">
-                                    <a href="#" class="img-inr">
-                                        <img src="{{ asset('image/house1.png') }}" class="img-fluid card-img "alt="">
+                                    <a href="{{ route('propertyDetails',$showProperty->id) }}" class="img-inr">
+                                        <img src="{{ url('MainImage/'.$showProperty->image) }}" class="img-fluid card-img "alt="">
                                         <div class="img-pri-abo">
                                             <h3><i class="fa-solid fa-rupee-sign"></i> <strong>
                                             {{ $showProperty->price }}</strong></h3>
@@ -165,7 +164,7 @@
                                         <div class="re-img">
                                             <div class="re-text">
                                                 <span>
-                                                    {{ $showProperty['property_type'] == 1 ? __('labels.for_rent') : __('labels.for_sales') }}
+                                                    {{ $showProperty['property_type'] == 1 ? __('For Rent') : __('For Sales') }}
                                                 </span>
                                             </div>
                                         </div>
@@ -289,7 +288,6 @@
                 }
             });
         }
-
         $(document).ready(function(){
             $(".bedroom").click(function() {
                 bedroom = $(this).text();

@@ -33,6 +33,8 @@ class CreatePropertiesTable extends Migration
             $table->string('latitude');
             $table->string('longitude');
             $table->boolean('status')->default(1);
+            $table->string('image');
+            $table->string('multiImage');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();

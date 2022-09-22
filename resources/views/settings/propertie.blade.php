@@ -22,6 +22,8 @@
                     <table class="table table-bordered">
                     <thead>
                         <tr>
+                            <th>Image</th>
+                            {{-- <th>Multi Image</th> --}}
                             <th>Name</th>
                             <th>Category</th>
                             <th>Price</th>
@@ -36,6 +38,17 @@
                     <tbody>
                         @foreach ($showPropertiesData as $propertiesData)
                             <tr>
+                                <td>
+                                    <img src="{{ url('/MainImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
+                                </td>
+                                {{-- <td>
+                                    @php
+                                        $muliImg = explode(" ,",$propertiesData->multiImage);
+                                    @endphp
+                                    @foreach ($muliImg as $images)
+                                        <img src="{{ url('/multiImage/'.$images) }}" style="height: 100px; width: 100px;">
+                                    @endforeach
+                                </td> --}}
                                 <td>{{$propertiesData['name']}}</td>
                                 <td>{{$propertiesData->hasOneCategory['name']}}</td>
                                 <td>{{$propertiesData['price']}}</td>

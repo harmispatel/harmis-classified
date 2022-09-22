@@ -19,38 +19,40 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
+        try {
         $category = Category::get();
-        // prx($category->toArray());
-        // Get the Prices
-        $propertyMaxPrice = Propertie::max('price');
-        $propertyMinPrice = Propertie::min('price');
-        $PropertyMidPrice = Propertie::avg('price');
-        $totalRecords     = Propertie::count();
+            $propertyMaxPrice = Propertie::max('price');
+            $propertyMinPrice = Propertie::min('price');
+            $PropertyMidPrice = Propertie::avg('price');
+            $totalRecords     = Propertie::count();
 
-        $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                            ->with(['hasOneCountry','haseOneState','hasOneCategory'])
-                            ->paginate(4);
-
-        if($request->ajax()){
             $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                                    ->with(['hasOneCountry','haseOneState','hasOneCategory'])
-                                    ->paginate(4);
+                                ->with(['hasOneCountry','haseOneState','hasOneCategory'])
+                                ->paginate(4);
 
-            $view = view('frontend.data',compact('property'))->render();
+            if($request->ajax()){
+                $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
+                                        ->with(['hasOneCountry','haseOneState','hasOneCategory'])
+                                        ->paginate(4);
 
-            return response()->json(['html'=>$view]);
+                $view = view('frontend.data',compact('property'))->render();
+
+                return response()->json(['html'=>$view]);
+            }
+
+            $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
+
+            return view('frontend.property', compact(
+                'property',
+                'propertyMaxPrice',
+                'propertyMinPrice',
+                'PropertyMidPrice',
+                'totalRecords',
+                'category'
+            ));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
         }
-
-        $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
-
-        return view('frontend.property', compact(
-            'property',
-            'propertyMaxPrice',
-            'propertyMinPrice',
-            'PropertyMidPrice',
-            'totalRecords',
-            'category'
-        ));
     }
 
     /**
@@ -60,49 +62,71 @@ class PropertyController extends Controller
      */
     public function create(Request $request)
     {
-        $countryId = Country::get();
-        $categoryId = Category::get();
-        return view('frontend.createProperty',compact('categoryId', 'countryId'));
+        try {
+            $countryId = Country::get();
+            $categoryId = Category::get();
+            return view('frontend.createProperty',compact('categoryId', 'countryId'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     public function getState(Request $request)
     {
-        $countryId = $request->countryId;
-        $states = State::where('country_id',$countryId)->get();
+        try {
+            $countryId = $request->countryId;
+            $states = State::where('country_id',$countryId)->get();
 
-        $html = '';
+            $html = '';
 
-        foreach($states as $state)
-        {
-            $html .= '<option value="'.$state->id.'">'.$state->name.'</option>';
+            foreach($states as $state)
+            {
+                $html .= '<option value="'.$state->id.'">'.$state->name.'</option>';
+            }
+
+            return response()->json([
+                'html' => $html
+            ]);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
         }
-
-        return response()->json([
-            'html' => $html
-        ]);
     }
 
     public function store(storePropertie $request)
     {
-        $user = auth()->User();
-        $userId = $user->id;
-        $addPropertyData = new Propertie;
-        $addPropertyData->name = $request->name;
-        $addPropertyData->category_id = $request->category_id;
-        $addPropertyData->user_id = $userId;
-        $addPropertyData->property_type = $request->property_type;
-        $addPropertyData->property_condition = $request->property_condition;
-        $addPropertyData->floor = $request->floor;
-        $addPropertyData->price = $request->price;
-        $addPropertyData->country_id = $request->country_id;
-        $addPropertyData->state_id = $request->state_id;
-        $addPropertyData->address = $request->address;
-        $addPropertyData->latitude ='latitude';
-        $addPropertyData->longitude ='longitude';
-        $addPropertyData->status = $request->status;
-        $addPropertyData->save();
 
-        return redirect('/');
+        try {
+            $user = auth()->User();
+            $userId = $user->id;
+            $addPropertyData = new Propertie;
+            $addPropertyData->name = $request->name;
+            $addPropertyData->category_id = $request->category_id;
+            $addPropertyData->user_id = $userId;
+            $addPropertyData->property_type = $request->property_type;
+            $addPropertyData->property_condition = $request->property_condition;
+            $addPropertyData->floor = $request->floor;
+            $addPropertyData->bedroom = $request->bedroom;
+            $addPropertyData->price = $request->price;
+            $addPropertyData->country_id = $request->country_id;
+            $addPropertyData->state_id = $request->state_id;
+            $addPropertyData->address = $request->address;
+            $addPropertyData->latitude ='latitude';
+            $addPropertyData->longitude ='longitude';
+            $addPropertyData->status = $request->status;
+
+            if($request->file('image')){
+                $file= $request->file('image');
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file-> move(public_path('MainImage'), $filename);
+                $addPropertyData['image']= $filename;
+            }
+
+            $addPropertyData->save();
+
+            return redirect('/');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
@@ -134,19 +158,33 @@ class PropertyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updatePropertyData = Propertie::find($id);
-        $updatePropertyData->name = $request->name;
-        $updatePropertyData->category_id = $request->category;
-        $updatePropertyData->price = $request->price;
-        $updatePropertyData->country_id = $request->country;
-        $updatePropertyData->state_id = $request->state;
-        $updatePropertyData->address = $request->address;
-        $updatePropertyData->latitude ='latitude';
-        $updatePropertyData->longitude ='longitude';
-        $updatePropertyData->status = $request->status;
-        $updatePropertyData->update();
+        try {
+            $updatePropertyData = Propertie::find($id);
+            $updatePropertyData->name = $request->name;
+            $updatePropertyData->category_id = $request->category;
+            $updatePropertyData->price = $request->price;
+            $updatePropertyData->country_id = $request->country;
+            $updatePropertyData->state_id = $request->state;
+            $updatePropertyData->address = $request->address;
+            $updatePropertyData->floor = $request->floor;
+            $updatePropertyData->bedroom = $request->bedroom;
+            $updatePropertyData->latitude ='latitude';
+            $updatePropertyData->longitude ='longitude';
+            $updatePropertyData->status = $request->status;
 
-        return redirect('/property');
+            if($request->file('image')){
+                $file= $request->file('image');
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file-> move(public_path('MainImage'), $filename);
+                $updatePropertyData['image']= $filename;
+
+            }
+            $updatePropertyData->update();
+
+            return redirect('/property');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
@@ -167,113 +205,131 @@ class PropertyController extends Controller
      */
     public function getpropertybyprice(Request $request)
     {
-        // Get Data from the Request
-        $proPrice = $request->price;
-        $rentSelsPic = $request->rentSelsPrice;
-        $page = $request->page;
-        $category_id = $request->category;
-        $property_condition = $request->propertyCondition;
-        $property_floor = $request->propertyFloor;
-        $bedroom = $request->bedroom;
+        try {
+            // Get Data from the Request
+            $proPrice = $request->price;
+            $rentSelsPic = $request->rentSelsPrice;
+            $page = $request->page;
+            $category_id = $request->category;
+            $property_condition = $request->propertyCondition;
+            $property_floor = $request->propertyFloor;
+            $bedroom = $request->bedroom;
 
-        // Set the Avg Price
-        $propertyMaxPrice = $request->price;
-        $propertyMinPrice = Propertie::min('price');
-        $PropertyMidPrice = Propertie::avg('price');
+            // Set the Avg Price
+            $propertyMaxPrice = $request->price;
+            $propertyMinPrice = Propertie::min('price');
+            $PropertyMidPrice = Propertie::avg('price');
 
-        $total = 0;
-        $property = Propertie::query();
+            $total = 0;
+            $property = Propertie::query();
 
-        // Property Type Filter
-        $property->when(!empty($rentSelsPic), function() use($property, $rentSelsPic, $total) {
-            $property->where('property_type', $rentSelsPic);
-            $total += $property->where('property_type', $rentSelsPic)->count();
-        });
+            // Property Type Filter
+            $property->when(!empty($rentSelsPic), function() use($property, $rentSelsPic, $total) {
+                $property->where('property_type', $rentSelsPic);
+                $total += $property->where('property_type', $rentSelsPic)->count();
+            });
 
-        // Property Filter on Category
-        $property->when(!empty($category_id), function() use($property, $category_id, $total) {
-            $property->where('category_id', $category_id);
-            $total += $property->where('category_id', $category_id)->count();
-        });
+            // Property Filter on Category
+            $property->when(!empty($category_id), function() use($property, $category_id, $total) {
+                $property->where('category_id', $category_id);
+                $total += $property->where('category_id', $category_id)->count();
+            });
 
-        // Property Filter on Property Condition
-        $property->when(!empty($property_floor), function() use($property, $property_floor, $total) {
-            $property->where('floor', $property_floor);
-            $total += $property->where('floor', $property_floor)->count();
-        });
+            // Property Filter on Property Condition
+            $property->when(!empty($property_floor), function() use($property, $property_floor, $total) {
+                $property->where('floor', $property_floor);
+                $total += $property->where('floor', $property_floor)->count();
+            });
 
-        // Property Filter on Property Floor
-        $property->when(!empty($property_condition), function() use($property, $property_condition, $total) {
-            $property->where('property_condition', $property_condition);
-            $total += $property->where('property_condition', $property_condition)->count();
-        });
+            // Property Filter on Property Floor
+            $property->when(!empty($property_condition), function() use($property, $property_condition, $total) {
+                $property->where('property_condition', $property_condition);
+                $total += $property->where('property_condition', $property_condition)->count();
+            });
 
-        // Property Filter on Bedrooms
-        $property->when(!empty($bedroom), function() use($property, $bedroom, $total) {
-            if ($bedroom == '5+') {
-                $total += $property->where('bedroom', '>=', 5)->count();
-                $property->where('bedroom', '>=', 5);
-            } else {
-                $total += $property->where('bedroom', $bedroom)->count();
-                $property->where('bedroom', $bedroom);
-            }
-        });
+            // Property Filter on Bedrooms
+            $property->when(!empty($bedroom), function() use($property, $bedroom, $total) {
+                if ($bedroom == '5+') {
+                    $total += $property->where('bedroom', '>=', 5)->count();
+                    $property->where('bedroom', '>=', 5);
+                } else {
+                    $total += $property->where('bedroom', $bedroom)->count();
+                    $property->where('bedroom', $bedroom);
+                }
+            });
 
-        $total += $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->count();
+            $total += $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->count();
 
-        $property = $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                            ->limit($request['limit'])
-                            ->offset($request['start'])
-                            ->get();
+            $property = $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
+                                ->limit($request['limit'])
+                                ->offset($request['start'])
+                                ->get();
 
-        // Set HTML Content
+            // Set HTML Content
 
-        $html = "";
+            $html = "";
 
-        foreach($property as $showProperty)
-        {
-            $html .= '<div class="post-wrap col-lg-6 col-md-6">
-                        <div class="post-item card ">
-                            <a href="#" class="img-inr">
-                                <img src=" '.asset ("image/house1.png").'" class="img-fluid card-img " alt="">
-                                <div class="img-pri-abo">
-                                    <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
-                                </div>
-                                <div class="re-img">
-                                    <div class="re-text">
-                                        <span>';
-                                            if($showProperty["property_type"] == 1)
-                                            {
-                                                $html .= __('labels.for_rent');
-                                            }
-                                            else
-                                            {
-                                                $html .= __('labels.for_sales');
-                                            }
-                                        $html .='</span>
+            foreach($property as $showProperty)
+            {
+                $url = route('propertyDetails',$showProperty->id);
+                $html .= '<div class="post-wrap col-lg-6 col-md-6">
+                            <div class="post-item card ">
+                                     <a href="'.$url.'" class="img-inr">
+                                    <img src=" '.asset ("MainImage/$showProperty->image").'" class="img-fluid card-img " alt="">
+                                    <div class="img-pri-abo">
+                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
+                                    </div>
+                                    <div class="re-img">
+                                        <div class="re-text">
+                                            <span>';
+                                                if($showProperty["property_type"] == 1)
+                                                {
+                                                    $html .= __('For Rent');
+                                                }
+                                                else
+                                                {
+                                                    $html .= __('For Sales');
+                                                }
+                                            $html .='</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card-body jo-card">
+                                    <div class="jo-card-bor">
+                                        <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
+                                        <p class="post-item-text font-weight-light font-sm">'.$showProperty->hasOneCountry["name"].', '. $showProperty->haseOneState["name"].', '. $showProperty->address.'</p>
                                     </div>
                                 </div>
-                            </a>
-                            <div class="card-body jo-card">
-                                <div class="jo-card-bor">
-                                    <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
-                                    <p class="post-item-text font-weight-light font-sm">'.$showProperty->hasOneCountry["name"].', '. $showProperty->haseOneState["name"].', '. $showProperty->address.'</p>
-                                </div>
                             </div>
-                        </div>
-                    </div>';
-        }
+                        </div>';
+            }
 
-        if ($request->ajax()) {
-            return response()->json([
-                'html' => $html,
-                'records' => count($property),
-                'total' => $total
+            if ($request->ajax()) {
+                return response()->json([
+                    'html' => $html,
+                    'records' => count($property),
+                    'total' => $total
 
-            ]);
-        } else {
-            // TODO: Return View Here.
-            // return view()
+                ]);
+            } else {
+                // TODO: Return View Here.
+                // return view()
+            }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
         }
+    }
+    public function propertyList(Request $request)
+    {
+        try {
+            return view("frontend.PropertyList");
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
+    }
+    public function propertyDetails(Request $request, $id)
+    {
+        $propertyDetails = Propertie::where('id',$id)->first();
+        return view('frontend.propertiesDetails', compact('propertyDetails'));
     }
 }

@@ -9,9 +9,6 @@ a{
 
 .header {
     background-color: #e4e4e4;
-    position: absolute;
-    top: 0;
-    left: 0;
     z-index: 9;
     width: 100%;
 }

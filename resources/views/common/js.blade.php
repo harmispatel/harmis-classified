@@ -48,7 +48,7 @@
 
 <script>
   $.widget.bridge('uibutton', $.ui.button)
-  
+
   setTimeout(() => {
     $('.alert').hide();
   }, 3000);

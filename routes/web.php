@@ -9,7 +9,7 @@ use App\Http\Controllers\PropertieController;
 use App\Http\Controllers\frontend\RegisterController;
 use App\Http\Controllers\frontend\UserLoginController;
 use App\Http\Controllers\frontend\PropertyController;
-use App\Http\Controllers\frontend\LanguageController;
+use App\Http\Controllers\Frontend\LanguageController;
 
 // Google map
 use App\Http\Controllers\GoogleController;
@@ -66,8 +66,11 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     // Language Routes
     Route::resource('languages', 'LanguageController');
 
+    // Labels Routes
+    Route::resource('labels', 'LabelController');
+
     //Logout Route
-    Route::get("/logout", [LoginController::class, "adminLogout"]);
+    Route::get("/logout", [LoginController::class, "adminLogout"])->name('adminLogout');
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");
 });
 
@@ -86,11 +89,21 @@ Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->n
 Route::get('/create', [PropertyController::class,'create'])->name('create');
 Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
 
+//Language DropDown
+Route::get('/get-languages',[LanguageController::class,'getLanguages'])->name('get_languages');
+
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
 // Route::post('upadteproperty/{id}',[PropertyController::class,'update'])->name('updateProperty');
 // Route::get('delete/property/{id}',[PropertyController::class,'destroy'])->name('deleteProperty');
 
 // Google map api:
-// Route::get('google-autocomplete', [GoogleController::class, 'index']);
-// Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
+Route::get('google-autocomplete', [GoogleController::class, 'index']);
+Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
 // Route::view('ind','frontend.HaRealestate.properties');
+
+Route::get('set-language', [App\Http\Controllers\LanguageController::class, 'setLanguage']);
+
+Route::get('property-list', [PropertyController::class, 'propertyList'])->name('PropertyList');
+Route::resource('property-details', 'Frontend\PropertyListController');
+
+Route::get('single-property-details/{id}', [PropertyController::class, 'propertyDetails'])->name('propertyDetails');

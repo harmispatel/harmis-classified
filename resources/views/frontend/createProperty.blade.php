@@ -35,7 +35,7 @@
       <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="form-inr">
-                <form action="{{route('addProperty')}}" id="quickForm" method="POST">
+                <form action="{{route('addProperty')}}" id="quickForm" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                     <div class="form-group">
@@ -43,6 +43,13 @@
                         <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Enter Name">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputImage">Main Image</label>
+                        <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
+                        @if ($errors->has('image'))
+                            <span class="text-danger">{{ $errors->first('image') }}</span>
                         @endif
                     </div>
                     <div class="form-group">
@@ -81,6 +88,13 @@
                             <option value="6">The Third</option>
                             <option value="7">Fourth +</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputBedroom">Number Of Bedrooms</label>
+                        <input type="text" name="bedroom" class="form-control {{ $errors->has('bedroom') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                        @if ($errors->has('bedroom'))
+                            <span class="text-danger">{{ $errors->first('bedroom') }}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPrice">Price</label>

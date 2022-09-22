@@ -22,6 +22,7 @@ class Propertie extends Model
         'state',
         'address',
         'status',
+        'image',
         'property_condition',
         'floor'
     ];

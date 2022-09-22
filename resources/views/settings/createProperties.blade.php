@@ -13,7 +13,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Add Properties</h3>
                         </div>
-                        <form action="{{route('propertie.store')}}" id="quickForm" method="POST">
+                        <form action="{{route('propertie.store')}}" id="quickForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                             <div class="form-group">
@@ -21,6 +21,20 @@
                                 <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Enter Name">
                                 @if ($errors->has('name'))
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputImage">Main Image</label>
+                                <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
+                                @if ($errors->has('image'))
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputMultiImage">Sub Image</label>
+                                <input type="file" name="multiImage[]" class="form-control {{ $errors->has('multiImage') ? 'is-invalid' : '' }}" placeholder="Enter Name" multiple="multiple">
+                                @if ($errors->has('multiImage'))
+                                    <span class="text-danger">{{ $errors->first('multiImage') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
@@ -68,6 +82,13 @@
                                     <option value="6">The Third</option>
                                     <option value="7">Fourth +</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputBedroom">Number Of Bedrooms</label>
+                                <input type="text" name="bedroom" class="form-control {{ $errors->has('bedroom') ? 'is-invalid' : '' }}" placeholder="Enter Number of Bedroom">
+                                @if ($errors->has('bedroom'))
+                                    <span class="text-danger">{{ $errors->first('bedroom') }}</span>
+                                @endif
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>

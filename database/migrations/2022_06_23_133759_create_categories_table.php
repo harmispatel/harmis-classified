@@ -15,6 +15,7 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('language_id');
             $table->string('name');
             $table->boolean('status')->default(1);
             $table->integer('created_by')->nullable();

@@ -8,18 +8,22 @@ use App\Models\Country;
 class CountryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Country.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $showCountryData = Country::get();
-        return view('settings.country',compact('showCountryData'));
+        try {
+            $showCountryData = Country::get();
+            return view('settings.country',compact('showCountryData'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Country.
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,7 +33,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Country in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,7 +44,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Country.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -51,7 +55,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Country.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -62,7 +66,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Country in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -74,7 +78,7 @@ class CountryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Country from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

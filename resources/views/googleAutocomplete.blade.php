@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
+{{-- <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>How to Add Google Map in Laravel? - ItSolutionStuff.com</title>
@@ -38,6 +38,6 @@
     </script>
 
     <script type="text/javascript"
-        src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap" ></script>
+        src="https://maps.google.com/maps/api/js?key={{ env('AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A') }}&callback=initMap" ></script>
 </body>
-</html>
+</html> --}}

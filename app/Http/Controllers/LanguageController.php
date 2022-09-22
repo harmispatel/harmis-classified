@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use File;
 
 // Models
-use App\Models\{ Language };
+use App\Models\{ Language, Labels };
 
 // Request Class
 use App\Http\Requests\{ LanguageRequest };
@@ -20,7 +21,6 @@ class LanguageController extends Controller
     public function index()
     {
         try {
-            // Display the Languages
             $languages = Language::get();
             return view('languages.list', compact('languages'));
         } catch (\Throwable $th) {
@@ -36,45 +36,81 @@ class LanguageController extends Controller
     public function create()
     {
         try {
-            // Show the Language Form for Add
             $type = 'Add';
-            return view('languages.add_edit', compact('type'));
+            $languages = Language::get();
+            $labels = Labels::get();
+            return view('languages.add', compact('type', 'labels', 'languages'));
+            // Show the Language Form for Add
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Language in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(LanguageRequest $request)
     {
-        try {
-            // Create the Languages
-            Language::create($request->all());
-            return back()->with('success', 'Language saved successfully!');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Something went wrong, please try later.');
+        $name = isset($request->name) ? $request->name : '';
+        $code = isset($request->code) ? $request->code : '';
+        $labels = isset($request->labels) ? $request->labels : [];
+        $status = isset($request->status) ? $request->status : [];
+
+        $html = '';
+
+        if(count($labels) > 0)
+        {
+            $labelCount = count($labels);
+            $no = 0;
+
+            $html .= '{';
+
+            foreach($labels as $key => $label)
+            {
+                $no++;
+
+                if($no < $labelCount)
+                {
+                    $html .= '"'.$key.'":"'.$label.'",';
+                }
+                else
+                {
+                    $html .= '"'.$key.'":"'.$label.'"';
+                }
+            }
+            $html .= '}';
+        }
+
+        $data = $html;
+        $file = $code.'.json';
+        $destinationPath=base_path()."/resources/lang/";
+
+        if (is_dir($destinationPath))
+        {
+            try {
+                File::put($destinationPath.$file,$data);
+                Language::create([
+                    'name' => $name,
+                    'code' => $code,
+                    'language_label' => serialize($labels),
+                    'status' => $status
+                ]);
+                    return back()->with('success', 'New Languages has been Created SuccessFully..');
+                } catch (\Throwable $th) {
+                    return back()->with('error', 'Something Went Wrong!');
+                }
+        }
+        else
+        {
+            return back()->with('error', 'Something Went Wrong!');
         }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
+     * Show the form for editing the specified Language.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -83,36 +119,83 @@ class LanguageController extends Controller
         try {
             // Show the Language Form for Edit
             $type = 'Update';
+            $labels = Labels::get();
             $language = Language::find(decrypt($id));
 
-            return view('languages.add_edit', compact('type', 'language'));
+            return view('languages.edit', compact('type', 'language','labels'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Language in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(LanguageRequest $request, $id)
+    public function update(Request $request)
     {
-        try {
-            // Update the Specific Language
-            $input = $request->except('_token', '_method');
-            $language = Language::find($id);
 
-            if (!empty($language)) {
-                $language->update($input);
-                return back()->with('success', 'Language updated successfully!');
-            } else {
-                return back()->with('error', 'Record not found!');
+        $id = isset($request->id) ? $request->id : '';
+        $name = isset($request->name) ? $request->name : '';
+        $code = isset($request->code) ? $request->code : '';
+        $labels = isset($request->labels) ? $request->labels : [];
+        $status = isset($request->status) ? $request->status : [];
+
+        $html = '';
+
+        if(count($labels) > 0)
+        {
+            $labelCount = count($labels);
+            $no = 0;
+
+            $html .= '{';
+
+            foreach($labels as $key => $label)
+            {
+                $no++;
+
+                if($no < $labelCount)
+                {
+                    $html .= '"'.$key.'":"'.$label.'",';
+                }
+                else
+                {
+                    $html .= '"'.$key.'":"'.$label.'"';
+                }
             }
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Something went wrong, please try later.');
+
+            $html .= '}';
+        }
+
+        $data = $html;
+        $file = $code.'.json';
+        $destinationPath=base_path()."/resources/lang/";
+
+        if (is_dir($destinationPath))
+        {
+            File::put($destinationPath.$file,$data);
+
+            // Store a Language
+            $hello = Language::find($id)->update([
+                'name' => $name,
+                'code' => $code,
+                'language_label' => serialize($labels),
+                'status' => $status
+            ]);
+
+                return back()->with('success', 'Language has been Updated SuccessFully..');
+            try {
+
+                } catch (\Throwable $th) {
+                    return back()->with('error', 'Something Went Wrong!');
+                }
+        }
+        else
+        {
+            return back()->with('error', 'Something Went Wrong!');
         }
     }
 
@@ -134,6 +217,23 @@ class LanguageController extends Controller
             } else {
                 return back()->with('error', 'Record not found!');
             }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Something went wrong, please try later.');
+        }
+    }
+    /**
+     *
+     * Set Language In Session
+     *
+     */
+    public function setLanguage(Request $request)
+    {
+        try {
+            session()->put('lang_code', $request->lang);
+            $getLangVal = session()->get('lang_code');
+            return response()->json([
+                'success' => 1,
+            ]);
         } catch (\Throwable $th) {
             return back()->with('error', 'Something went wrong, please try later.');
         }

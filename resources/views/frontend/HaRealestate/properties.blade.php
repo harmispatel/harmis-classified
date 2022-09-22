@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HaRealestate | Home</title>
-    
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 
@@ -13,18 +13,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 
     <!-- css -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>     
-    <link rel="stylesheet" href="assets/css/animate.css"/>     
-    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css"/>     
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="assets/css/animate.css"/>
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css"/>
 
     <!-- Main style sheet -->
-    <link href="assets/css/custom.css" rel="stylesheet">    
+    <link href="assets/css/custom.css" rel="stylesheet">
 
-   
+
     <!-- Google Font -->
-    <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>    
+    <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,7 +34,7 @@
     <![endif]-->
 
   </head>
-  <body class="aa-price-range">  
+  <body class="aa-price-range">
     <!-- Pre Loader -->
     <div id="aa-preloader-area">
       <div class="pulse"></div>
@@ -60,7 +60,7 @@
           </div>
         </div>
       </div>
-      <div class="header-main"> 
+      <div class="header-main">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="container">
             <a class="navbar-brand" href="#">
@@ -104,13 +104,13 @@
 
     <section class="property-main page-title-bg">
       <div class="container">
-        <div class="page-title">
+        {{-- <div class="page-title">
             <h2>PROPERTIES PAGE</h2>
             <ol class="breadcrumb">
-                <li><a href="#">HOME</a></li>            
+                <li><a href="#">HOME</a></li>
                 <li class="active"><a href="">PROPERTIES</a></li>
             </ol>
-        </div>
+        </div> --}}
       </div>
     </section>
 
@@ -474,7 +474,7 @@
 
 
 
- 
+
     <!-- jQuery library -->
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>

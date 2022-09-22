@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\{Permission, Country, State, User};
+use App\Models\{Permission, Country, State, User, Language};
 // use App\Models\Country;
 
 
@@ -39,4 +39,11 @@ function getUserName($id)
 {
     $getUserId = User::where('id',$id)->first();
     return $getUserId;
+}
+
+function getLang()
+{
+    $languageValue = Language::select('id', 'name', 'code')->where('status',1)->get();
+
+    return $languageValue;
 }

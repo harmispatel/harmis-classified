@@ -22,8 +22,10 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                        <label for="exampleInputName">Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                        @foreach ($getLanguage as $multiLang)
+                            <label for="exampleInputName">Name:-({{$multiLang->name}})</label>
+                            <input type="text" name="name_{{$multiLang->id}}" class="form-control" placeholder="Enter Name">
+                        @endforeach
                         @if ($errors->any())
                             <div class="text-danger">
                                 <ul>
@@ -35,10 +37,10 @@
                         @endif
                         </div>
                         <div class="form-group">
-                        <label for="exampleInputStatus">Status</label>
-                        <select class="form-control" name="status">
-                            <option value="1">Active</option>
-                            <option value="0">InActive</option>
+                            <label for="exampleInputStatus">Status</label>
+                            <select class="form-control" name="status">
+                                <option value="1">Active</option>
+                                <option value="0">InActive</option>
                             </select>
                         </div>
                     </div>

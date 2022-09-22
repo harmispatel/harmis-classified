@@ -18,74 +18,80 @@ use App\Models\{Role, Permission, PermissionRole};
 class RoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Role.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $showRoleData = Role::where('id', '!=', '1')->orderBy('id', 'desc')->get();
-        return view('user_management.role',compact('showRoleData'));
+        try {
+            $showRoleData = Role::where('id', '!=', '1')->orderBy('id', 'desc')->get();
+            return view('user_management.role',compact('showRoleData'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Role.
      *
      * @return \Illuminate\Http\Response
      */
     public function create():Response
     {
-        $permission = Permission::get();
-        return response()->view('user_management.createRole',compact('permission'));
+        try {
+            $permission = Permission::get();
+            return response()->view('user_management.createRole',compact('permission'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Role in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRole $request)
     {
-        $permissionArray = $request->permission;
+        try {
+            $permissionArray = $request->permission;
 
-        // Save Role
-        $roles = $request->only('name', 'status');
-        $addRoleData = Role::create($roles);
+            // Save Role
+            $roles = $request->only('name', 'status');
+            $addRoleData = Role::create($roles);
 
-        // Save Role's Permissions
-        $addRoleData->addRole()->attach($permissionArray);
+            // Save Role's Permissions
+            $addRoleData->addRole()->attach($permissionArray);
 
-        return redirect('show_role');
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-
+            return redirect('show_role');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified Role.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $permission = Permission::pluck('name','id');
-        $editRoleData = Role::find($id);
-        $permissionId = $editRoleData->addRole()->pluck('permission_id');
+        try {
+            $permission = Permission::pluck('name','id');
+            $editRoleData = Role::find($id);
+            $permissionId = $editRoleData->addRole()->pluck('permission_id');
 
-        return view('user_management.editRole',compact('editRoleData','permission', 'permissionId'));
+            return view('user_management.editRole',compact('editRoleData','permission', 'permissionId'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified Role in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -93,29 +99,36 @@ class RoleController extends Controller
      */
     public function update(StoreRole $request, $id)
     {
-        $validated = $request->validated();
-        $validated = $request->safe()->only(['name']);
+        try {
+            $validated = $request->validated();
+            $validated = $request->safe()->only(['name']);
 
-        $permissionArray = $request->permission;
-        $updateRoleData = Role::find($id);
-        $updateRoleData->name = $request->name;
-        $updateRoleData->status = $request->status;
+            $permissionArray = $request->permission;
+            $updateRoleData = Role::find($id);
+            $updateRoleData->name = $request->name;
+            $updateRoleData->status = $request->status;
 
-        $updateRoleData->addRole()->sync($permissionArray);
-        $updateRoleData->update();
-        return redirect()->route('show_role.index');
+            $updateRoleData->addRole()->sync($permissionArray);
+            $updateRoleData->update();
+            return redirect()->route('show_role.index');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Role from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $deleteRoleData = Role::where('id',$id)->delete();
-
-        return redirect()->route('show_role.index');
+        try {
+            $deleteRoleData = Role::where('id',$id)->delete();
+            return redirect()->route('show_role.index');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
     }
 }

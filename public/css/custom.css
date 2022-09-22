@@ -49,3 +49,247 @@
     top: 5%;
     right: 1%;
 }
+
+/* Property Details CSS.. */
+
+
+.about-property, .property-details-main{
+    padding: 30px 0;
+}
+
+.proprety_img img{
+    border-radius: 10px;
+}
+.center-img{
+    margin: 15px 0;
+}
+.proprety_img .left-img{
+    height: 600px;
+}
+.proprety_img .side-img{
+    height: 190px;
+    margin-bottom: 15px;
+}
+.proprety_img .side-img:last-child {
+    margin: 0;
+}
+.property-price{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.price-ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.price-ul li{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.price-ul li span{
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+
+}
+
+.price-ul li span.bed{
+    background: rgba(3, 169, 244,0.1);
+    color: #03a9f4;
+}
+
+.price-ul li span.bath{
+
+    background: rgba(255, 152, 0,0.1);
+    color: #ff9800;
+}
+
+.price-ul li span.garage{
+    background: rgba(76, 175, 80,0.1);
+    color: #4caf50;
+}
+
+.price-ul li span.sqft{
+    background: rgba(230, 34, 34,0.1);
+    color: #e62222;
+}
+
+.property-price-info h2{
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+}
+
+.property-price-info label{
+    color:#72809D;
+    font-size: 15px;
+}
+.share_list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.share_list li{
+    padding-left: 15px;
+    display: inline-block;
+}
+.share_list li a{
+    color:#72809D;
+}
+
+.property-info, .property-advance-fea, .property-reviwe, .reviwe-box,.agent-info{
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid rgb(114 128 157 / 20%);
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+.property-info h3, .property-advance-fea h3, .property-reviwe h3,.reviwe-box h3{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.property-info p{
+    font-size: 14px;
+    color:#72809D;
+    margin: 0;
+}
+
+.property-advance-fea .feature_ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.property-advance-fea .feature_ul li{
+    font-size: 18px;
+    color: #72809D;
+    margin-bottom: 10px;
+}
+
+.reviwe_ul{
+    list-style: none;
+    padding:20px 0 0;
+    margin: 0;
+}
+
+.reviwe_ul li{
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #72809D;
+    margin-bottom: 20px;
+}
+.reviwe_ul li:last-child{
+    margin: 0;
+    padding: 0;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.reviwe_info{
+    display: flex;
+}
+
+.reviwe_info .review_img img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.reviwe_info .reviwe_details{
+    padding-left: 30px;
+}
+
+.reviwe_details h4{
+    font-size: 20px;
+    color: #72809D;
+    margin: 0;
+}
+
+.reviwe_details span{
+    text-transform: uppercase;
+    font-size: 14px;
+    color:#ef4060;
+}
+.reviwe_details p{
+    margin: 10px 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+.reviwe-bt{
+    text-decoration: none;
+    background-color: #eff1f5;
+    color: #566180;
+    font-size: 14px;
+    padding: 8px 20px;
+    text-align: center;
+    border-radius: 20px;
+    transition: all 0.5s ease-in-out;
+}
+.reviwe-bt:hover{
+    color:#27ae60;
+}
+
+.reviwe-box .form-control{
+    margin-bottom: 20px;
+}
+.reviwe-box .submit-review-bt{
+    background-color: #58bb47;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.agent-info{
+    text-align: center;
+}
+
+.agent-img img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.agent-info-inr{
+    padding: 20px;
+}
+.agent-info-inr h3{
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+.agent-info-inr p{
+    color: #879ac3;
+    margin: 0;
+}
+.agent-info-inr p i{
+    color: #05af78;
+}
+
+.agent_box_ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.agent-contact button.btn{
+    background-color:#232c3d;
+    color:#fff;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 15px 20px;
+}
+
+.agent-contact p{
+    background-color:rgba(5, 175, 120,0.1);
+    color:#05af78;
+    margin: 0;
+    padding: 15px 20px;
+    text-align: center;
+}

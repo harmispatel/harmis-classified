@@ -1,9 +1,9 @@
 @extends('common.layout')
 
 @if ($type == 'Add')
-    @section('title', 'Add Languages')
+    @section('title', 'Add Labels')
 @else
-    @section('title', 'Edit Languages')
+    @section('title', 'Edit Labels')
 @endif
 
 @section('content')
@@ -26,10 +26,10 @@
 
                         <div class="card card-primary my-4">
                             <div class="card-header">
-                                <h3 class="card-title">{{ $type }} Language</h3>
+                                <h3 class="card-title">{{ $type }} Labels</h3>
                             </div>
 
-                            <form action="{{ $type == 'Add' ? route('languages.store') : route('languages.update', $language->id) }}"
+                            <form action="{{ $type == 'Add' ? route('labels.store') : route('labels.update', $labels->id) }}"
                                 id="quickForm" method="POST"
                             >
                                 @csrf
@@ -39,20 +39,13 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputName">Name</label>
-                                        <input type="text" name="name" class="form-control" placeholder="Enter Language Name" 
-                                            value="{{ $type != 'Add' ? $language->name : '' }}"
+                                        <input type="text" name="name" class="form-control" placeholder="Enter Label Name"
+                                            value="{{ $type != 'Add' ? $labels->name : '' }}"
                                         >
-                                        @if ($errors->any())
-                                            <div class="text-danger">
-                                                <ul>
-                                                    @foreach ($errors->all() as $error)
-                                                        <li>{{ $error }}</li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
+                                        @if ($errors->has('name'))
+                                            <span class="text-danger">{{ $errors->first('name') }}</span>
                                         @endif
                                     </div>
-
                                     <div class="form-group">
                                         <label for="exampleInputStatus">Status</label>
                                         <select class="form-control" name="status">
@@ -61,9 +54,9 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="card-footer">
-                                    <a href="{{ route('languages.index') }}" class="btn btn-secondary">Back</a>
+                                    <a href="{{ route('labels.index') }}" class="btn btn-secondary">Back</a>
                                     <button type="submit" class="btn btn-primary">{{ $type == 'Add' ? 'Save' : 'Update' }}</button>
                                 </div>
                             </form>
