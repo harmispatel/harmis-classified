@@ -47,6 +47,7 @@
                     <table class="table table-bordered">
                     <thead>
                         <tr>
+                        <th class="text-center">Image</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Gender</th>
@@ -59,6 +60,9 @@
                     <tbody>
                         @foreach ($showUserData as $userData)
                         <tr>
+                            <td class="text-center">
+                                <img src="{{ url('/UserImage/'.$userData->image) }}" style="height: 100px">
+                            </td>
                             <td>{{$userData['name']}}</td>
                             <td>{{$userData['email']}}</td>
                             <td>{{$userData['gender']}}</td>

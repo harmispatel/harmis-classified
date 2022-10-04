@@ -69,12 +69,12 @@
                         <div class="bulid-info">
                             <h3>{{ __('Number Of BedRooms') }}</h3>
                             <div class="nu-inr">
-                                <input type="hidden" class="badge nu-inr-st bedroom" value="0" />
-                                <p style="color:black" class="badge nu-inr-st bedroom">1</p>
-                                <p style="color:black" class="badge nu-inr-st bedroom">2</p>
-                                <p style="color:black" class="badge nu-inr-st bedroom">3</p>
-                                <p style="color:black" class="badge nu-inr-st bedroom">4</p>
-                                <p style="color:black" class="badge nu-inr-st bedroom">5+</p>
+                                <input type="hidden" name="bedroom" class="badge nu-inr-st bedroom" value="0" />
+                                <p style="color:black" class="badge nu-inr-st bedroom" class="bedroom">1</p>
+                                <p style="color:black" class="badge nu-inr-st bedroom" class="bedroom">2</p>
+                                <p style="color:black" class="badge nu-inr-st bedroom" class="bedroom">3</p>
+                                <p style="color:black" class="badge nu-inr-st bedroom" class="bedroom">4</p>
+                                <p style="color:black" class="badge nu-inr-st bedroom" class="bedroom">5+</p>
                             </div>
                             <button class="btn btn-primary" onclick="clearFilter('bedroom')">{{ __('Clear') }}</button>
                         </div>
@@ -242,6 +242,7 @@
             var localData = $('.post-grid').val();
             var rentSelsPrice = $('input[name="propertyType"]:checked').val();
             var propertyCondition = $('input[name="property_condition"]:checked').val();
+            var propertyBedRoom = $('input[name="bedroom"]:checked').val();
             var propertyFloor = $('input[name="floor"]:checked').val();
             var category = $('input[name="category"]:checked').val();
             // set Two Zero after Price using toFixed(2) method:
@@ -265,6 +266,7 @@
                     "category": category,
                     "propertyCondition": propertyCondition,
                     "propertyFloor": propertyFloor,
+                    "propertyBedRoom": propertyBedRoom,
                     "selectPrice": selectPrice,
                     "limit": limit,
                     "start": start,

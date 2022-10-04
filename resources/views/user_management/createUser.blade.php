@@ -13,7 +13,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Add Users</h3>
                         </div>
-                        <form action="{{route('show_user.store')}}" id="quickForm" method="POST">
+                        <form action="{{route('show_user.store')}}" id="quickForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                             <div class="form-group">
@@ -28,6 +28,13 @@
                                 <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Enter Email">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputImage">Image</label>
+                                <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
+                                @if ($errors->has('image'))
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">

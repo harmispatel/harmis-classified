@@ -106,6 +106,35 @@
                                     <span class="text-danger">{{ $errors->first('bedroom') }}</span>
                                 @endif
                             </div>
+
+
+                            <div class="form-group">
+                                <label for="exampleInputKitchen">Kitchen</label>
+                                <input type="text" name="kitchen" value="{{$editPropertiesData->kitchen}}" class="form-control {{ $errors->has('kitchen') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                @if ($errors->has('kitchen'))
+                                <span class="text-danger">{{ $errors->first('kitchen') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputBath">Bath</label>
+                                <input type="text" name="bath" value="{{$editPropertiesData->bath}}" class="form-control {{ $errors->has('bath') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                @if ($errors->has('bath'))
+                                <span class="text-danger">{{ $errors->first('bath') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputGarage">Garage</label>
+                                <input type="text" name="garage" value="{{$editPropertiesData->garage}}" class="form-control {{ $errors->has('garage') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                @if ($errors->has('garage'))
+                                    <span class="text-danger">{{ $errors->first('garage') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputMultiImage">Build Year</label>
+                                <select name="build_year" class="form-control" id="ddlYears">
+                                        <option value="{{$editPropertiesData->build_year}}">{{$editPropertiesData->build_year}}</option>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="exampleInputPrice">Price</label>
                                 <input type="text" name="price" value="{{$editPropertiesData->price}}" class="form-control {{ $errors->has('price') ? 'is-invalid' : '' }}" placeholder="Enter Price">
@@ -113,6 +142,12 @@
                                     <span class="text-danger">{{ $errors->first('price') }}</span>
                                 @endif
                             </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputPrice">Description</label>
+                                <textarea class="form-control" name="description" id="summernote_1">{{$editPropertiesData->description}}</textarea>
+                            </div>
+
                             @php
                                 $countryId = $editPropertiesData->country_id;
                                 $countryName = getCountryName($countryId);
@@ -150,12 +185,25 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputAddress">address</label>
-                                <textarea id="address" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" name="address" rows="3">{{$editPropertiesData->address}}</textarea>
+                                <label for="exampleInputAddress">Address</label>
+                                <input type="text" id="autocomplete" name="address" value="{{$editPropertiesData->address}}" class="form-control">
                                 @if ($errors->has('address'))
                                     <span class="text-danger">{{ $errors->first('address') }}</span>
                                 @endif
                             </div>
+
+
+                            <div class="form-group" id="latitudeArea">
+                                <label>Latitude</label>
+                                <input type="text" id="latitude" name="latitude" value="{{$editPropertiesData->latitude}}" class="form-control">
+                            </div>
+
+                            <div class="form-group" id="longtitudeArea">
+                                <label>Longitude</label>
+                                <input type="text" name="longitude" value="{{$editPropertiesData->longitude}}" id="longitude" class="form-control">
+                            </div>
+
+
                             <div class="form-group">
                                 <label for="exampleInputStatus">Status</label>
                                 <select class="form-control" name="status">
@@ -175,6 +223,8 @@
         </div>
     </section>
 </div>
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#country').change(function (){
@@ -195,6 +245,59 @@
                 });
         });
     });
+
+    window.onload = function () {
+        //Reference the DropDownList.
+        var ddlYears = document.getElementById("ddlYears");
+
+        //Determine the Current Year.
+        var currentYear = (new Date()).getFullYear();
+
+        //Loop and add the Year values to DropDownList.
+        for (var i = 1900; i <= currentYear; i++) {
+            var option = document.createElement("OPTION");
+            option.innerHTML = i;
+            option.value = i;
+            ddlYears.appendChild(option);
+        }
+    };
+
+    $(document).ready(function() {
+        $('#summernote_1').summernote({
+            height: 400,
+            placeholder: 'Property Description...',
+        });
+    });
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+        src="https://maps.google.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&libraries=places" ></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#latitudeArea").addClass("d-none");
+            $("#longtitudeArea").addClass("d-none");
+        });
+        </script>
+    <script>
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function initialize() {
+            var input = document.getElementById('autocomplete');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
+                console.log(place);
+                $('#latitude').val(place.geometry['location'].lat());
+                $('#longitude').val(place.geometry['location'].lng());
+
+                $("#latitudeArea").removeClass("d-none");
+                $("#longtitudeArea").removeClass("d-none");
+            });
+        }
+        </script>
 
 @endsection

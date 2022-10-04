@@ -51,37 +51,37 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     // Role Routes:
     Route::resource('show_role', 'RoleController');
 
-    //Country Route
+    //Country Route:
     Route::resource('country', 'CountryController');
 
-    //State Route
+    //State Route:
     Route::resource('state', 'StateController');
 
-    //Category Route
+    //Category Route:
     Route::resource('category', 'CategoryController');
 
-    //Propertie Route
+    //Propertie Route:
     Route::resource('propertie', 'PropertieController');
 
-    // Language Routes
+    // Language Routes:
     Route::resource('languages', 'LanguageController');
 
-    // Labels Routes
+    // Labels Routes:
     Route::resource('labels', 'LabelController');
 
-    //Logout Route
+    //Logout Route:
     Route::get("/logout", [LoginController::class, "adminLogout"])->name('adminLogout');
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");
 });
 
-//Country Route In Ajax Call
+//Country Route In Ajax Call:
 Route::post('getState', [PropertieController::class, 'getState'])->name('getState');
 
 //User Logout Route:
 Route::post('/userlogout', [UserLoginController::class, 'logout'])->name('userLogout');
 Route::get('/userlogout', [UserLoginController::class, 'userLogout'])->name('userLog');
 
-// Property Routes
+// Property Routes:
 Route::get('/', [PropertyController::class, 'index'])->name('showProperty');
 Route::post('/getpropertybyprice', [PropertyController::class, 'getpropertybyprice'])->name('getpropertybyprice');
 Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->name('infinitescroll');
@@ -89,7 +89,7 @@ Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->n
 Route::get('/create', [PropertyController::class,'create'])->name('create');
 Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
 
-//Language DropDown
+//Language DropDown:
 Route::get('/get-languages',[LanguageController::class,'getLanguages'])->name('get_languages');
 
 // Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');

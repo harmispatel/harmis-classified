@@ -23,8 +23,13 @@ class CreatePropertiesTable extends Migration
             $table->decimal('price', 13, 2);
             $table->tinyInteger('property_type')->nullable();
             $table->tinyInteger('bedroom')->nullable();
+            $table->tinyInteger('bath')->nullable();
+            $table->tinyInteger('garage')->nullable();
+            $table->tinyInteger('kitchen')->nullable();
             $table->tinyInteger('property_condition')->unsigned()->nullable();
-            $table->tinyInteger('floor')->unsigned()->nullable();
+            $table->tinyInteger('floor')->nullable();
+            $table->year('build_year')->nullable();
+            $table->longText('description')->nullable();
             $table->unsignedBigInteger('country_id');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->unsignedBigInteger('state_id');

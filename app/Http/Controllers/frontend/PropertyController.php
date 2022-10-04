@@ -13,7 +13,7 @@ use App\Http\Requests\storePropertie;
 class PropertyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Property.
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,14 +32,13 @@ class PropertyController extends Controller
 
             if($request->ajax()){
                 $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                                        ->with(['hasOneCountry','haseOneState','hasOneCategory'])
+                                        ->with(['hasOneCountry', 'haseOneState', 'hasOneCategory'])
                                         ->paginate(4);
 
                 $view = view('frontend.data',compact('property'))->render();
 
                 return response()->json(['html'=>$view]);
             }
-
             $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
 
             return view('frontend.property', compact(
@@ -50,13 +49,15 @@ class PropertyController extends Controller
                 'totalRecords',
                 'category'
             ));
+
+        // if($request->ajax())
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new Property.
      *
      * @return \Illuminate\Http\Response
      */
@@ -71,6 +72,7 @@ class PropertyController extends Controller
         }
     }
 
+    // Get State.
     public function getState(Request $request)
     {
         try {
@@ -92,9 +94,9 @@ class PropertyController extends Controller
         }
     }
 
+    // Store Property.
     public function store(storePropertie $request)
     {
-
         try {
             $user = auth()->User();
             $userId = $user->id;
@@ -106,6 +108,11 @@ class PropertyController extends Controller
             $addPropertyData->property_condition = $request->property_condition;
             $addPropertyData->floor = $request->floor;
             $addPropertyData->bedroom = $request->bedroom;
+            $addPropertyData->kitchen = $request->kitchen;
+            $addPropertyData->bath = $request->bath;
+            $addPropertyData->garage = $request->garage;
+            $addPropertyData->build_year = $request->build_year;
+            $addPropertyData->description = $request->description;
             $addPropertyData->price = $request->price;
             $addPropertyData->country_id = $request->country_id;
             $addPropertyData->state_id = $request->state_id;
@@ -119,6 +126,16 @@ class PropertyController extends Controller
                 $filename= date('YmdHi').$file->getClientOriginalName();
                 $file-> move(public_path('MainImage'), $filename);
                 $addPropertyData['image']= $filename;
+            }
+
+            if($request->hasfile('multiImage')) {
+                foreach($request->file('multiImage') as $file)
+                {
+                    $multiImage = date('YmdHi').$file->getClientOriginalName();
+                    $file->move(public_path().'/multiImage/', $multiImage);
+                    $imgData[] = $multiImage;
+                }
+                $addPropertyData->multiImage = implode(" ,",$imgData);
             }
 
             $addPropertyData->save();
@@ -168,6 +185,9 @@ class PropertyController extends Controller
             $updatePropertyData->address = $request->address;
             $updatePropertyData->floor = $request->floor;
             $updatePropertyData->bedroom = $request->bedroom;
+            $updatePropertyData->kitchen = $request->kitchen;
+            $updatePropertyData->bath = $request->bath;
+            $updatePropertyData->garage = $request->garage;
             $updatePropertyData->latitude ='latitude';
             $updatePropertyData->longitude ='longitude';
             $updatePropertyData->status = $request->status;
@@ -177,7 +197,16 @@ class PropertyController extends Controller
                 $filename= date('YmdHi').$file->getClientOriginalName();
                 $file-> move(public_path('MainImage'), $filename);
                 $updatePropertyData['image']= $filename;
+            }
 
+            if($request->hasfile('multiImage')) {
+                foreach($request->file('multiImage') as $file)
+                {
+                    $multiImage = date('YmdHi').$file->getClientOriginalName();
+                    $file->move(public_path().'/multiImage/', $multiImage);
+                    $imgData[] = $multiImage;
+                }
+                $updatePropertyData->multiImage = implode(" ,",$imgData);
             }
             $updatePropertyData->update();
 
@@ -206,7 +235,7 @@ class PropertyController extends Controller
     public function getpropertybyprice(Request $request)
     {
         try {
-            // Get Data from the Request
+            // Get Data from the Request.
             $proPrice = $request->price;
             $rentSelsPic = $request->rentSelsPrice;
             $page = $request->page;
@@ -215,7 +244,7 @@ class PropertyController extends Controller
             $property_floor = $request->propertyFloor;
             $bedroom = $request->bedroom;
 
-            // Set the Avg Price
+            // Set the Avg Price.
             $propertyMaxPrice = $request->price;
             $propertyMinPrice = Propertie::min('price');
             $PropertyMidPrice = Propertie::avg('price');
@@ -223,31 +252,31 @@ class PropertyController extends Controller
             $total = 0;
             $property = Propertie::query();
 
-            // Property Type Filter
+            // Property Type Filter.
             $property->when(!empty($rentSelsPic), function() use($property, $rentSelsPic, $total) {
                 $property->where('property_type', $rentSelsPic);
                 $total += $property->where('property_type', $rentSelsPic)->count();
             });
 
-            // Property Filter on Category
+            // Property Filter on Category.
             $property->when(!empty($category_id), function() use($property, $category_id, $total) {
                 $property->where('category_id', $category_id);
                 $total += $property->where('category_id', $category_id)->count();
             });
 
-            // Property Filter on Property Condition
+            // Property Filter on Property Condition.
             $property->when(!empty($property_floor), function() use($property, $property_floor, $total) {
                 $property->where('floor', $property_floor);
                 $total += $property->where('floor', $property_floor)->count();
             });
 
-            // Property Filter on Property Floor
+            // Property Filter on Property Floor.
             $property->when(!empty($property_condition), function() use($property, $property_condition, $total) {
                 $property->where('property_condition', $property_condition);
                 $total += $property->where('property_condition', $property_condition)->count();
             });
 
-            // Property Filter on Bedrooms
+            // Property Filter on Bedrooms.
             $property->when(!empty($bedroom), function() use($property, $bedroom, $total) {
                 if ($bedroom == '5+') {
                     $total += $property->where('bedroom', '>=', 5)->count();
@@ -265,7 +294,7 @@ class PropertyController extends Controller
                                 ->offset($request['start'])
                                 ->get();
 
-            // Set HTML Content
+            // Set HTML Content.
 
             $html = "";
 
@@ -275,7 +304,7 @@ class PropertyController extends Controller
                 $html .= '<div class="post-wrap col-lg-6 col-md-6">
                             <div class="post-item card ">
                                      <a href="'.$url.'" class="img-inr">
-                                    <img src=" '.asset ("MainImage/$showProperty->image").'" class="img-fluid card-img " alt="">
+                                    <img src="'.asset ("MainImage/$showProperty->image").'" class="img-fluid card-img " alt="">
                                     <div class="img-pri-abo">
                                         <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
                                     </div>
@@ -319,6 +348,7 @@ class PropertyController extends Controller
             return back()->with('error', 'Page Not Found!');
         }
     }
+    // List of Property end Map.
     public function propertyList(Request $request)
     {
         try {
@@ -329,7 +359,12 @@ class PropertyController extends Controller
     }
     public function propertyDetails(Request $request, $id)
     {
-        $propertyDetails = Propertie::where('id',$id)->first();
+        $propertyDetails = Propertie::where('id',$id)
+                        ->with(['hasOneCountry','haseOneState','hasOneCategory', 'hasOneUser'])
+                        ->first();
+                        // echo '<pre>';
+                        // print_r($propertyDetails->hasOneUser['image']);
+                        // exit;
         return view('frontend.propertiesDetails', compact('propertyDetails'));
     }
 }

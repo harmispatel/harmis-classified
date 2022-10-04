@@ -39,4 +39,8 @@ class Propertie extends Model
     {
         return $this->hasOne(Category::class,'id','category_id');
     }
+    public function hasOneUser()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 }

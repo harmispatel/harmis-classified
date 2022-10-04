@@ -20,7 +20,8 @@
   <link rel="stylesheet" href="{{ asset ('plugins/summernote/summernote-bs4.min.css')}}">
   {{-- custom csss --}}
   <link rel="stylesheet" href="{{ asset ('css/custom.css') }}">
-
+  {{-- summernote --}}
+  {{-- <link rel="stylesheet" href="{{ asset ('css/summernote.css') }}"> --}}
 
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">

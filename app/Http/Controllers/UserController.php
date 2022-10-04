@@ -59,18 +59,25 @@ class UserController extends Controller
      */
     public function store(storeUser $request)
     {
+
+        $addUserData = new User;
+        $addUserData->name = $request->name;
+        $addUserData->email=$request->email;
+        $addUserData->gender=$request->gender;
+        $addUserData->mobile=$request->mobile;
+        $addUserData->role_id=$request->role;
+        $addUserData->password=bcrypt(request('password')) ;
+        $addUserData->status=$request->status;
+
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('/UserImage'), $filename);
+            $addUserData['image']= $filename;
+        }
+
+        $addUserData->save();
         try {
-            $addUserData = new User;
-            $addUserData->name = $request->name;
-            $addUserData->email=$request->email;
-            $addUserData->gender=$request->gender;
-            $addUserData->mobile=$request->mobile;
-
-            $addUserData->role_id=$request->role;
-
-            $addUserData->password=bcrypt(request('password')) ;
-            $addUserData->status=$request->status;
-            $addUserData->save();
         } catch (\Throwable $th) {
             return 'The User Cannot be Saved.';
         }
@@ -111,11 +118,16 @@ class UserController extends Controller
             $addUserData->email=$request->email;
             $addUserData->gender=$request->gender;
             $addUserData->mobile=$request->mobile;
-
             $addUserData->role_id=$request->role;
-
             $addUserData->password=bcrypt(request('password'));
             $addUserData->status=$request->status;
+
+            if($request->file('image')){
+                $file= $request->file('image');
+                $filename= date('YmdHi').$file->getClientOriginalName();
+                $file-> move(public_path('/UserImage'), $filename);
+                $addUserData['image']= $filename;
+            }
 
             $addUserData->save();
         } catch (\Throwable $th) {

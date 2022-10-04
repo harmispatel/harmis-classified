@@ -103,7 +103,6 @@
         <script>
             $(".deleteBtn").click(function () {
                 var url = $(this).attr("data-target-id")
-                alert(url);
                 $("#deleteForm").attr('action', url)
             });
         </script>

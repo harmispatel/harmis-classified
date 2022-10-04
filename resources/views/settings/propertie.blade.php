@@ -22,7 +22,7 @@
                     <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Image</th>
+                            <th class="text-center">Image</th>
                             {{-- <th>Multi Image</th> --}}
                             <th>Name</th>
                             <th>Category</th>
@@ -38,7 +38,7 @@
                     <tbody>
                         @foreach ($showPropertiesData as $propertiesData)
                             <tr>
-                                <td>
+                                <td class="text-center">
                                     <img src="{{ url('/MainImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
                                 </td>
                                 {{-- <td>

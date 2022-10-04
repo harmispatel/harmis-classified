@@ -15,7 +15,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-            <form action="{{route('show_user.update',$editUserData->id)}}" id="quickForm" method="POST">
+            <form action="{{route('show_user.update',$editUserData->id)}}" id="quickForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 {{ method_field('PUT') }}
                 <div class="card-body">
@@ -29,6 +29,14 @@
                         </div>
                     @endif
                   </div>
+                  <div class="form-group">
+                    <label for="exampleInputImage">Image</label>
+                    <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
+                    <img src="{{ url('/UserImage/'.$editUserData->image) }}" style="height: 100px; width: 100px; margin-top: 20px;">
+                    @if ($errors->has('image'))
+                        <span class="text-danger">{{ $errors->first('image') }}</span>
+                    @endif
+                </div>
                   <div class="form-group">
                     <label for="exampleInputEmail">Email</label>
                     <input type="email" name="email" class="form-control" value="{{$editUserData->email}}" placeholder="Enter Email">
