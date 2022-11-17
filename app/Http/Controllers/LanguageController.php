@@ -21,7 +21,7 @@ class LanguageController extends Controller
     public function index()
     {
         try {
-            $languages = Language::get();
+            $languages = Language::orderBy('id','DESC')->get();
             return view('languages.list', compact('languages'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');

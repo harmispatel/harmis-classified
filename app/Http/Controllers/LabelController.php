@@ -18,7 +18,7 @@ class LabelController extends Controller
     public function index()
     {
         try{
-            $labels = Labels::get();
+            $labels = Labels::orderBy('id','DESC')->get();
             return view('labels.list', compact('labels'));
         } catch (\throwable $th){
             return back()->with('error', 'Page Not Found');

@@ -192,17 +192,8 @@
                                 @endif
                             </div>
 
-
-                            <div class="form-group" id="latitudeArea">
-                                <label>Latitude</label>
-                                <input type="text" id="latitude" name="latitude" value="{{$editPropertiesData->latitude}}" class="form-control">
-                            </div>
-
-                            <div class="form-group" id="longtitudeArea">
-                                <label>Longitude</label>
-                                <input type="text" name="longitude" value="{{$editPropertiesData->longitude}}" id="longitude" class="form-control">
-                            </div>
-
+                                <input type="hidden" id="latitude" name="latitude" value="{{$editPropertiesData->latitude}}" class="form-control">
+                                <input type="hidden" name="longitude" value="{{$editPropertiesData->longitude}}" id="longitude" class="form-control">
 
                             <div class="form-group">
                                 <label for="exampleInputStatus">Status</label>

@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $showCategoryData = Category::get();
+        $showCategoryData = Category::orderBy('id','DESC')->get();
         return view('categories.category',compact('showCategoryData'));
     }
 

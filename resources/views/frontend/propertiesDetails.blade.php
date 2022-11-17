@@ -6,16 +6,16 @@
 <section class="property-main page-title-bg">
     <div class="container">
         <div class="page-title">
-            <h2>{{__('PROPERTIES DETAILS')}}</h2>
+            <h2>{{$propertyDetails->name}}</h2>
             <ol class="breadcrumb">
                 <li><a href="#">{{__('HOME')}}</a></li>
-                <li class="active"><a href="">{{__('PROPERTIES DETAILS')}}</a></li>
+                {{-- <li class="active"><a href="">{{__('PROPERTIES DETAILS')}}</a></li> --}}
             </ol>
         </div>
     </div>
 </section>
 
-  <body class="aa-price-range">
+<body class="aa-price-range">
     <section class="property-details-main">
         <div class="container">
             <div class="row">
@@ -59,11 +59,11 @@
                                 <li>
                                     <span class="garage">{{$propertyDetails->garage}} Garage</span>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <span class="sqft">730 sqft</span>
-                                </li>
+                                </li> --}}
                             </ul>
-                            <h2>5689 Resot Relly Market, Montreal Canada, HAQC445</h2>
+                            <h2>{{$propertyDetails->name}}</h2>
                             {{-- <label><i class="fa-solid fa-location-dot"></i> 778 Country St. Panama City, FL</label> --}}
                             <label><i class="fa-solid fa-location-dot"></i> {{$propertyDetails->address}}</label>
                         </div>
@@ -111,7 +111,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="property-reviwe">
+                    {{-- <div class="property-reviwe">
                         <h3>{{__('Reviwes')}}</h3>
                         <ul class="reviwe_ul">
                             <li>
@@ -154,31 +154,31 @@
                         <div class="text-center">
                             <a href="#" class="reviwe-bt">8 Reviwes</a>
                         </div>
-                    </div>
-                <div class="reviwe-box">
-                    <h3>{{__('Write review')}}</h3>
-                    <form action="">
-                        {{-- @csrf --}}
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="name" class="form-label">{{__('Name')}}</label>
-                                <input type="text" class="form-control" id="name">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">{{__('Email')}}</label>
-                                <input type="email" class="form-control" id="email">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="review" class="form-label">{{__('Messages')}}</label>
-                                <textarea class="form-control" id="review" rows="3"></textarea>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn submit-review-bt" type="submit">{{__('Submit Review')}}</button>
-                            </div>
-                        </div>
-                    </form>
+                    </div> --}}
+                    {{-- <div class="reviwe-box">
+                        <h3>{{__('Write review')}}</h3>
+                        <form action="">
+                            {{-- @csrf --}}
+                            {{-- <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">{{__('Name')}}</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">{{__('Email')}}</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="review" class="form-label">{{__('Messages')}}</label>
+                                    <textarea class="form-control" id="review" rows="3"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn submit-review-bt" type="submit">{{__('Submit Review')}}</button>
+                                </div>
+                            </div> --}}
+                        {{-- </form> --}}
+                    {{-- </div> --}}
                 </div>
-            </div>
             <div class="col-md-5">
             <div class="agent-info">
                 <div class="agent-img">
@@ -199,7 +199,7 @@
     <script>
       new WOW().init();
     </script>
-  </body>
+</body>
 
-  @endsection
-  @endsection
+@endsection
+@endsection

@@ -18,11 +18,12 @@
                             <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputName">Name</label>
-                                <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Enter Name">
+                                <input type="text" id="name" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Enter Name">
                                 @if ($errors->has('name'))
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
+
                             <div class="form-group">
                                 <label for="exampleInputImage">Main Image</label>
                                 <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
@@ -128,6 +129,9 @@
                             <div class="form-group">
                                 <label for="exampleInputPrice">Description</label>
                                 <textarea class="form-control" name="description" id="summernote_1"></textarea>
+                                @if ($errors->has('description'))
+                                    <span class="text-danger">{{ $errors->first('description') }}</span>
+                                @endif
                             </div>
 
                             <div class="form-group">
@@ -159,20 +163,8 @@
                                 @endif
                             </div>
 
-
-
-                            <div class="form-group" id="latitudeArea">
-                                <label>Latitude</label>
-                                <input type="text" id="latitude" name="latitude" class="form-control">
-                            </div>
-
-                            <div class="form-group" id="longtitudeArea">
-                                <label>Longitude</label>
-                                <input type="text" name="longitude" id="longitude" class="form-control">
-                            </div>
-
-
-
+                                <input type="hidden" id="latitude" name="latitude" class="form-control">
+                                <input type="hidden" name="longitude" id="longitude" class="form-control">
 
                             <div class="form-group">
                                 <label for="exampleInputStatus">Status</label>
@@ -197,6 +189,7 @@
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script>
+
     $(document).ready(function() {
         $('#country').change(function (){
             var countryId  = $(this).val();
@@ -213,11 +206,9 @@
                         $("#state_id").html('');
                         $("#state_id").append(result.html);
                     }
-
                 });
         });
     });
-
 
     window.onload = function () {
         //Reference the DropDownList.
@@ -241,6 +232,7 @@
             placeholder: 'Property Description...',
         });
     });
+
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

@@ -19,6 +19,7 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
+
         try {
         $category = Category::get();
             $propertyMaxPrice = Propertie::max('price');
@@ -30,16 +31,17 @@ class PropertyController extends Controller
                                 ->with(['hasOneCountry','haseOneState','hasOneCategory'])
                                 ->paginate(4);
 
-            if($request->ajax()){
-                $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                                        ->with(['hasOneCountry', 'haseOneState', 'hasOneCategory'])
-                                        ->paginate(4);
+            // if($request->ajax()){
 
-                $view = view('frontend.data',compact('property'))->render();
+            //     $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
+            //                             ->with(['hasOneCountry', 'haseOneState', 'hasOneCategory'])
+            //                             ->paginate(4);
 
-                return response()->json(['html'=>$view]);
-            }
-            $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
+            //     $view = view('frontend.data',compact('property'))->render();
+
+            //     return response()->json(['html'=>$view]);
+            // }
+            // $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
 
             return view('frontend.property', compact(
                 'property',
@@ -97,11 +99,15 @@ class PropertyController extends Controller
     // Store Property.
     public function store(storePropertie $request)
     {
+        // echo '<pre>';
+        // print_r($request->all());
+        // exit;
         try {
             $user = auth()->User();
             $userId = $user->id;
             $addPropertyData = new Propertie;
             $addPropertyData->name = $request->name;
+            $addPropertyData->slug = Str::slug($request->name);
             $addPropertyData->category_id = $request->category_id;
             $addPropertyData->user_id = $userId;
             $addPropertyData->property_type = $request->property_type;
@@ -117,8 +123,8 @@ class PropertyController extends Controller
             $addPropertyData->country_id = $request->country_id;
             $addPropertyData->state_id = $request->state_id;
             $addPropertyData->address = $request->address;
-            $addPropertyData->latitude ='latitude';
-            $addPropertyData->longitude ='longitude';
+            $addPropertyData->longitude = $request->longitude;
+            $addPropertyData->latitude = $request->latitude;
             $addPropertyData->status = $request->status;
 
             if($request->file('image')){
@@ -238,11 +244,14 @@ class PropertyController extends Controller
             // Get Data from the Request.
             $proPrice = $request->price;
             $rentSelsPic = $request->rentSelsPrice;
+
+
             $page = $request->page;
             $category_id = $request->category;
             $property_condition = $request->propertyCondition;
             $property_floor = $request->propertyFloor;
             $bedroom = $request->bedroom;
+            $search = $request->search;
 
             // Set the Avg Price.
             $propertyMaxPrice = $request->price;
@@ -287,6 +296,11 @@ class PropertyController extends Controller
                 }
             });
 
+            $property->when(!empty($search), function() use($property, $search, $total) {
+                $property->where('name', 'LIKE', "%{$search}%");
+                $total += $property->where('name', 'LIKE', "%{$search}%")->count();
+            });
+
             $total += $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->count();
 
             $property = $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
@@ -300,10 +314,10 @@ class PropertyController extends Controller
 
             foreach($property as $showProperty)
             {
-                $url = route('propertyDetails',$showProperty->id);
+                $url = route('propertyDetails',$showProperty->slug);
                 $html .= '<div class="post-wrap col-lg-6 col-md-6">
                             <div class="post-item card ">
-                                     <a href="'.$url.'" class="img-inr">
+                                <a href="'.$url.'" class="img-inr">
                                     <img src="'.asset ("MainImage/$showProperty->image").'" class="img-fluid card-img " alt="">
                                     <div class="img-pri-abo">
                                         <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
@@ -326,7 +340,7 @@ class PropertyController extends Controller
                                 <div class="card-body jo-card">
                                     <div class="jo-card-bor">
                                         <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
-                                        <p class="post-item-text font-weight-light font-sm">'.$showProperty->hasOneCountry["name"].', '. $showProperty->haseOneState["name"].', '. $showProperty->address.'</p>
+                                        <p class="post-item-text font-weight-light font-sm">'. $showProperty->address.'</p>
                                     </div>
                                 </div>
                             </div>
@@ -357,9 +371,10 @@ class PropertyController extends Controller
             return back()->with('error', 'Page Not Found!');
         }
     }
-    public function propertyDetails(Request $request, $id)
+    public function propertyDetails(Request $request, $slug)
     {
-        $propertyDetails = Propertie::where('id',$id)
+
+        $propertyDetails = Propertie::where('slug',$slug)
                         ->with(['hasOneCountry','haseOneState','hasOneCategory', 'hasOneUser'])
                         ->first();
                         // echo '<pre>';

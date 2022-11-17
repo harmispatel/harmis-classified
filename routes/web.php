@@ -9,12 +9,14 @@ use App\Http\Controllers\PropertieController;
 use App\Http\Controllers\frontend\RegisterController;
 use App\Http\Controllers\frontend\UserLoginController;
 use App\Http\Controllers\frontend\PropertyController;
+use App\Http\Controllers\frontend\PropertyListController;
 use App\Http\Controllers\Frontend\LanguageController;
+// use App\Http\Controllers\Frontend\SearchController;
 
 // Google map
 use App\Http\Controllers\GoogleController;
 
-
+Route::view('/summer','frontend.summer');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -104,6 +106,13 @@ Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('
 Route::get('set-language', [App\Http\Controllers\LanguageController::class, 'setLanguage']);
 
 Route::get('property-list', [PropertyController::class, 'propertyList'])->name('PropertyList');
+//list Scroll:
+Route::post('list-scroll', [PropertyListController::class, 'listScroll'])->name('listScroll');
+// list Scroll:
 Route::resource('property-details', 'Frontend\PropertyListController');
 
 Route::get('single-property-details/{id}', [PropertyController::class, 'propertyDetails'])->name('propertyDetails');
+
+// Search Route.
+
+// Route::get('/search', [SearchController::class, 'search'])->name('search');

@@ -10,6 +10,8 @@ use Illuminate\Http\Response;
 
 //Requests Class
 use App\Http\Requests\storePropertie;
+// Slug
+use Illuminate\Support\Str;
 
 class PropertieController extends Controller
 {
@@ -21,7 +23,7 @@ class PropertieController extends Controller
     public function index()
     {
         try {
-            $showPropertiesData = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->paginate(10);
+            $showPropertiesData = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->orderBy('id','DESC')->paginate(10);
             return view('settings.propertie',compact('showPropertiesData'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
@@ -76,8 +78,13 @@ class PropertieController extends Controller
      */
     public function store(storePropertie $request)
     {
+
         $addPropertyData = new Propertie;
         $addPropertyData->name = $request->name;
+        $addPropertyData->slug = Str::slug($request->name);
+        // echo '<pre>';
+        // print_r($addPropertyData->slug);
+        // exit;
         $addPropertyData->category_id = $request->category_id;
         $addPropertyData->user_id = $request->user_id;
         $addPropertyData->property_type = $request->property_type;
@@ -151,10 +158,11 @@ class PropertieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(storePropertie $request, $id)
+    public function update(Request $request, $id)
     {
         $updatePropertyData = Propertie::find($id);
         $updatePropertyData->name = $request->name;
+        $updatePropertyData->slug = Str::slug($request->name);
         $updatePropertyData->category_id = $request->category_id;
         $updatePropertyData->user_id = $request->user_id;
         $updatePropertyData->property_type = $request->property_type;

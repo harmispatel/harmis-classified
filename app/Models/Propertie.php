@@ -16,6 +16,7 @@ class Propertie extends Model
     // protected $guarded = [];
     protected $fillable = [
         'name',
+        'slug',
         'category',
         'price',
         'country',

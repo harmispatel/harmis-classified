@@ -28,12 +28,19 @@ class storePropertie extends FormRequest
         // echo "<pre>";
         // print_r($request->all());exit;
         return [
-            'name'     => 'required',
-            'category_id' => 'required',
-            'price'    => 'required',
-            'country_id'  => 'required',
-            'state_id'    => 'required',
-            'address'  => 'required'
+            'name'          => 'required',
+            'category_id'   => 'required',
+            'price'         => 'integer|min:0',
+            'country_id'    => 'required',
+            'state_id'      => 'required',
+            'address'       => 'required',
+            'image'       => 'required',
+            'multiImage'       => 'required',
+            'bedroom'       => 'integer|min:0',
+            'bath'       => 'integer|min:0',
+            'garage'       => 'integer|min:0',
+            'kitchen'       => 'integer|min:0',
+            'description'       => 'required'
         ];
 
 //         Array

@@ -1,43 +1,84 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-{{-- <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>How to Add Google Map in Laravel? - ItSolutionStuff.com</title>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <style type="text/css">
-        #map {
-          height: 400px;
-        }
-    </style>
-</head>
+<html>
+    <head>
+      <title>Marker Clustering</title>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+      <script src="https://unpkg.com/wrld.js@1.x.x"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <script type="text/javascript"></script>
 
-<body>
-    <div class="container mt-5">
-        <h2>How to Add Google Map in Laravel? - ItSolutionStuff.com</h2>
-        <div id="map"></div>
-    </div>
 
-    <script type="text/javascript">
+    </head>
+    <body>
+      <div id="map"></div>
+
+      <script type="text/javascript">
+
         function initMap() {
-          const myLatLng = { lat: 22.2734719, lng: 70.7512559 };
-          const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 5,
-            center: myLatLng,
-          });
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 3,
+                center: { lat: -28.024, lng: 140.887 },
+            });
+            const infoWindow = new google.maps.InfoWindow({
+                content: "",
+                disableAutoPan: true,
+            });
+            // Create an array of alphabetical characters used to label the markers.
+            const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            // Add some markers to the map.
+            const markers = locations.map((position, i) => {
+                const label = labels[i % labels.length];
+                const marker = new google.maps.Marker({
+                position,
+                label,
+                });
 
-          new google.maps.Marker({
-            position: myLatLng,
-            map,
-            title: "Hello Rajkot!",
-          });
+                // markers can only be keyboard focusable when they have click listeners
+                // open info window when marker is clicked
+                marker.addListener("click", () => {
+                infoWindow.setContent(label);
+                infoWindow.open(map, marker);
+                });
+                return marker;
+            });
+
+            // Add a marker clusterer to manage the markers.
+            // new MarkerClusterer({ markers, map });
         }
+
+        const locations = [
+            { lat: -31.56391, lng: 147.154312 },
+            { lat: -33.718234, lng: 150.363181 },
+            { lat: -33.727111, lng: 150.371124 },
+            { lat: -33.848588, lng: 151.209834 },
+            { lat: -33.851702, lng: 151.216968 },
+            { lat: -34.671264, lng: 150.863657 },
+            { lat: -35.304724, lng: 148.662905 },
+            { lat: -36.817685, lng: 175.699196 },
+            { lat: -36.828611, lng: 175.790222 },
+            { lat: -37.75, lng: 145.116667 },
+            { lat: -37.759859, lng: 145.128708 },
+            { lat: -37.765015, lng: 145.133858 },
+            { lat: -37.770104, lng: 145.143299 },
+            { lat: -37.7737, lng: 145.145187 },
+            { lat: -37.774785, lng: 145.137978 },
+            { lat: -37.819616, lng: 144.968119 },
+            { lat: -38.330766, lng: 144.695692 },
+            { lat: -39.927193, lng: 175.053218 },
+            { lat: -41.330162, lng: 174.865694 },
+            { lat: -42.734358, lng: 147.439506 },
+            { lat: -42.734358, lng: 147.501315 },
+            { lat: -42.735258, lng: 147.438 },
+            { lat: -43.999792, lng: 170.463352 },
+        ];
 
         window.initMap = initMap;
     </script>
 
-    <script type="text/javascript"
-        src="https://maps.google.com/maps/api/js?key={{ env('AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A') }}&callback=initMap" ></script>
-</body>
-</html> --}}
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&callback=initMap"></script>
+    </body>
+</html>
+
+

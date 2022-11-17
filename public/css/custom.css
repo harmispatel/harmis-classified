@@ -322,8 +322,86 @@
     /* margin: 20px; */
 }
 
+/* csm radio */
+/* .custom-checkbox [type="radio"]:checked,
+.custom-checkbox [type="radio"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.custom-checkbox [type="radio"]:checked + label,
+.custom-checkbox [type="radio"]:not(:checked) + label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+  color: #666;
+}
+
+.custom-checkbox [type="radio"]:checked + label:before,
+.custom-checkbox [type="radio"]:not(:checked) + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #58bb47;
+  border-radius: 100%;
+  background: #fff;
+}
+
+.custom-checkbox [type="radio"]:checked + label:after,
+.custom-checkbox [type="radio"]:not(:checked) + label:after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background: #58bb47;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  border-radius: 100%;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+.custom-checkbox [type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+} */
+
 .property_list_inr_box_img img{
     padding-right: 30px;
     width: 300px !important;
     height: 200px !important;
+}
+.property_fea{
+    padding: 20px 0;
+}
+.property_fea .card{
+    padding: 15px;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+}
+.property_fea .card .list-op,.property_fea .card .list-op .pri-range,.property_fea .card .list-op .bulid-info{
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+/* .property_fea .card .list-op .list-inr-op,.property_fea .card .list-op .pri-range,.property_fea .card .list-op .bulid-info{
+    min-height:230px;
+} */
+.property_fea .card .list-op h3{
+    font-size:18px;
+    font-weight:700;
+    border-bottom: 1px dashed #000;
+    padding-bottom: 5px;
 }

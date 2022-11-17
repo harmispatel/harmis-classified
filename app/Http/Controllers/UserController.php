@@ -22,14 +22,14 @@ class UserController extends Controller
     {
         try {
             $userId = user::with(['hasOneRole']);
-            $rolePermission = PermissionRole::where('role_id',isset($userId->role_id) ? $userId->role_id : '')->get();
+            $rolePermission = PermissionRole::where('role_id',isset($userId->role_id) ? $userId->role_id : '')->orderBy('id','DESC')->get();
             foreach($rolePermission as $permissionValue)
             {
                 $parmissionId = $permissionValue->permission_id;
                 $permissionQuery = Permission::where('id',$parmissionId)->first();
 
             }
-            $showUserData = User::where('id', '!=', 1 )->get();
+            $showUserData = User::where('id', '!=', 1 )->orderBy('id','DESC')->get();
             return view('user_management.user',compact('showUserData','rolePermission'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');

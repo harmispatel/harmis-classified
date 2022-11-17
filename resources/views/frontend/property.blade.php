@@ -18,7 +18,13 @@
                 <div class="col-lg-3 li-page">
                     <div class="listing-check">
                         <div class="list-op">
-                            {{-- <li><a class="dropdown-item" href="#">{{ __('labels.property_list') }}</a> --}}
+                            <h3>{{ __('Search') }}</h3>
+                            <div class="list-inr-op d-flex ">
+                                <input id="search" type="text" placeholder="Search Property..." onkeyup="getPricewiseProperty(this)" name="search" class="form-control me-2"/>
+                                {{-- <button class="btn btn-outline-success" onclick="getPricewiseProperty(this)" type="submit">Search</button> --}}
+                            </div>
+                        </div>
+                        <div class="list-op">
                             <h3>{{ __('Other Options') }}</h3>
                             <div class="list-inr-op">
                                 @forelse ($category as $categoryName)
@@ -134,7 +140,7 @@
                             </div>
                             <button class="btn btn-primary" onclick="clearFilter('floor')">{{__('Clear')}}</button>
                         </div>
-                        <div class="bulid-info">
+                        {{-- <div class="bulid-info">
                             <h3>{{ __('Building Area') }}</h3>
                             <form>
                                 <div class="form-group">
@@ -142,7 +148,7 @@
                                     <input type="range" class="form-control-range" id="formControlRange">
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-md-9 filter-message">
@@ -155,7 +161,7 @@
                         @forelse ($property as $showProperty)
                             <div class="post-wrap col-lg-6 col-md-6" onscroll="getPricewiseProperty()" id="scroll">
                                 <div class="post-item card ">
-                                    <a href="{{ route('propertyDetails',$showProperty->id) }}" class="img-inr">
+                                    <a href="{{ route('propertyDetails',$showProperty->slug) }}" class="img-inr">
                                         <img src="{{ url('MainImage/'.$showProperty->image) }}" class="img-fluid card-img "alt="">
                                         <div class="img-pri-abo">
                                             <h3><i class="fa-solid fa-rupee-sign"></i> <strong>
@@ -174,8 +180,7 @@
                                             <h3 class="card-title mb-1"><a href="#">{{ $showProperty->name }}</a>
                                             </h3>
                                             <p class="post-item-text font-weight-light font-sm">
-                                                {{ $showProperty->hasOneCountry['name'] }},
-                                                {{ $showProperty->haseOneState['name'] }}, {{ $showProperty->address }}
+                                                {{ $showProperty->address }}
                                             </p>
                                         </div>
                                     </div>
@@ -210,7 +215,9 @@
 
         // Infinite Scrolling
         $(window).scroll(function() {
+
             if ($(window).scrollTop() + $(window).height() >= $(document).height() && total != recent) {
+                console.log(recent);
                 page++;
                 limit+=4;
                 getPricewiseProperty("scroll");
@@ -227,7 +234,6 @@
         }
         // Main Function
         function getPricewiseProperty(type="") {
-
             if(type != "scroll")
             {
                 page = 1;
@@ -245,6 +251,7 @@
             var propertyBedRoom = $('input[name="bedroom"]:checked').val();
             var propertyFloor = $('input[name="floor"]:checked').val();
             var category = $('input[name="category"]:checked').val();
+            var search = $('#search').val();
             // set Two Zero after Price using toFixed(2) method:
             var selectPrice = parseFloat($('input[name="priceRange"]').val());
             var afterTwoZero = selectPrice.toFixed(2);
@@ -257,20 +264,21 @@
                 url: "/getpropertybyprice",
                 dataType: 'json',
                 data: {
-                    "_token": "{{ csrf_token() }}",
-                    "price": priceVal,
-                    "localData": localData,
-                    "ajaxId": ajaxId,
-                    "page":page,
-                    "rentSelsPrice": rentSelsPrice,
-                    "category": category,
-                    "propertyCondition": propertyCondition,
-                    "propertyFloor": propertyFloor,
-                    "propertyBedRoom": propertyBedRoom,
-                    "selectPrice": selectPrice,
-                    "limit": limit,
-                    "start": start,
-                    "bedroom": bedroom
+                    "_token"            : "{{ csrf_token() }}",
+                    "price"             : priceVal,
+                    "localData"         : localData,
+                    "ajaxId"            : ajaxId,
+                    "page"              : page,
+                    "rentSelsPrice"     : rentSelsPrice,
+                    "category"          : category,
+                    "propertyCondition" : propertyCondition,
+                    "propertyFloor"     : propertyFloor,
+                    "propertyBedRoom"   : propertyBedRoom,
+                    "selectPrice"       : selectPrice,
+                    "limit"             : limit,
+                    "start"             : start,
+                    "bedroom"           : bedroom,
+                    "search"           : search
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -299,5 +307,4 @@
             });
         });
     </script>
-
 @endsection

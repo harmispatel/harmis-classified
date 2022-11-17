@@ -2,8 +2,8 @@
     {{-- <link rel="shortcut icon" href="{{ asset ('image/favicon.ico')}}" type="image/x-icon"> --}}
 
     <!-- Font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
-
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <!-- css -->
     <link rel="stylesheet" href="{{ asset ('css/bootstrap.min.css')}}"/>
     <link rel="stylesheet" href="{{ asset ('css/animate.css')}}"/>

@@ -36,11 +36,9 @@
                                 @if ($type != 'Add')
                                     @method('PUT')
                                 @endif
-                                <div class="card-body">
-
+                                    <div class="card-body">
                                         <div class="row">
                                             <div class="col">
-
                                                 <label for="exampleInputName">Language Name</label>
                                                 <input type="text" name="name" class="form-control" placeholder="Enter Language Name">
                                                 @if ($errors->has('name'))
@@ -57,25 +55,25 @@
                                                 @endif
                                             </div>
                                             <div class="col">
-                                            <label for="exampleInputStatus">Status</label>
-                                                <select class="form-control" name="status">
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Inactive</option>
-                                                </select>
+                                                <label for="exampleInputStatus">Status</label>
+                                                    <select class="form-control" name="status">
+                                                        <option value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <h4>Labels</h4>
-                                        @foreach ($labels as $label)
-                                            <div class="col-md-6">
-                                                <label for="exampleInputName">{{$label->name}}</label>
-                                                <input type="text" name="labels[{{$label->name}}]" class="form-control" placeholder="Enter Label Name"
-                                                value="{{ $type != 'Add' ? $language->name : '' }}"
-                                                >
+                                            <hr>
+                                            <div class="row">
+                                                <h4>Labels</h4>
+                                                @foreach ($labels as $label)
+                                                    <div class="col-md-6">
+                                                        <label for="exampleInputName">{{$label->name}}</label>
+                                                        <input type="text" name="labels[{{$label->name}}]" class="form-control" placeholder="Enter Label Name"
+                                                        value="{{ $type != 'Add' ? $language->name : '' }}"
+                                                        >
+                                                    </div>
+                                                @endforeach
                                             </div>
-                                            @endforeach
-                                        </div>
                                             {{-- <div class="col">
                                                 <label for="exampleInputStatus">Status</label>
                                                 <select class="form-control" name="status">
@@ -84,7 +82,7 @@
                                                 </select>
                                             </div> --}}
                                         </div>
-                                </div>
+                                    </div>
 
                                 <div class="card-footer">
                                     <a href="{{ route('languages.index') }}" class="btn btn-secondary">Back</a>
@@ -97,5 +95,4 @@
             </div>
         </section>
     </div>
-
 @endsection
