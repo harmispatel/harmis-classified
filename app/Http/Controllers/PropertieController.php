@@ -78,13 +78,9 @@ class PropertieController extends Controller
      */
     public function store(storePropertie $request)
     {
-
         $addPropertyData = new Propertie;
         $addPropertyData->name = $request->name;
         $addPropertyData->slug = Str::slug($request->name);
-        // echo '<pre>';
-        // print_r($addPropertyData->slug);
-        // exit;
         $addPropertyData->category_id = $request->category_id;
         $addPropertyData->user_id = $request->user_id;
         $addPropertyData->property_type = $request->property_type;
@@ -95,6 +91,7 @@ class PropertieController extends Controller
         $addPropertyData->bath = $request->bath;
         $addPropertyData->garage = $request->garage;
         $addPropertyData->build_year = $request->build_year;
+        $addPropertyData->building_area = $request->building_area;
         $addPropertyData->description = $request->description;
         $addPropertyData->price = $request->price;
         $addPropertyData->country_id = $request->country_id;
@@ -125,10 +122,6 @@ class PropertieController extends Controller
         $addPropertyData->save();
 
         return redirect('propertie');
-        try {
-            } catch (\Throwable $th) {
-                return back()->with('error', 'Page Not Found!');
-        }
     }
 
     /**
@@ -173,6 +166,7 @@ class PropertieController extends Controller
         $updatePropertyData->bath = $request->bath;
         $updatePropertyData->garage = $request->garage;
         $updatePropertyData->build_year = $request->build_year;
+        $updatePropertyData->building_area = $request->building_area;
         $updatePropertyData->description = $request->description;
         $updatePropertyData->price = $request->price;
         $updatePropertyData->country_id = $request->country_id;
@@ -201,10 +195,6 @@ class PropertieController extends Controller
         $updatePropertyData->update();
 
         return redirect('propertie');
-        try {
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Page Not Found!');
-        }
     }
 
     /**

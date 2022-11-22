@@ -118,6 +118,7 @@ class PropertyController extends Controller
             $addPropertyData->bath = $request->bath;
             $addPropertyData->garage = $request->garage;
             $addPropertyData->build_year = $request->build_year;
+            $addPropertyData->building_area = $request->building_area;
             $addPropertyData->description = $request->description;
             $addPropertyData->price = $request->price;
             $addPropertyData->country_id = $request->country_id;
@@ -151,14 +152,6 @@ class PropertyController extends Controller
             return back()->with('error', 'Page Not Found!');
         }
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
 
     /**
      * Show the form for editing the specified resource.

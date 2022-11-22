@@ -340,8 +340,8 @@
         })
 
         $(document).ready(function(){
+            $('.pro_info').removeClass("active");
             $('.pro_info').click(function(){
-                $('.pro_info').removeClass("active");
                 $(this).toggleClass("active");
             });
         });

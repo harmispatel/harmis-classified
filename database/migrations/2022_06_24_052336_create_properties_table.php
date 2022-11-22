@@ -30,6 +30,7 @@ class CreatePropertiesTable extends Migration
             $table->tinyInteger('property_condition')->unsigned()->nullable();
             $table->tinyInteger('floor')->nullable();
             $table->year('build_year')->nullable();
+            $table->string('building_area');
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('country_id');
             $table->foreign('country_id')->references('id')->on('countries');

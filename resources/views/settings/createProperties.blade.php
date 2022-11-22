@@ -127,6 +127,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="exampleInputPrice" class="mb-2">Building Area (In SQFT.)</label>
+                                <input type="number" name="building_area" class="form-control mb-2 {{ $errors->has('building_area') ? 'is-invalid' : '' }}" placeholder="Enter Building Area">
+                                @if ($errors->has('building_area'))
+                                    <span class="text-danger">{{ $errors->first('building_area') }}</span>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
                                 <label for="exampleInputPrice">Description</label>
                                 <textarea class="form-control" name="description" id="summernote_1"></textarea>
                                 @if ($errors->has('description'))
@@ -163,8 +171,8 @@
                                 @endif
                             </div>
 
-                                <input type="hidden" id="latitude" name="latitude" class="form-control">
-                                <input type="hidden" name="longitude" id="longitude" class="form-control">
+                            <input type="hidden" id="latitude" name="latitude" class="form-control">
+                            <input type="hidden" name="longitude" id="longitude" class="form-control">
 
                             <div class="form-group">
                                 <label for="exampleInputStatus">Status</label>
