@@ -32,7 +32,7 @@ class Propertie extends Model
     {
         return $this->hasOne(Country::class,'id','country_id');
     }
-    public function haseOneState()
+    public function hasOneState()
     {
         return $this->hasOne(State::class,'id','state_id');
     }
@@ -43,5 +43,13 @@ class Propertie extends Model
     public function hasOneUser()
     {
         return $this->hasOne(User::class,'id','user_id');
+    }
+
+    /**
+     * Bind Relationship with Bookmarks
+     */
+    public function bookmarks()
+    {
+        return $this->belongsTo(Bookmark::class, 'id', 'property_id');
     }
 }

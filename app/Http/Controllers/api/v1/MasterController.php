@@ -20,7 +20,7 @@ class MasterController extends Controller
     {
         try {
             // Get the Active Property Types
-            $categories = Category::select('id', 'name')->where('status', Category::ACTIVE)->get();
+            $categories = Category::select('id', 'name')->where('status', config('global.ACTIVE'))->get();
 
             return $this->sendResponse('true', 'Property Types loaded successfully!', $categories, Response::HTTP_OK);
         } catch (\Throwable $e) {

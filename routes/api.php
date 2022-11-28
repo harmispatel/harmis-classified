@@ -27,3 +27,6 @@ Route::get('/get-property-types', [MasterController::class, 'getCategories']);
 
 // Properties
 Route::get('/get-properties', [PropertyController::class, 'getProperties']);
+Route::get('/get-bookmarks', [PropertyController::class, 'getBookmarks']);
+Route::post('/add-to-bookmarks', [PropertyController::class, 'addToBookmarks']);
+Route::delete('/remove-from-bookmarks', [PropertyController::class, 'removeFromBookmarks']);
