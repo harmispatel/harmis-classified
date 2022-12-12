@@ -11,7 +11,7 @@ Key Features
 3. Multi language support. Unlimited number of languages.
 4. Powerful Permission System: Manage user, role by permissions. Easy to manage user by permissions.
 5. Fully Responsive: Compatible with all screen resolutions.
-7. Google Map: display Google Map With Property data in product list.
+7. Google Map: display Google Map With Property details in product list.
     - Create Google Map Api : https://developers.google.com/maps/documentation/geocoding/get-api-key
 
 
@@ -35,8 +35,8 @@ Admin Pages
 
 1. Dashboard
  - The dashboard page shows Total Property, Total Rent Property, Total Sale Property and Total User.
- 
-2. User list 
+
+2. User list
  - when you click on the user menu, you will see the list of users. And you can add new user and delete and modify user in user menu.
 
 3. Property List
@@ -55,6 +55,6 @@ Admin Pages
   - When you click on the Category menu, Labels page manages labels for languages such as adding new labels for languages, editing labels and deleting labels.
 
 8. Language List
-  - When you click on the Category menu, The language page has a listing of all languages
-  - Add a language Add the value in the language you want to add to the label below the same language as the language you want to add.    
+  - When you click on the Category menu, The language page has a listing of all languages.
+  - Add language, Enter the language you want to add in the input box below. and add its label.
 

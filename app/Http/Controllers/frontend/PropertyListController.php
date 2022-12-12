@@ -55,7 +55,7 @@ class PropertyListController extends Controller
 
         $total = 0;
         $listOfProperty = Propertie::query();
-        
+
         // Property on Rent Sels Filter.
         $listOfProperty->when(!empty($rentSelsPrice), function() use($listOfProperty, $rentSelsPrice, $total) {
             $listOfProperty->where('property_type', $rentSelsPrice);
@@ -164,9 +164,12 @@ class PropertyListController extends Controller
                                                 {
                                                     $html .= __('For Rent');
                                                 }
-                                                else
+                                                elseif($showProperty["property_type"] == 2)
                                                 {
                                                     $html .= __('For Sales');
+                                                }
+                                                else{
+                                                    $html .= '';
                                                 }
                                             $html .='</span>
                                         </div>
@@ -201,9 +204,12 @@ class PropertyListController extends Controller
                                             {
                                                 $listview .= __('For Rent');
                                             }
-                                            else
+                                            elseif($showProperty["property_type"] == 2)
                                             {
                                                 $listview .= __('For Sales');
+                                            }
+                                            else{
+                                                $listview .= '';
                                             }
                                             $listview .='</span>
                                         </div>';
