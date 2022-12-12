@@ -45,7 +45,7 @@ Route::get('/change-language', [LanguageController::class, 'changeLang'])->name(
 
 // Dashboard Route:
 Route::group(['middleware' => ['auth', 'check.user']], function () {
-    
+
     // Dashboard Route:
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
