@@ -1,3 +1,11 @@
+{{--
+    THIS IS CREATE USER PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    createUser.blade.php
+    It Displayed Create New User Form
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Add Users')

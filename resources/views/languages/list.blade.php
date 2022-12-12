@@ -1,3 +1,11 @@
+{{--
+    THIS IS LANGUAGE LIST PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    list.blade.php
+    It Displayed All Laguages List
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'List Language')

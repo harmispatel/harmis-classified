@@ -1,3 +1,11 @@
+{{--
+    THIS IS LOGIN PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    login.blade.php
+    It Displayed Admin Login Form.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +51,6 @@
             </form>
         </div>
     </div>
-
     @include('common.js')
 </body>
 </html>

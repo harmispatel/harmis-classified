@@ -1,3 +1,12 @@
+{{--
+    THIS IS CATEGOY LIST PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    category.blade.php
+    It Displayed All Categoy.
+    ----------------------------------------------------------------------------------------------
+--}}
+
+
 @extends('common.layout')
 
 @section('title', 'List Categories')

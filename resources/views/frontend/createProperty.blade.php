@@ -1,3 +1,14 @@
+{{--
+    THIS IS CREATE PROOERTIES PAGE FOR FRONTSIDE/USERSIDE
+    ----------------------------------------------------------------------------------------------
+    createProperties.blade.php
+
+    Only Agent Can Proerty Create.
+    It Displayed Create New Property Form.
+    ----------------------------------------------------------------------------------------------
+--}}
+
+
 @extends('frontend.common.layout')
 
 @section('title', 'Add Properties')
@@ -42,7 +53,6 @@
                                         <div class="form-group">
                                             <label for="exampleInputCategory" class="mb-2">Category</label>
                                             <select class="form-control mb-2" name="category_id">
-                                                {{-- <option value="1">Hello</option> --}}
                                                 @foreach ($categoryId as $category)
                                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                                 @endforeach
@@ -88,7 +98,7 @@
 
                                         <div class="form-group">
                                             <label for="exampleInputBedroom" class="mb-2">Kitchen</label>
-                                            <input type="number" name="kitchen" class="form-control mb-2 {{ $errors->has('kitchen') ? 'is-invalid' : '' }}" placeholder="Enter Kitchen">
+                                            <input type="number" name="kitchen" class="form-control mb-2 {{ $errors->has('kitchen') ? 'is-invalid' : '' }}" placeholder="Enter Number of Kitchen">
                                             @if ($errors->has('kitchen'))
                                                 <span class="text-danger">{{ $errors->first('kitchen') }}</span>
                                             @endif
@@ -185,8 +195,11 @@
             </div>
         </section>
     </div>
+
+    {{-- Summernote Text Editor js And css --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
           $('#summernote').summernote({
@@ -196,17 +209,15 @@
         });
     </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-        src="https://maps.google.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&libraries=places" ></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&libraries=places" ></script>
 
     <script>
         $(document).ready(function() {
-        $('#country').change(function (){
-            var countryId  = $(this).val();
-
-            $.ajax({
+            $('#country').change(function (){
+                var countryId  = $(this).val();
+                $.ajax({
                     url : "{{ url('getState') }}",
                     data : {
                         "_token": "{{ csrf_token() }}",
@@ -218,35 +229,31 @@
                         $("#state_id").html('');
                         $("#state_id").append(result.html);
                     }
-
                 });
+            });
         });
-    });
 
+        window.onload = function () {
+            //Reference the DropDownList.
+            var ddlYears = document.getElementById("ddlYears");
 
-    window.onload = function () {
-        //Reference the DropDownList.
-        var ddlYears = document.getElementById("ddlYears");
+            //Determine the Current Year.
+            var currentYear = (new Date()).getFullYear();
 
-        //Determine the Current Year.
-        var currentYear = (new Date()).getFullYear();
+            //Loop and add the Year values to DropDownList.
+            for (var i = 1900; i <= currentYear; i++) {
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddlYears.appendChild(option);
+            }
+        };
 
-        //Loop and add the Year values to DropDownList.
-        for (var i = 1900; i <= currentYear; i++) {
-            var option = document.createElement("OPTION");
-            option.innerHTML = i;
-            option.value = i;
-            ddlYears.appendChild(option);
-        }
-    };
-    </script>
-    <script>
         $(document).ready(function () {
             $("#latitudeArea").addClass("d-none");
             $("#longtitudeArea").addClass("d-none");
         });
-        </script>
-    <script>
+
         google.maps.event.addDomListener(window, 'load', initialize);
 
         function initialize() {
@@ -263,5 +270,5 @@
                 $("#longtitudeArea").removeClass("d-none");
             });
         }
-        </script>
+    </script>
 @endsection

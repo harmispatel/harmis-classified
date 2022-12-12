@@ -1,3 +1,11 @@
+{{--
+    THIS IS HEADER/NAVBAR PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    header.blade.php
+    It Is Used For Admin Panel's Top/Navabr Part
+    ----------------------------------------------------------------------------------------------
+--}}
+
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->

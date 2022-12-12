@@ -1,3 +1,11 @@
+{{--
+    THIS IS REGISTER PAGE FOR USER
+    ----------------------------------------------------------------------------------------------
+    register.blade.php
+    It Displayed User Register Form.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('frontend.common.layout')
 
 @section('title', 'Register')

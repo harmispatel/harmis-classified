@@ -1,0 +1,60 @@
+Introduction
+
+
+    The “Real Estate” has been developed to Override the problems prevailing in the practicing manual system. This software is supported to eliminate and, in some cases, reduce the hardships faced by this existing system. Moreover, this system is designed for the need of the to carry Out operations in a smooth and effective manner.
+No formal knowledge is needed for the user to use this system. Thus, by this all it proves it is user-friendly. Real Estate System, as described above, can lead to , secure, reliable and fast management system.
+
+Key Features
+
+1. Page, real estate.. modules are provided with the use of components to avoid boilerplate code.
+2. REST API with Laravel API resources.
+3. Multi language support. Unlimited number of languages.
+4. Powerful Permission System: Manage user, role by permissions. Easy to manage user by permissions.
+5. Fully Responsive: Compatible with all screen resolutions.
+7. Google Map: display Google Map With Property data in product list.
+    - Create Google Map Api : https://developers.google.com/maps/documentation/geocoding/get-api-key
+
+
+Front Pages
+
+1. Homepage
+    - The home page will show a listing of all properties. will show a property filter and property search.
+2. Product detail
+    - Property details page will show the full details of the property that you click on.
+3. Product List
+    - The Product List page will show the property listing. And location marks of all properties will be shown on adjacent Google Maps.
+    - If you clicked on property list then this property showed in map near property list and if you clicked in map location then this location peroperty is highlighted in property list
+    - When you clicked on property location in map then one popup box will be open with property image and then when you clicked on this that image then you will be redirect on that property details page
+4. Property Add
+    - If the agent is logged in, it will show the Add New Property page.
+
+
+Admin Pages
+
+   - When you login as admin you will see all the menus. And from that menu.
+
+1. Dashboard
+ - The dashboard page shows Total Property, Total Rent Property, Total Sale Property and Total User.
+ 
+2. User list 
+ - when you click on the user menu, you will see the list of users. And you can add new user and delete and modify user in user menu.
+
+3. Property List
+    when you click on the propertie menu, The property list page will show all the properties and their details, from there admin can manage properties like create new properties, edit and delete properties.
+
+4. Category List
+  - When you click on the Category menu, The category page shows all categories. And from there all categories are managed like add new category, category edit and category delete.
+
+5. Country List
+  - When you click on the Category menu, The country page shows a list of all countries.
+
+6. State List
+  - When you click on the Category menu, The State page shows a list of all State.
+
+7. Lable List
+  - When you click on the Category menu, Labels page manages labels for languages such as adding new labels for languages, editing labels and deleting labels.
+
+8. Language List
+  - When you click on the Category menu, The language page has a listing of all languages
+  - Add a language Add the value in the language you want to add to the label below the same language as the language you want to add.    
+

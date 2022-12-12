@@ -1,3 +1,11 @@
+{{--
+    THIS IS PROPERTIES PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    propertie.blade.php
+    It Displayed All Propertie List
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'List Propertys')
@@ -39,22 +47,14 @@
                         @foreach ($showPropertiesData as $propertiesData)
                             <tr>
                                 <td class="text-center">
-                                    <img src="{{ url('/MainImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
+                                    <img src="{{ url('public/multiImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
                                 </td>
-                                {{-- <td>
-                                    @php
-                                        $muliImg = explode(" ,",$propertiesData->multiImage);
-                                    @endphp
-                                    @foreach ($muliImg as $images)
-                                        <img src="{{ url('/multiImage/'.$images) }}" style="height: 100px; width: 100px;">
-                                    @endforeach
-                                </td> --}}
                                 <td>{{$propertiesData['name']}}</td>
                                 <td>{{$propertiesData->hasOneCategory['name']}}</td>
                                 <td>{{$propertiesData['price']}}</td>
                                 <td>{{ $propertiesData['property_type'] == 1 ? 'For Rent' : 'For Sale' }}</td>
                                 <td>{{$propertiesData->hasOneCountry['name']}}</td>
-                                <td>{{$propertiesData->haseOneState['name']}}</td>
+                                <td>{{$propertiesData->hasOneState->name}}</td>
                                 <td>{{$propertiesData['address']}}</td>
                                 <td>
                                     <span class="{{ $propertiesData['status'] == 0 ? 'badge badge-danger' : 'badge badge-success' }}">
@@ -95,9 +95,7 @@
                         @endforeach
                     </tbody>
                     </table>
-
                         {!! $showPropertiesData->links() !!}
-
                 </div>
                 </div>
             </div>

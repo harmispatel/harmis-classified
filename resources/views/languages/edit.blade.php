@@ -1,3 +1,10 @@
+{{--
+    THIS IS LANGUAGE EDIT PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    edit.blade.php
+    It Displayed Edit Language Page/Form With Selected Language Data
+    ----------------------------------------------------------------------------------------------
+--}}
 @extends('common.layout')
 
 @if ($type == 'Add')

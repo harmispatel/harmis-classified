@@ -1,3 +1,11 @@
+{{--
+    THIS IS CREATE PROOERTIES PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    createProperties.blade.php
+    It Displayed Create New Property Form.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Add Properties')
@@ -95,21 +103,21 @@
 
                             <div class="form-group">
                                 <label for="exampleInputBedroom">Kitchen</label>
-                                <input type="number" name="kitchen" class="form-control {{ $errors->has('kitchen') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                <input type="number" name="kitchen" class="form-control {{ $errors->has('kitchen') ? 'is-invalid' : '' }}" placeholder="Enter Number of Kitchen">
                                 @if ($errors->has('kitchen'))
                                     <span class="text-danger">{{ $errors->first('kitchen') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputBedroom">Bath</label>
-                                <input type="number" name="bath" class="form-control {{ $errors->has('bath') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                <input type="number" name="bath" class="form-control {{ $errors->has('bath') ? 'is-invalid' : '' }}" placeholder="Enter Number of Bath">
                                 @if ($errors->has('bath'))
                                     <span class="text-danger">{{ $errors->first('bath') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputBedroom">Garage</label>
-                                <input type="number" name="garage" class="form-control {{ $errors->has('garage') ? 'is-invalid' : '' }}" placeholder="Enter Price">
+                                <input type="number" name="garage" class="form-control {{ $errors->has('garage') ? 'is-invalid' : '' }}" placeholder="Enter Number of Garage">
                                 @if ($errors->has('garage'))
                                     <span class="text-danger">{{ $errors->first('garage') }}</span>
                                 @endif

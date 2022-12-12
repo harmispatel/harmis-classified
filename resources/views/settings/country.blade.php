@@ -1,3 +1,11 @@
+{{--
+    THIS IS COUNTRY PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    country.blade.php
+    It Displayed All Country List.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'List Country')

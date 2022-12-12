@@ -23,7 +23,7 @@ class PropertieController extends Controller
     public function index()
     {
         try {
-            $showPropertiesData = Propertie::with(['hasOneCountry','haseOneState','hasOneCategory'])->orderBy('id','DESC')->paginate(10);
+            $showPropertiesData = Propertie::with(['hasOneCountry','hasOneState','hasOneCategory'])->orderBy('id','DESC')->paginate(10);
             return view('settings.propertie',compact('showPropertiesData'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
@@ -99,14 +99,12 @@ class PropertieController extends Controller
         $addPropertyData->address = $request->address;
         $addPropertyData->longitude = $request->longitude;
         $addPropertyData->latitude = $request->latitude;
-        // $addPropertyData->latitude ='latitude';
-        // $addPropertyData->longitude ='longitude';
         $addPropertyData->status = $request->status;
 
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('/MainImage'), $filename);
+            $file-> move(public_path('/multiImage'), $filename);
             $addPropertyData['image']= $filename;
         }
 
@@ -114,7 +112,7 @@ class PropertieController extends Controller
             foreach($request->file('multiImage') as $file)
             {
                 $multiImage = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path().'/multiImage/', $multiImage);
+                $file->move(public_path().'/multiImage', $multiImage);
                 $imgData[] = $multiImage;
             }
             $addPropertyData->multiImage = implode(" ,",$imgData);
@@ -179,7 +177,7 @@ class PropertieController extends Controller
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('MainImage'), $filename);
+            $file-> move(public_path('/multiImage'), $filename);
             $updatePropertyData['image']= $filename;
         }
 
@@ -187,7 +185,7 @@ class PropertieController extends Controller
             foreach($request->file('multiImage') as $file)
             {
                 $multiImage = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path().'/multiImage/', $multiImage);
+                $file->move(public_path().'/multiImage', $multiImage);
                 $imgData[] = $multiImage;
             }
             $updatePropertyData->multiImage = implode(" ,",$imgData);

@@ -1,22 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\PropertieController;
-use App\Http\Controllers\frontend\RegisterController;
-use App\Http\Controllers\frontend\UserLoginController;
-use App\Http\Controllers\frontend\PropertyController;
-use App\Http\Controllers\frontend\PropertyListController;
-use App\Http\Controllers\Frontend\LanguageController;
+use App\Http\Controllers\{ RoleController, CountryController, DashboardController, PropertieController};
+use App\Http\Controllers\frontend\{ RegisterController, UserLoginController, PropertyController, PropertyListController, LanguageController};
 // use App\Http\Controllers\Frontend\SearchController;
 
 // Google map
 use App\Http\Controllers\GoogleController;
+use Illuminate\Support\Facades\Artisan;
 
-Route::view('/summer','frontend.summer');
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +22,13 @@ Route::view('/summer','frontend.summer');
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('config-clear', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    dd("Cache is cleared");
+});
+
 Route::group(['middleware' => ['guest']], function () {
 
     Route::post('/login', [LoginController::class, 'login'])->name('login');
@@ -43,9 +45,9 @@ Route::get('/change-language', [LanguageController::class, 'changeLang'])->name(
 
 // Dashboard Route:
 Route::group(['middleware' => ['auth', 'check.user']], function () {
-
+    
     // Dashboard Route:
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // User Route:
     Route::resource('show_user', 'UserController');
@@ -101,7 +103,7 @@ Route::get('/get-languages',[LanguageController::class,'getLanguages'])->name('g
 // Google map api:
 Route::get('google-autocomplete', [GoogleController::class, 'index']);
 Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
-// Route::view('ind','frontend.HaRealestate.properties');
+
 
 Route::get('set-language', [App\Http\Controllers\LanguageController::class, 'setLanguage']);
 
@@ -109,10 +111,7 @@ Route::get('property-list', [PropertyController::class, 'propertyList'])->name('
 //list Scroll:
 Route::post('list-scroll', [PropertyListController::class, 'listScroll'])->name('listScroll');
 // list Scroll:
-Route::resource('property-details', 'Frontend\PropertyListController');
+Route::resource('property-details', 'frontend\PropertyListController');
 
 Route::get('single-property-details/{id}', [PropertyController::class, 'propertyDetails'])->name('propertyDetails');
 
-// Search Route.
-
-// Route::get('/search', [SearchController::class, 'search'])->name('search');

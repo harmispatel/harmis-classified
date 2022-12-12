@@ -1,3 +1,11 @@
+{{--
+    THIS IS STATE PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    state.blade.php
+    It Displayed All State List
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'List Satates')
@@ -9,9 +17,6 @@
 
         <!-- Main content -->
         <div style = "padding-top:25px">
-            {{-- <div class="text-right mr-3 mb-2">
-                <a href="#" class="btn btn-primary">Add States</a>
-            </div> --}}
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">

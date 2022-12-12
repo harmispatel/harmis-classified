@@ -1,3 +1,11 @@
+{{--
+    THIS IS CREATE CATEGORY PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    createCategory.blade.php
+    It Displayed Add/Create Category Form/Page.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Add Categories')

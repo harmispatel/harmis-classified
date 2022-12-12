@@ -4,11 +4,11 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-// use App\Models\frontend\Property;
-use App\Models\{Propertie, Country, Category};
+use App\Models\{Propertie, Country, Category, State};
 
 //use validation Request Class
 use App\Http\Requests\storePropertie;
+use Illuminate\Support\Str;
 
 class PropertyController extends Controller
 {
@@ -19,7 +19,6 @@ class PropertyController extends Controller
      */
     public function index(Request $request)
     {
-
         try {
         $category = Category::get();
             $propertyMaxPrice = Propertie::max('price');
@@ -28,20 +27,8 @@ class PropertyController extends Controller
             $totalRecords     = Propertie::count();
 
             $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                                ->with(['hasOneCountry','haseOneState','hasOneCategory'])
-                                ->paginate(4);
-
-            // if($request->ajax()){
-
-            //     $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-            //                             ->with(['hasOneCountry', 'haseOneState', 'hasOneCategory'])
-            //                             ->paginate(4);
-
-            //     $view = view('frontend.data',compact('property'))->render();
-
-            //     return response()->json(['html'=>$view]);
-            // }
-            // $ajaxId = isset($request->ajaxId) ? $request->ajaxId : 0;
+                                ->with(['hasOneCountry','hasOneState','hasOneCategory'])
+                                ->paginate(6);
 
             return view('frontend.property', compact(
                 'property',
@@ -52,7 +39,6 @@ class PropertyController extends Controller
                 'category'
             ));
 
-        // if($request->ajax())
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }
@@ -99,9 +85,6 @@ class PropertyController extends Controller
     // Store Property.
     public function store(storePropertie $request)
     {
-        // echo '<pre>';
-        // print_r($request->all());
-        // exit;
         try {
             $user = auth()->User();
             $userId = $user->id;
@@ -131,7 +114,7 @@ class PropertyController extends Controller
             if($request->file('image')){
                 $file= $request->file('image');
                 $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('MainImage'), $filename);
+                $file-> move(public_path('multiImage'), $filename);
                 $addPropertyData['image']= $filename;
             }
 
@@ -149,7 +132,7 @@ class PropertyController extends Controller
 
             return redirect('/');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Page Not Found!');
+            return back()->with('error', 'Something went wrong!');
         }
     }
 
@@ -194,7 +177,7 @@ class PropertyController extends Controller
             if($request->file('image')){
                 $file= $request->file('image');
                 $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('MainImage'), $filename);
+                $file-> move(public_path('multiImage'), $filename);
                 $updatePropertyData['image']= $filename;
             }
 
@@ -216,147 +199,19 @@ class PropertyController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function destroy($id)
     {
         $deleteProprtieData = Propertie::find($id)->delete();
         return redirect('/property');
     }
-
-    /**
-     * Filter the Properties.
-     *
-     */
-    public function getpropertybyprice(Request $request)
-    {
-        try {
-            // Get Data from the Request.
-            $proPrice = $request->price;
-            $rentSelsPic = $request->rentSelsPrice;
-
-
-            $page = $request->page;
-            $category_id = $request->category;
-            $property_condition = $request->propertyCondition;
-            $property_floor = $request->propertyFloor;
-            $bedroom = $request->bedroom;
-            $search = $request->search;
-
-            // Set the Avg Price.
-            $propertyMaxPrice = $request->price;
-            $propertyMinPrice = Propertie::min('price');
-            $PropertyMidPrice = Propertie::avg('price');
-
-            $total = 0;
-            $property = Propertie::query();
-
-            // Property Type Filter.
-            $property->when(!empty($rentSelsPic), function() use($property, $rentSelsPic, $total) {
-                $property->where('property_type', $rentSelsPic);
-                $total += $property->where('property_type', $rentSelsPic)->count();
-            });
-
-            // Property Filter on Category.
-            $property->when(!empty($category_id), function() use($property, $category_id, $total) {
-                $property->where('category_id', $category_id);
-                $total += $property->where('category_id', $category_id)->count();
-            });
-
-            // Property Filter on Property Condition.
-            $property->when(!empty($property_floor), function() use($property, $property_floor, $total) {
-                $property->where('floor', $property_floor);
-                $total += $property->where('floor', $property_floor)->count();
-            });
-
-            // Property Filter on Property Floor.
-            $property->when(!empty($property_condition), function() use($property, $property_condition, $total) {
-                $property->where('property_condition', $property_condition);
-                $total += $property->where('property_condition', $property_condition)->count();
-            });
-
-            // Property Filter on Bedrooms.
-            $property->when(!empty($bedroom), function() use($property, $bedroom, $total) {
-                if ($bedroom == '5+') {
-                    $total += $property->where('bedroom', '>=', 5)->count();
-                    $property->where('bedroom', '>=', 5);
-                } else {
-                    $total += $property->where('bedroom', $bedroom)->count();
-                    $property->where('bedroom', $bedroom);
-                }
-            });
-
-            $property->when(!empty($search), function() use($property, $search, $total) {
-                $property->where('name', 'LIKE', "%{$search}%");
-                $total += $property->where('name', 'LIKE', "%{$search}%")->count();
-            });
-
-            $total += $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])->count();
-
-            $property = $property->whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                                ->limit($request['limit'])
-                                ->offset($request['start'])
-                                ->get();
-
-            // Set HTML Content.
-
-            $html = "";
-
-            foreach($property as $showProperty)
-            {
-                $url = route('propertyDetails',$showProperty->slug);
-                $html .= '<div class="post-wrap col-lg-6 col-md-6">
-                            <div class="post-item card ">
-                                <a href="'.$url.'" class="img-inr">
-                                    <img src="'.asset ("MainImage/$showProperty->image").'" class="img-fluid card-img " alt="">
-                                    <div class="img-pri-abo">
-                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
-                                    </div>
-                                    <div class="re-img">
-                                        <div class="re-text">
-                                            <span>';
-                                                if($showProperty["property_type"] == 1)
-                                                {
-                                                    $html .= __('For Rent');
-                                                }
-                                                else
-                                                {
-                                                    $html .= __('For Sales');
-                                                }
-                                            $html .='</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="card-body jo-card">
-                                    <div class="jo-card-bor">
-                                        <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
-                                        <p class="post-item-text font-weight-light font-sm">'. $showProperty->address.'</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
-            }
-
-            if ($request->ajax()) {
-                return response()->json([
-                    'html' => $html,
-                    'records' => count($property),
-                    'total' => $total
-
-                ]);
-            } else {
-                // TODO: Return View Here.
-                // return view()
-            }
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Page Not Found!');
-        }
-    }
+    
     // List of Property end Map.
-    public function propertyList(Request $request)
+    public function propertyList()
     {
         try {
             return view("frontend.PropertyList");
@@ -364,15 +219,18 @@ class PropertyController extends Controller
             return back()->with('error', 'Page Not Found!');
         }
     }
-    public function propertyDetails(Request $request, $slug)
-    {
 
+    /**
+    * Show the property details.
+    *
+    * @param  string  $slug
+    * @return \Illuminate\Http\Response
+    */
+    public function propertyDetails($slug)
+    {
         $propertyDetails = Propertie::where('slug',$slug)
-                        ->with(['hasOneCountry','haseOneState','hasOneCategory', 'hasOneUser'])
-                        ->first();
-                        // echo '<pre>';
-                        // print_r($propertyDetails->hasOneUser['image']);
-                        // exit;
+                        ->with(['hasOneCountry','hasOneState','hasOneCategory', 'hasOneUser'])
+                        ->first();                        
         return view('frontend.propertiesDetails', compact('propertyDetails'));
     }
 }

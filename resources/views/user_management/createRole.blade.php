@@ -1,3 +1,11 @@
+{{--
+    THIS IS CREATE ROLE PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    createRole.blade.php
+    It Displayed Create New Role Form
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Add Roles')

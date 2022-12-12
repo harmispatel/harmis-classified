@@ -1,3 +1,11 @@
+{{--
+    THIS IS EDIT PROPERTIES PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    editProperties.blade.php
+    It Displayed Selected Edit Property Form With Selected Data.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Add Properties')
@@ -15,10 +23,6 @@
                         </div>
                         <form action="{{route('propertie.update',$editPropertiesData->id)}}" id="quickForm" method="POST" enctype="multipart/form-data">
                             @csrf
-                            {{-- @php
-                                echo "<pre>";
-                                print_r($editPropertiesData);exit;
-                            @endphp --}}
                             {{ method_field('PUT') }}
                             <div class="card-body">
                             <div class="form-group">
@@ -31,7 +35,7 @@
                             <div class="form-group">
                                 <label for="exampleInputImage">Main Image</label>
                                 <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
-                                <img src="{{ url('MainImage/'.$editPropertiesData->image) }}" style="height: 100px; width: 60px; margin-top: 20px;">
+                                <img src="{{ url('public/multiImage/'.$editPropertiesData->image) }}" style="height: 100px; width: 60px; margin-top: 20px;">
                                 @if ($errors->has('image'))
                                     <span class="text-danger">{{ $errors->first('image') }}</span>
                                 @endif
@@ -43,7 +47,7 @@
                                     $multiImage = explode(" ,",$editPropertiesData->multiImage);
                                 @endphp
                                 @foreach ($multiImage as $images)
-                                <img src="{{ url('/multiImage/'.$images) }}" style="height: 100px; width: 100px; margin-top: 20px;">
+                                    <img src="{{ url('public/multiImage/'.$images) }}" style="height: 100px; width: 100px; margin-top: 20px;">
                                 @endforeach
                                 @if ($errors->has('multiImage'))
                                     <span class="text-danger">{{ $errors->first('multiImage') }}</span>

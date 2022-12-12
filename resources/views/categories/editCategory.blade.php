@@ -1,3 +1,11 @@
+{{--
+    THIS IS EDIT CATEGORY PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    editCategory.blade.php
+    It Displayed Edit/Update Category Form/Page With Selected Category Data.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Edit Categpries')

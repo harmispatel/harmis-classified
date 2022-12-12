@@ -11,10 +11,14 @@ use App\Models\{User, Role};
 use Illuminate\Support\Facades\Hash;
 
 // Request Class
-use App\Http\Requests\StoreRegister;
+use App\Http\Requests\storeRegister;
 
 class RegisterController extends Controller
 {
+
+    /**
+    * User Register .
+    */
     public function index()
     {
         try {
@@ -26,7 +30,11 @@ class RegisterController extends Controller
             return back()->with('error', 'Page Not Found!');
         }
     }
-
+   /**
+    * Authenticate the User.
+    *
+    * @param storeRegister $request
+    */
     public function create(storeRegister $request)
     {
         try {

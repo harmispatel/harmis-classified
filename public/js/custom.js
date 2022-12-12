@@ -1,30 +1,27 @@
 $(function () {
 
-    $(window).on('scroll', function () {
-        if ($('.header').length) {
-            var headerScrollPos = 100;
-            var stricky = $('.header');
-            if ($(window).scrollTop() > headerScrollPos) {
-                stricky.addClass('header-sticky');
-            } else if ($(this).scrollTop() <= headerScrollPos) {
-                stricky.removeClass('header-sticky');
-            }
-        }
-        if ($('.scroll-to-top').length) {
-            var strickyScrollPos = 100;
-            if ($(window).scrollTop() > strickyScrollPos) {
-                $('.scroll-to-top').fadeIn(500);
-            } else if ($(this).scrollTop() <= strickyScrollPos) {
-                $('.scroll-to-top').fadeOut(500);
-            }
-        }
+    // sticky header
+    // $(window).on('scroll', function () {
+    //     if ($('.header').length) {
+    //         var headerScrollPos = 100;
+    //         var stricky = $('.header');
+    //         if ($(window).scrollTop() > headerScrollPos) {
+    //             stricky.addClass('header-sticky');
+    //         } else if ($(this).scrollTop() <= headerScrollPos) {
+    //             stricky.removeClass('header-sticky');
+    //         }
+    //     }
+    //     if ($('.scroll-to-top').length) {
+    //         var strickyScrollPos = 100;
+    //         if ($(window).scrollTop() > strickyScrollPos) {
+    //             $('.scroll-to-top').fadeIn(500);
+    //         } else if ($(this).scrollTop() <= strickyScrollPos) {
+    //             $('.scroll-to-top').fadeOut(500);
+    //         }
+    //     }
+    // });
 
-    });
-
-
-
-
-
+    // swiper slider
     let homeSlideSwiper = new Swiper(".home-slide .swiper", {
         spaceBetween: 0,
         speed: 500,
@@ -43,25 +40,3 @@ $(function () {
     })
 })
 
-jQuery( "#load" ).click(function() {
-    var token = document.getElementsByName("_token")[0].value;
-    var name = "yogesh";
-
-    $.ajax({
-        type:"POST",
-        url: "/infinitescroll",
-        dataType:   'json',
-        data: {
-            "_token": token,
-            // "name": name,
-
-        },
-        dataType: 'json',
-        success: function(res){
-            // alert(priceVal)
-            // console.log(res);
-
-       }
-    });
-    // alert( token );
-  });

@@ -1,3 +1,16 @@
+{{--
+    THIS IS LAYOUT PAGE FOR ADMINPANEL
+    ----------------------------------------------------------------------------------------------
+    layout.blade.php
+    It's Included Some layout like..
+    - head
+    - header
+    - layout
+    - footer
+    - script
+    ----------------------------------------------------------------------------------------------
+--}}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,3 +1,11 @@
+{{--
+    THIS IS EDIT USER PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    editUser.blade.php
+    It Displayed Selected User Data
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'Edit Users')
@@ -32,7 +40,7 @@
                   <div class="form-group">
                     <label for="exampleInputImage">Image</label>
                     <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
-                    <img src="{{ url('/UserImage/'.$editUserData->image) }}" style="height: 100px; width: 100px; margin-top: 20px;">
+                    <img src="{{ url('public/userimage/'.$editUserData->image) }}" style="height: 100px; width: 100px; margin-top: 20px;">
                     @if ($errors->has('image'))
                         <span class="text-danger">{{ $errors->first('image') }}</span>
                     @endif
@@ -61,10 +69,6 @@
                             <option value="{{$role->id}}">{{$role->name}}</option>
                         @endforeach
                     </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword">Password</label>
-                    <input type="password" name="password" class="form-control" value="{{$editUserData->password}}" placeholder="Enter Password">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputStatus">Status</label>

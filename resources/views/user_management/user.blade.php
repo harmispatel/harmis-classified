@@ -1,3 +1,11 @@
+{{--
+    THIS IS USER PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    user.blade.php
+    It Displayed All User List
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'List Users')
@@ -8,9 +16,7 @@
     <div style="padding-top: 25px">
         <div class="text-right mr-3 mb-2">
             @php
-             $empty_array = array();
-                // echo "<pre>";
-                //     print_r($rolePermission);exit;
+                $empty_array = array();
             @endphp
             @foreach ($rolePermission as $permission)
                     @php
@@ -18,21 +24,8 @@
                         $permissionQuery = getPermissionValue($userPermission);
                         $empty_array =$permissionQuery->name;
                     @endphp
-
-            {{-- @php
-                exit;
-            @endphp --}}
-                {{-- @if ($permissionQuery->name == 'Add User')
-                @endif --}}
-
-                @endforeach
-                <a href="{{route('show_user.create')}}" class="btn btn-primary">Add Users</a>
-
-            {{-- @php
-                print_r($empty_array);
-            @endphp --}}
-
-
+            @endforeach
+        <a href="{{route('show_user.create')}}" class="btn btn-primary">Add Users</a>
         </div>
         <section class="content">
         <div class="container-fluid">
@@ -61,7 +54,7 @@
                         @foreach ($showUserData as $userData)
                         <tr>
                             <td class="text-center">
-                                <img src="{{ url('/UserImage/'.$userData->image) }}" style="height: 100px">
+                                <img src="{{ url('public/userimage/'.$userData->image) }}" style="height: 100px">
                             </td>
                             <td>{{$userData['name']}}</td>
                             <td>{{$userData['email']}}</td>

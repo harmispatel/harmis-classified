@@ -1,3 +1,12 @@
+{{--
+    THIS IS EDIT ROLE PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    editRole.blade.php
+    It Displayed Selected Role Data Form.
+    ----------------------------------------------------------------------------------------------
+--}}
+
+
 @extends('common.layout')
 
 @section('title', 'Edit Roles')

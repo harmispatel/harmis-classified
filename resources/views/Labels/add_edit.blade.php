@@ -1,3 +1,13 @@
+{{--
+    THIS IS LABLES ADD/EDIT PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    add_edit.blade.php
+    It Displayed Add Lable Page/Form
+    If Click Edit Button It Displayed Edit Form/Page With Selected Lageage Data
+    ----------------------------------------------------------------------------------------------
+--}}
+
+
 @extends('common.layout')
 
 @if ($type == 'Add')

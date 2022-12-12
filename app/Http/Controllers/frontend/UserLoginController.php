@@ -9,15 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UserLoginController extends Controller
 {
-    public function index()
-    {
-        try {
-            return view('frontend.common.layout');
-        } catch (\Throwable $th) {
-            return back()->with('error', 'Page Not Found!');
-        }
-    }
 
+    /**
+     * Change the Language.
+     *
+     * @return view user login view
+     * @return view/frontend/auth/login
+    */
     public function show()
     {
         try {
@@ -28,10 +26,10 @@ class UserLoginController extends Controller
     }
 
     /**
-     * Authenticate the User.
-     *
-     * @param LoginRequest $request
-     */
+    * Authenticate the User.
+    *
+    * @param LoginRequest $request
+    */
     public function login(LoginRequest $request)
     {
         try {
@@ -39,7 +37,7 @@ class UserLoginController extends Controller
 
             // Login the User
             if (Auth::attempt($credentials)) {
-                return redirect('/');
+                return redirect()->route('showProperty');
             } else {
                 return back();
             }
@@ -48,6 +46,9 @@ class UserLoginController extends Controller
         }
     }
 
+    /**
+    * Admin Logout.
+    */
     public function logout()
     {
         try {
@@ -58,6 +59,9 @@ class UserLoginController extends Controller
         }
     }
 
+    /**
+    * User Logout.
+    */
     public function userLogout()
     {
         try {

@@ -1,3 +1,11 @@
+{{--
+    THIS IS ROLE PAGE FOR ADMIN PANEL
+    ----------------------------------------------------------------------------------------------
+    role.blade.php
+    It Displayed All Role List
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('common.layout')
 
 @section('title', 'List Roles')

@@ -72,7 +72,7 @@ class UserController extends Controller
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('/UserImage'), $filename);
+            $file-> move(public_path('/userimage'), $filename);
             $addUserData['image']= $filename;
         }
 
@@ -119,13 +119,12 @@ class UserController extends Controller
             $addUserData->gender=$request->gender;
             $addUserData->mobile=$request->mobile;
             $addUserData->role_id=$request->role;
-            $addUserData->password=bcrypt(request('password'));
             $addUserData->status=$request->status;
 
             if($request->file('image')){
                 $file= $request->file('image');
                 $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('/UserImage'), $filename);
+                $file-> move(public_path('/userimage'), $filename);
                 $addUserData['image']= $filename;
             }
 

@@ -1,3 +1,11 @@
+{{--
+    THIS IS LOGIN PAGE FOR USER
+    ----------------------------------------------------------------------------------------------
+    login.blade.php
+    It Displayed User Login Form.
+    ----------------------------------------------------------------------------------------------
+--}}
+
 @extends('frontend.common.layout')
 
 @section('title', 'Login')
@@ -28,7 +36,7 @@
 
                             <div class="mt-4 align-items-center d-flex justify-content-between">
                                 <button type="submit" class="btn btn-primary">{{__('labels.login')}}</button>
-                                <a href="{{ route('register') }}" style="text-decoration: none;">{{__('labels.register')}}</a>
+                                <a href="{{ route('register') }}/" style="text-decoration: none;">{{__('labels.register')}}</a>
                             </div>
                         </form>
                     </div>

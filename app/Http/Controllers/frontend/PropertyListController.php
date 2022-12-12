@@ -9,73 +9,53 @@ use App\Models\{Propertie, Category};
 class PropertyListController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index(Request $request)
     {
-        $totalRecords = Propertie::count();
-        // $proDataList = Propertie::get();
-        $category = Category::get();
-            $propertyMaxPrice = Propertie::max('price');
-            $propertyMinPrice = Propertie::min('price');
-            $PropertyMidPrice = Propertie::avg('price');
-            $totalRecords     = Propertie::count();
+        $totalRecords      = Propertie::count();
+        $category          = Category::get();
+        $propertyMaxPrice  = Propertie::max('price');
+        $propertyMinPrice  = Propertie::min('price');
+        $PropertyMidPrice  = Propertie::avg('price');
+        $totalRecords      = Propertie::count();
 
-// For Scroll:
-
-        return view('frontend.propertyList', compact(
+        return view('frontend.PropertyList', compact(
             'totalRecords',
-            // 'proDataList',
             'category',
             'propertyMaxPrice',
             'propertyMinPrice',
             'PropertyMidPrice',
         ));
-
-// For Scroll:
     }
 
-    // Store Property.
-    public function store(Request $request)
-    {
-       //
-    }
 
+    /**
+    * Property Listing by Scrolling.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function listScroll(Request $request)
     {
-
         $category = Category::get();
-            $propertyMaxPrice = Propertie::max('price');
-            $propertyMinPrice = Propertie::min('price');
-            // $PropertyMidPrice = Propertie::avg('price');
-            $totalRecords     = Propertie::count();
+        $propertyMinPrice = Propertie::min('price');
 
         // Get Data from the Request.
         $proPrice = $request->price;
 
         $rentSelsPrice = $request->rentSelsPrice;
-        $page = $request->page;
         $category_id = $request->category;
         $property_condition = $request->propertyCondition;
         $property_floor = $request->propertyFloor;
         $bedroom = $request->propertyBedRoom;
         $search = $request->search;
-
-
-
-
-        $page = $request->page;
-        $limit = 4;
         $start = ($request->start);
-
-
 
         $total = 0;
         $listOfProperty = Propertie::query();
-
-
+        
         // Property on Rent Sels Filter.
         $listOfProperty->when(!empty($rentSelsPrice), function() use($listOfProperty, $rentSelsPrice, $total) {
             $listOfProperty->where('property_type', $rentSelsPrice);
@@ -125,94 +105,131 @@ class PropertyListController extends Controller
                             ->offset($request['start'])
                             ->get();
 
-
-
-// Rent Sels Price Filter:
-        // if($rentSelsPic == 0) {
-        //     $total = Propertie::with('hasOneCountry','haseOneState','hasOneCategory')->count();
-
-        //     $listOfProperty = Propertie::with('hasOneCountry','haseOneState','hasOneCategory')
-        //     ->limit($limit)
-        //     ->offset($start)
-        //     ->get();
-        // } else {
-        //     $total = Propertie::where('property_type', $rentSelsPic)->with('hasOneCountry','haseOneState','hasOneCategory')->count();
-
-        //     $listOfProperty = Propertie::where('property_type', $rentSelsPic)->with('hasOneCountry','haseOneState','hasOneCategory')
-        //     ->limit($limit)
-        //     ->offset($start)
-        //     ->get();
-        // }
-// Property Condition Used, New:
-        // if($propertyCondition == 0) {
-        //     $total = Propertie::with('hasOneCountry','haseOneState','hasOneCategory')->count();
-
-        //     $listOfProperty = Propertie::with('hasOneCountry','haseOneState','hasOneCategory')
-        //     ->limit($limit)
-        //     ->offset($start)
-        //     ->get();
-        // } else {    $total = Propertie::where('property_condition', $propertyCondition)->with('hasOneCountry','haseOneState','hasOneCategory')->count();
-
-        //     $listOfProperty = Propertie::where('property_condition', $propertyCondition)->with('hasOneCountry','haseOneState','hasOneCategory')
-        //     ->limit($limit)
-        //     ->offset($start)
-        //     ->get();
-        // }
-
-
-// Condition New, Used:
-        //Set HTML Content.
-
-        $html = "";
-
-        foreach($listOfProperty as $key => $PropertyList)
-        {
-
-            $html .='
-                    <div class="property_list_inr_box post-grid" onclick="myClick('.$start.');">
-                        <div id="property'.$PropertyList->id.'" class="property_detail_inr_info">
-                            <div class="property_list_inr_box_img">
-                                <div class="property_list_img">
-                                    <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
-                                        <img src="'. "mainImage/".''.$PropertyList->image.'" alt="">
-                                    </a>
+       $html = "";
+       $listview = "";
+        if ($request->request_page != 'propertyHome') {
+            foreach($listOfProperty as $key => $PropertyList)
+            {
+                // Property list
+                $html .='<div class="property_list_inr_box post-grid" onclick="myClick('.$start.');">
+                            <div id="property'.$PropertyList->id.'" class="property_detail_inr_info">
+                                <div class="property_list_inr_box_img">
+                                    <div class="property_list_img">
+                                        <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
+                                            <img src="'. asset("public/multiImage/".''.$PropertyList->image).'" alt="">
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="property_list_inr_box_info">
-                                <div class="property_detail">
-                                    <div class="sl-item highlighted">
-                                        <div class="property_name">
-                                            <h2>'.$PropertyList->name.'</h2>
-                                        </div>
-                                        <div class="property_detail_inr">
-                                            <span>'. __("BedRooms") .':-'. $PropertyList->bedroom.'</span>
-                                        </div>
-                                        <div class="property_detail_inr">
-                                            <span>'. __('Floor').':-'.$PropertyList->floor.'</span>
-                                        </div>
-                                        <div class="property_detail_inr">
-                                            <span>'. __('Addres') .':-';
-                                            $html .='</span>';
-                                            $html .='<span onclick="myClick('.$start.')">'. $PropertyList->address .'</span>
+                                <div class="property_list_inr_box_info">
+                                    <div class="property_detail">
+                                        <div class="sl-item highlighted">
+                                            <div class="property_name">
+                                                <h2>'.$PropertyList->name.'</h2>
+                                            </div>
+                                            <div class="property_detail_inr">';
+                                            $html .=  ($PropertyList->bedroom != 0 && !empty($PropertyList->bedroom)) ? "<span>". __('BedRooms') .":-". $PropertyList->bedroom."</span>" : '';
+                                            $html .= '</div>
+                                            <div class="property_detail_inr">';
+                                            $html .= ($PropertyList->floor != '' && !empty($PropertyList->floor)) ? "<span>". __('Floor').":-".$PropertyList->floor."</span>" : '';
+                                            $html .= '</div>
+                                            <div class="property_detail_inr">
+                                                <span>'. __('Addres') .':-';
+                                                $html .='</span>';
+                                                $html .='<span onclick="myClick('.$start.')">'. $PropertyList->address .'</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>';
+                        $start++;
+            }
+        }
+        else{
+            foreach($listOfProperty as $showProperty)
+            {
+                $url = route('propertyDetails',$showProperty->slug);
+                // Grid view for Home Page
+                $html .='<div class="item" onscroll="getPricewiseProperty()" id="scroll">
+                             <div class="post-item card ">
+                                <a href="'.$url.'" class="img-inr">
+                                    <img src="'.asset("public/multiImage/$showProperty->image").'" class="img-fluid card-img " alt="">
+                                    <div class="img-pri-abo">
+                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
+                                    </div>
+                                    <div class="re-img">
+                                        <div class="re-text">
+                                            <span>';
+                                                if($showProperty["property_type"] == 1)
+                                                {
+                                                    $html .= __('For Rent');
+                                                }
+                                                else
+                                                {
+                                                    $html .= __('For Sales');
+                                                }
+                                            $html .='</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="card-body jo-card">
+                                    <div class="jo-card-bor">
+                                        <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
+                                        <p class="post-item-text font-weight-light font-sm">'. $showProperty->address.'</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+
+                    // List View for Home Page
+                    $listview .='<div class="col-md-4 mb-3 onscroll="getPropertyList()" id="scroll"">
+                        <div class="list_img">
+                            <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
+                                <img src="'. url('public/multiImage/'.$showProperty->image) .'" alt="">
+                            </a>
                         </div>
+                    </div>
+                    <div class="col-md-8">
+                        <a href="'. route('propertyDetails',$showProperty->slug) .'" class="text-dark" style="text-decoration: none;">
+                            <div class="list_pro_info">
+                                <div class="property_detail">
+                                    <div class="sl-item highlighted">
+                                        <div class="property_name">
+                                            <h2 class="d-inline-block">'. $showProperty->name .'</h2>
+                                            <span class="ms-2">';
+                                            if($showProperty["property_type"] == 1)
+                                            {
+                                                $listview .= __('For Rent');
+                                            }
+                                            else
+                                            {
+                                                $listview .= __('For Sales');
+                                            }
+                                            $listview .='</span>
+                                        </div>';
+                                        $listview .= ($showProperty->floor != '' && !empty($showProperty->floor)) ? '<div class="property_detail_inr"><span>Floor:-</span><span>'.$showProperty->floor.'</span></div>' : '';
+                                        $listview .= ($showProperty->bedroom != '' && !empty($showProperty->bedroom)) ? '<div class="property_detail_inr"><span>Bedroom:-</span><span>'.$showProperty->bedroom.'</span></div>' : '';
+                                        $listview .= ($showProperty->building_area != 0 && !empty($showProperty->building_area)) ? '<div class="property_detail_inr"><span>sq.ft.:-</span><span>'.$showProperty->building_area.'</span></div>' : '';
+                                        $listview .= ($showProperty->price != 0 && !empty($showProperty->price)) ? '<div class="property_detail_inr"><span>Price:-</span><span>'.$showProperty->price.'</span></div>' : '';
+                                        $listview .= '<div class="property_detail_inr">
+                                            <span>Addres:-</span><span onclick="myClick('.$start.')">'. $showProperty->address .'</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </div>';
-                    $start++;
+            }
         }
         if ($request->ajax()) {
             return response()->json([
                 "html" => $html,
+                "listview" => $listview,
                 "propertyList" => $listOfProperty,
                 "records" => count($listOfProperty),
                 "total" => $total,
                 "category" => $category
             ]);
-        } else {
-            // TODO: Return View Here.
-            // return view()
         }
         return back()->with("error", "Page Not Found!");
     }
