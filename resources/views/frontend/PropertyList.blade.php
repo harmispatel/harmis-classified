@@ -271,12 +271,9 @@
     </div>
 </div>
 
-    {{-- clusterd / Googal Map Api--}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-    <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js"></script>
-    {{-- clusterd --}}
+@endsection
 
+@section('js')
     <script type="text/javascript">
         var limit = 4;
         var start = 0;
@@ -383,17 +380,17 @@
             $("input[name='propertyBedroom']:checked").each(function() {
                 bedroomInput.push($(this).val());
             });
-           
+
             getPropertyList();
         }
 
 
         // Property Floor Multi Select.
-        function selectedFloor(type){            
+        function selectedFloor(type){
             if (type == 1) {
                 $("input[name='propertyFloor']").prop('checked', false);
             }
-            
+
             if(markerCluster){
                 markerCluster.removeMarkers(markers);
             }
@@ -549,12 +546,12 @@
                                 }
 
                                 // Map marker click and show propery detail
-                                infoWindow.setContent('<div class="post-item card"><a href="{{ url("single-property-details") }}/'+ propertyData.slug +'"><img src="public/multiImage/'+ propertyData.image +'"><div class="re-img"><div class="re-text"><span>'+ property_type +'</span></div></div><div class="img-pri-abo"><h3><i class="fa-solid fa-rupee-sign"></i> <strong>'+ propertyData.price +'</strong></h3></div></a></div><div class="pro_inr_map"><h4><b> '+ propertyData.name +'</b></h4></div>');
+                                infoWindow.setContent('<div class="post-item card"><a href="{{ asset("single-property-details") }}/'+ propertyData.slug +'"><img src="public/multiImage/'+ propertyData.image +'"><div class="re-img"><div class="re-text"><span>'+ property_type +'</span></div></div><div class="img-pri-abo"><h3><i class="fa-solid fa-rupee-sign"></i> <strong>'+ propertyData.price +'</strong></h3></div></a></div><div class="pro_inr_map"><h4><b> '+ propertyData.name +'</b></h4></div>');
                                 infoWindow.open(map, marker);
 
                                 $('.property_detail_inr_info').removeClass("active");
                                 $('#property'+propertyData.id).addClass("active");
-                                
+
                                 // map marker click scrolling property list and showing top selected property.
                                 document.getElementById('map-property-lists').getElementsByClassName('active')[0].scrollIntoView({behavior: "smooth"})
                                 infoWindow.addListener('closeclick', ()=>{
@@ -730,12 +727,8 @@
 
         $("#priceDiv").on("click", function(event){
             event.stopPropagation();
-        });             
+        });
 
     </script>
 
-    {{-- google map api kay='enter google map api key' --}}
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&callback=initMap&v=weekly"></script>
-    {{-- <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&callback=initMap&v=weekly"></script> --}}
 @endsection

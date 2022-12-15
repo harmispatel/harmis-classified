@@ -27,27 +27,22 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table class="table table-bordered">
+                                    <table class="table table-striped table-hover" id="countryTable">
                                         <thead>
                                             <tr>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                            {{-- <th class="text-right">Actions</th> --}}
+                                                <th>Name</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($showStateData as $stateData)
                                                 <tr>
-                                                    <td>{{$stateData['name']}}</td>
+                                                    <td>{!!$stateData['name']!!}</td>
                                                     <td>
                                                         <span class="{{ $stateData['status'] == 0 ? 'badge badge-danger' : 'badge badge-success' }}">
                                                             {{ $stateData['status'] == 0 ? 'Inactive' : 'Active' }}
                                                         </span>
                                                     </td>
-                                                    {{-- <td class="text-right">
-                                                        <a href="{{ route('show_role.edit',$stateData->id) }}" title="Edit" class="mr-2"><i class="fas fa-edit"></i></a>
-                                                        <i class="fa fa-trash text-danger" data-toggle="modal" style="cursor: pointer;" data-target="#exampleModal" title="Delete"></i>
-                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -85,4 +80,12 @@
         </div>
     </div>
 
+@endsection
+
+@section('js')
+<script>
+    $(document).ready( function () {
+        $('#countryTable').DataTable();
+    });
+</script>
 @endsection

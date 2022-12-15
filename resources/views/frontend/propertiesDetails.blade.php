@@ -32,26 +32,26 @@
                     <div class="gallery">
                         <div class="swiper-container gallery-slider">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="{{ url('public/multiImage/'.$propertyDetails->image) }}" alt=""></div>
+                                <div class="swiper-slide"><img src="{{ asset('public/multiImage/'.$propertyDetails->image) }}" alt=""></div>
                                 @foreach ($muliImg as $images)
                                     <div class="carousel-item">
-                                        <img src="{{ url('public/multiImage/'.$images) }}" class="d-block w-100" height="100%" alt="...">
+                                        <img src="{{ asset('public/multiImage/'.$images) }}" class="d-block w-100" height="100%" alt="...">
                                     </div>
-                                    <div class="swiper-slide"><img src="{{ url('public/multiImage/'.$images) }}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{{ asset('public/multiImage/'.$images) }}" alt=""></div>
                                 @endforeach
                             </div>
                             <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
                         </div>
-                
+
                         <div class="swiper-container gallery-thumbs">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="{{ url('public/multiImage/'.$propertyDetails->image) }}" alt=""></div>
+                                <div class="swiper-slide"><img src="{{ asset('public/multiImage/'.$propertyDetails->image) }}" alt=""></div>
                                 @foreach ($muliImg as $images)
                                     <div class="carousel-item">
-                                        <img src="{{ url('public/multiImage/'.$images) }}" class="d-block w-100" height="100%" alt="...">
+                                        <img src="{{ asset('public/multiImage/'.$images) }}" class="d-block w-100" height="100%" alt="...">
                                     </div>
-                                    <div class="swiper-slide"><img src="{{ url('public/multiImage/'.$images) }}" alt=""></div>
+                                    <div class="swiper-slide"><img src="{{ asset('public/multiImage/'.$images) }}" alt=""></div>
                                 @endforeach
                             </div>
                         </div>
@@ -63,13 +63,13 @@
                                     <span class="category">{{$propertyDetails->hasOneCategory['name']}}</span>
                                 </li>
                                 <li>
-                                    <span class="bed">{{$propertyDetails->bedroom}} Bed</span>
+                                    <span class="bed">{{$propertyDetails->bedroom}} {{ __('Bed') }}</span>
                                 </li>
                                 <li>
-                                    <span class="bath">{{$propertyDetails->bath}} Bath</span>
+                                    <span class="bath">{{$propertyDetails->bath}} {{__('Bath')}}</span>
                                 </li>
                                 <li>
-                                    <span class="garage">{{$propertyDetails->garage}} Garage</span>
+                                    <span class="garage">{{$propertyDetails->garage}} {{__('Garage')}}</span>
                                 </li>
                             </ul>
                             <h2>{{$propertyDetails->name}}</h2>
@@ -95,19 +95,19 @@
                         <ul class="feature_ul row">
                             <li class="col-lg-4 col-md-6">
                                 <i class="fa-solid fa-bed"></i>
-                                <span>{{$propertyDetails->bedroom}} Bedrooms</span>
+                                <span>{{$propertyDetails->bedroom}} {{__('Bedrooms')}}</span>
                             </li>
                             <li class="col-lg-4 col-md-6">
                                 <i class="fa-solid fa-building"></i>
-                                <span>{{$propertyDetails->floor}} Floor</span>
+                                <span>{{$propertyDetails->floor}} {{__('Floor')}}</span>
                             </li>
                             <li class="col-lg-4 col-md-6">
                                 <i class="fa-solid fa-kitchen-set"></i>
-                                <span>{{$propertyDetails->kitchen}} Kitchen</span>
+                                <span>{{$propertyDetails->kitchen}} {{__('Kitchen')}}</span>
                             </li>
                             <li class="col-lg-4 col-md-6">
                                 <i class="fa-solid fa-car"></i>
-                                <span>{{$propertyDetails->garage}} Car Parking</span>
+                                <span>{{$propertyDetails->garage}} {{__('Car Parking')}}</span>
                             </li>
                             <li class="col-lg-4 col-md-6">
                                 <i class="fa-solid fa-calendar-days"></i>
@@ -123,7 +123,7 @@
                 <div class="col-md-5">
                     <div class="agent-info">
                         <div class="agent-img">
-                            <img src="{{ url('public/userimage/'.$propertyDetails->hasOneUser['image']) }}"/>
+                            <img src="{{ asset('public/userimage/'.$propertyDetails->hasOneUser['image']) }}"/>
                         </div>
                         <div class="agent-info-inr">
                             <h3>{{$propertyDetails->hasOneUser['name']}}</h3>
@@ -141,113 +141,6 @@
             </div>
         </div>
     </section>
-
-    {{-- clusterd  Google map--}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />
-    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-    <script src="https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/src/markerclusterer.js"></script>
-
-    <script type="text/javascript">     
-        var markers = []
-        var gmarkers = []
-        var categoryInput = []
-        var conditionInput = []
-        var floorInput = []
-        var bedroomInput = []
-        var map;
-        var markerCluster;
-
-        function getPropertyList(type="") {
-            // this is from controller to blade Pass Array:
-            if(markerCluster){
-                markerCluster.removeMarkers(markers);
-            }
-            // var listPro = res.propertyList;
-            const infoWindow = new google.maps.InfoWindow({
-                content: "",
-                disableAutoPan: true,
-            });
-            // let markersajax = listPro.map((propertyData, i) => {
-                if (infoWindow) infoWindow.close();
-                const marker = new google.maps.Marker({
-                    position:{lat:Number({{$propertyDetails->latitude}}), lng:Number({{$propertyDetails->longitude}})},
-                    content: "{{$propertyDetails->name}}",
-                });
-
-                // open info window when marker is clicked
-                marker.addListener("click", () => {
-                    var property_type = {{$propertyDetails->property_type}};
-                    if(property_type == 1){
-                        property_type = "For Rent";
-                    }
-                    else{
-                        property_type = "For Sales";
-                    }
-                    infoWindow.open(map, marker);
-                });
-                markers.push(marker);
-            if(markers.length > 0 && map){
-                markerCluster = new MarkerClusterer(map, markers, {
-                    imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-                });
-            }
-        }                    
-                
-       
-        function initMap() {
-            // Call Current Location Function:
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError)
-                    getPropertyList("load");
-                } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            return new Promise(function(resolve, reject) {
-                // Get latitude ande longitude:
-                lat = position.coords.latitude;
-                lon = position.coords.longitude;
-
-                if(!map){
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 5,
-                        center: new google.maps.LatLng(lat, lon)
-                    });
-                    markerCluster = new MarkerClusterer(map, markers, {
-                        imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-                    });
-                }
-                resolve({map})
-            });
-        }
-
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    // x.innerHTML = "User denied the request for Geolocation."
-                    console.log("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable."
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out."
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred."
-                    break;
-            }
-        }
-        function myClick(id) {
-            google.maps.event.trigger(markers[id], 'click');
-        }
-
-    </script>
-
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&callback=initMap&v=weekly"></script>
 </body>
 
 @endsection
@@ -281,5 +174,105 @@
 
 	slider.controller.control = thumbs;
 	thumbs.controller.control = slider;
+</script>
+
+
+<script type="text/javascript">
+    var markers = []
+    var gmarkers = []
+    var categoryInput = []
+    var conditionInput = []
+    var floorInput = []
+    var bedroomInput = []
+    var map;
+    var markerCluster;
+
+    function getPropertyList(type="") {
+        // this is from controller to blade Pass Array:
+        if(markerCluster){
+            markerCluster.removeMarkers(markers);
+        }
+        // var listPro = res.propertyList;
+        const infoWindow = new google.maps.InfoWindow({
+            content: "",
+            disableAutoPan: true,
+        });
+        // let markersajax = listPro.map((propertyData, i) => {
+            if (infoWindow) infoWindow.close();
+            const marker = new google.maps.Marker({
+                position:{lat:Number({{$propertyDetails->latitude}}), lng:Number({{$propertyDetails->longitude}})},
+                content: "{{$propertyDetails->name}}",
+            });
+
+            // open info window when marker is clicked
+            marker.addListener("click", () => {
+                var property_type = {{$propertyDetails->property_type}};
+                if(property_type == 1){
+                    property_type = "For Rent";
+                }
+                else{
+                    property_type = "For Sales";
+                }
+                infoWindow.open(map, marker);
+            });
+            markers.push(marker);
+        if(markers.length > 0 && map){
+            markerCluster = new MarkerClusterer(map, markers, {
+                imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+            });
+        }
+    }
+
+
+    function initMap() {
+        // Call Current Location Function:
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError)
+                getPropertyList("load");
+            } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        return new Promise(function(resolve, reject) {
+            // Get latitude ande longitude:
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+
+            if(!map){
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 5,
+                    center: new google.maps.LatLng(lat, lon)
+                });
+                markerCluster = new MarkerClusterer(map, markers, {
+                    imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+                });
+            }
+            resolve({map})
+        });
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                // x.innerHTML = "User denied the request for Geolocation."
+                console.log("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                x.innerHTML = "The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred."
+                break;
+        }
+    }
+    function myClick(id) {
+        google.maps.event.trigger(markers[id], 'click');
+    }
+
 </script>
 @endsection

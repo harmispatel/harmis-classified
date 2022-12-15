@@ -54,7 +54,7 @@
                         @foreach ($showUserData as $userData)
                         <tr>
                             <td class="text-center">
-                                <img src="{{ url('public/userimage/'.$userData->image) }}" style="height: 100px">
+                                <img src="{{ asset('public/userimage/'.$userData->image) }}" style="height: 100px">
                             </td>
                             <td>{{$userData['name']}}</td>
                             <td>{{$userData['email']}}</td>

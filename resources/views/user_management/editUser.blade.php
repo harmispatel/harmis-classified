@@ -40,7 +40,7 @@
                   <div class="form-group">
                     <label for="exampleInputImage">Image</label>
                     <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
-                    <img src="{{ url('public/userimage/'.$editUserData->image) }}" style="height: 100px; width: 100px; margin-top: 20px;">
+                    <img src="{{ asset('public/userimage/'.$editUserData->image) }}" style="height: 100px; width: 100px; margin-top: 20px;">
                     @if ($errors->has('image'))
                         <span class="text-danger">{{ $errors->first('image') }}</span>
                     @endif

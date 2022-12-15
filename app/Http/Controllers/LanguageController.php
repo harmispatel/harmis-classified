@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use File;
 
 // Models
-use App\Models\{ Language, Labels };
+use App\Models\{ Language, labels };
 
 // Request Class
 use App\Http\Requests\{ LanguageRequest };
@@ -119,7 +119,7 @@ class LanguageController extends Controller
         try {
             // Show the Language Form for Edit
             $type = 'Update';
-            $labels = Labels::get();
+            $labels = labels::get();
             $language = Language::find(decrypt($id));
 
             return view('languages.edit', compact('type', 'language','labels'));

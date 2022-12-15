@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="{{ asset('public/css/custom.css') }}">
   {{-- summernote --}}
   {{-- <link rel="stylesheet" href="{{ asset('public/css/summernote.css') }}"> --}}
+  {{-- DataTable css --}}
+  <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
 
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">

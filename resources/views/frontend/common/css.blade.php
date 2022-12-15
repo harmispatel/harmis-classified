@@ -6,7 +6,7 @@
     it is used for Frontside/Userside
     ----------------------------------------------------------------------------------------------
 --}}
-    
+
 <!-- Font awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 
@@ -27,3 +27,6 @@
 
 {{-- Custom css --}}
 <link href="{{ asset('public/css/custom.css') }}" rel="stylesheet">
+
+{{-- Google Map Styleseet --}}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css" rel="stylesheet" />

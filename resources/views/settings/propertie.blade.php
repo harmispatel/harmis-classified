@@ -47,12 +47,12 @@
                         @foreach ($showPropertiesData as $propertiesData)
                             <tr>
                                 <td class="text-center">
-                                    <img src="{{ url('public/multiImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
+                                    <img src="{{ asset('public/multiImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
                                 </td>
                                 <td>{{$propertiesData['name']}}</td>
                                 <td>{{$propertiesData->hasOneCategory['name']}}</td>
                                 <td>{{$propertiesData['price']}}</td>
-                                <td>{{ $propertiesData['property_type'] == 1 ? 'For Rent' : 'For Sale' }}</td>
+                                <td>{{$propertiesData['property_type'] == 1 ? 'For Rent' : 'For Sale' }}</td>
                                 <td>{{$propertiesData->hasOneCountry['name']}}</td>
                                 <td>{{$propertiesData->hasOneState->name}}</td>
                                 <td>{{$propertiesData['address']}}</td>

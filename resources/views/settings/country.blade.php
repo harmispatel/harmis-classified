@@ -30,7 +30,7 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table class="table table-bordered">
+                                    <table class="table table-striped table-hover" id="countryTable">
                                         <thead>
                                             <tr>
                                             <th>Name</th>
@@ -88,4 +88,13 @@
         </div>
     </div>
 
+@endsection
+
+
+@section('js')
+<script>
+    $(document).ready( function () {
+        $('#countryTable').DataTable();
+    });
+</script>
 @endsection

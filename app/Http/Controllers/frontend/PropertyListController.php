@@ -188,7 +188,7 @@ class PropertyListController extends Controller
                     $listview .='<div class="col-md-4 mb-3 onscroll="getPropertyList()" id="scroll"">
                         <div class="list_img">
                             <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
-                                <img src="'. url('public/multiImage/'.$showProperty->image) .'" alt="">
+                                <img src="'. asset('public/multiImage/'.$showProperty->image) .'" alt="">
                             </a>
                         </div>
                     </div>

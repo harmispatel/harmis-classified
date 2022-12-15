@@ -33,5 +33,6 @@
 
   </div>
   @include('common.js')
+  @yield('js')
 </body>
 </html>

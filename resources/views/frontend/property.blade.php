@@ -265,7 +265,7 @@
                             <div class="item" onscroll="getPropertyList()" id="scroll">
                                 <div class="post-item card ">
                                     <a href="{{ route('propertyDetails',$showProperty->slug) }}" class="img-inr">
-                                        <img src="{{ url('public/multiImage/'.$showProperty->image) }}" class="img-fluid card-img "alt="">
+                                        <img src="{{ asset('public/multiImage/'.$showProperty->image) }}" class="img-fluid card-img "alt="">
                                         <div class="img-pri-abo">
                                             <h3><i class="fa-solid fa-rupee-sign"></i> <strong>
                                             {{ $showProperty->price }}</strong></h3>
@@ -301,7 +301,7 @@
                             <div class="col-md-4 mb-3">
                                 <div class="list_img">
                                     <a href="javascript:void(0)" onclick="myClick(0)" class="img_inr">
-                                        <img src="{{ url('public/multiImage/'.$showProperty->image) }}" alt="">
+                                        <img src="{{ asset('public/multiImage/'.$showProperty->image) }}" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -417,7 +417,7 @@
         // Clear Property Badroom Filter
         function clearBedroomFilter(type="") {
             $(this).addClass('active');
-          
+
             page = 1;
             start = 0;
             limit = 6;
@@ -446,13 +446,13 @@
             $("input[name='propertyBedroom']:checked").each(function() {
                 bedroomInput.push($(this).val());
             });
-           
+
             getPropertyList();
         }
 
 
         // Property Floor Multi Select.
-        function selectedFloor(type){            
+        function selectedFloor(type){
             if (type == 1) {
                 $("input[name='propertyFloor']").prop('checked', false);
             }

@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label for="exampleInputImage">Main Image</label>
                                 <input type="file" name="image" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}" placeholder="Enter Name">
-                                <img src="{{ url('public/multiImage/'.$editPropertiesData->image) }}" style="height: 100px; width: 60px; margin-top: 20px;">
+                                <img src="{{ asset('public/multiImage/'.$editPropertiesData->image) }}" style="height: 100px; width: 60px; margin-top: 20px;">
                                 @if ($errors->has('image'))
                                     <span class="text-danger">{{ $errors->first('image') }}</span>
                                 @endif
@@ -47,7 +47,7 @@
                                     $multiImage = explode(" ,",$editPropertiesData->multiImage);
                                 @endphp
                                 @foreach ($multiImage as $images)
-                                    <img src="{{ url('public/multiImage/'.$images) }}" style="height: 100px; width: 100px; margin-top: 20px;">
+                                    <img src="{{ asset('public/multiImage/'.$images) }}" style="height: 100px; width: 100px; margin-top: 20px;">
                                 @endforeach
                                 @if ($errors->has('multiImage'))
                                     <span class="text-danger">{{ $errors->first('multiImage') }}</span>
@@ -276,7 +276,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript"
-        src="https://maps.google.com/maps/api/js?key=AIzaSyBsf7LHMQFIeuA_7-bR7u7EXz5CUaD6I2A&libraries=places" ></script>
+        src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places" ></script>
 
     <script>
         $(document).ready(function () {

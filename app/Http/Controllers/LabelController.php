@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 // Models
-use App\Models\Labels;
+use App\Models\labels;
 // Request Class
 use App\Http\Requests\{ LabelRequest };
 
@@ -18,7 +18,7 @@ class LabelController extends Controller
     public function index()
     {
         try{
-            $labels = Labels::orderBy('id','DESC')->get();
+            $labels = labels::orderBy('id','DESC')->get();
             return view('labels.list', compact('labels'));
         } catch (\throwable $th){
             return back()->with('error', 'Page Not Found');
@@ -50,7 +50,7 @@ class LabelController extends Controller
     public function store(LabelRequest $request)
     {
         try {
-            Labels::create($request->all());
+            labels::create($request->all());
             return back()->with('success', 'Label saved successfully!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Something went wrong, please try later.');
@@ -66,7 +66,7 @@ class LabelController extends Controller
     public function edit($id)
     {
         $type = 'Update';
-        $labels = Labels::find(decrypt($id));
+        $labels = labels::find(decrypt($id));
 
         return view('labels.add_edit', compact('type', 'labels'));
         try {
@@ -86,7 +86,7 @@ class LabelController extends Controller
     {
         try {
             $input = $request->except('_token', '_method');
-            $label = Labels::find($id);
+            $label = labels::find($id);
 
             if (!empty($label)) {
                 $label->update($input);
@@ -108,7 +108,7 @@ class LabelController extends Controller
     public function destroy($id)
     {
         try {
-            $label = Labels::find(decrypt($id));
+            $label = labels::find(decrypt($id));
 
             if (!empty($label)) {
                 $label->delete();

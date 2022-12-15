@@ -34,7 +34,7 @@ class CategoryController extends Controller
         $getLanguage = Language::get();
 
         $category = Category::get();
-        return response()->view('categories.CreateCategory',compact('category','getLanguage'));
+        return response()->view('categories.createCategory',compact('category','getLanguage'));
     }
 
     /**
