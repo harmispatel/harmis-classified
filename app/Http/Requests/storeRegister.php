@@ -15,6 +15,7 @@ class storeRegister extends FormRequest
     {
         return [
             'name'            => 'required',
+            'userimage'           => 'mimes:jpeg,jpg,png,gif',
             'mobile'          => 'required',
             'email'           => 'required',
             'password'        => 'required',
@@ -31,6 +32,7 @@ class storeRegister extends FormRequest
     {
         return [
             'name.required'            => 'Name is required',
+            'userimage.required'           => 'The image must be a file of type: jpeg, jpg, png, gif.',
             'email.required'           => 'Email is required',
             'email.email'              => 'Please enter a valid email address',
             'mobile.required'          => 'Mobile No. is required',

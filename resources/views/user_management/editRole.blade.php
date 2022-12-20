@@ -18,9 +18,19 @@
         <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Error</strong> {{ $error }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endforeach
+            @endif
             <div class="card card-primary my-4">
                 <div class="card-header">
-                <h3 class="card-title">Edit Roles</h3>
+                    <h3 class="card-title">Edit Roles</h3>
                 </div>
                 <form action="{{route('show_role.update',$editRoleData->id)}}" id="quickForm" method="POST">
                     @csrf
@@ -30,15 +40,6 @@
                     <div class="form-group">
                         <label for="exampleInputName">Name</label>
                         <input type="text" name="name" class="form-control" value="{{$editRoleData->name}}">
-                        @if ($errors->any())
-                            <div class="text-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
                     </div>
                     <div class="form-group">
                             <label for="exampleInputStatus">Status</label>

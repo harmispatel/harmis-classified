@@ -38,8 +38,7 @@
                             </div>
 
                             <form action="{{ $type == 'Add' ? route('languages.store') : route('languages.update', $language->id) }}"
-                                id="quickForm" method="POST"
-                            >
+                                id="quickForm" method="POST">
                                 @csrf
                                 @if ($type != 'Add')
                                     @method('PUT')

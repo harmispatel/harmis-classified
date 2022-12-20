@@ -17,7 +17,6 @@
         <div class="text-right mr-3 mb-2">
             <a href="{{ route('languages.create') }}" class="btn btn-primary">Add Language</a>
         </div>
-
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -39,7 +38,7 @@
                             </div>
 
                             <div class="card-body">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="languageTable">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -60,11 +59,7 @@
                                                     <a href="{{ route('languages.edit', encrypt($language->id)) }}" title="Edit" class="mr-2">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <i class="fa fa-trash text-danger deleteBtn" data-toggle="modal"
-                                                        style="cursor: pointer;" data-target="#exampleModal"
-                                                        data-target-id="{{ route('languages.destroy', encrypt($language->id)) }}"
-                                                        title="Delete">
-                                                    </i>
+                                                    <i class="fa fa-trash text-danger deleteBtn" data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#exampleModal" data-target-id="{{ route('languages.destroy', encrypt($language->id)) }}" title="Delete"></i>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -76,17 +71,15 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Delete Language</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-
                                             <div class="modal-body">
                                                 Are you sure to delete this Language?
                                             </div>
-
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 <form action="" id="deleteForm" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
@@ -102,19 +95,21 @@
                 </div>
             </div>
         </section>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer">
-        </script>
-
-        <script>
-            $(".deleteBtn").click(function () {
-                var url = $(this).attr("data-target-id")
-                $("#deleteForm").attr('action', url)
-            });
-        </script>
     </div>
 </div>
 
+@endsection
+
+@section('js')
+
+<script>
+    $(document).ready( function () {
+        $('#languageTable').DataTable();
+    });
+
+    $(".deleteBtn").click(function () {
+        var url = $(this).attr("data-target-id")
+        $("#deleteForm").attr('action', url)
+    });
+</script>
 @endsection

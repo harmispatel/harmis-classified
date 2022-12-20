@@ -30,10 +30,14 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                        @foreach ($getLanguage as $multiLang)
+                        {{-- @foreach ($getLanguage as $multiLang) --}}
+                            <label for="exampleInputName">Name:-</label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                        {{-- @endforeach --}}
+                        {{-- @foreach ($getLanguage as $multiLang)
                             <label for="exampleInputName">Name:-({{$multiLang->name}})</label>
                             <input type="text" name="name_{{$multiLang->id}}" class="form-control" placeholder="Enter Name">
-                        @endforeach
+                        @endforeach --}}
                         @if ($errors->any())
                             <div class="text-danger">
                                 <ul>

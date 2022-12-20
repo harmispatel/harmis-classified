@@ -13,8 +13,13 @@ use Illuminate\Support\Facades\Hash;
 // Request Class
 use App\Http\Requests\storeRegister;
 
+// Trait
+use App\Traits\imageRemoveTrait;
+
 class RegisterController extends Controller
 {
+
+    use imageRemoveTrait;
 
     /**
     * User Register .
@@ -41,6 +46,12 @@ class RegisterController extends Controller
             // Set password and removed unused fields
             $register = $request->except('_token', 'confirmPassword');
             $register['password'] = Hash::make($request->password);
+
+            if($request->file('image')){
+                $file = $request->file('image');
+                $image = $this->addSingleImage('userimage',$file, $oldImage = '');
+                $register['image'] = $image;
+            }
 
             // Create the User
             User::create($register);

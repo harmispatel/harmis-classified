@@ -59,11 +59,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deletaModal">
-                                    Launch demo modal
-                                </button>
-
                                 <!-- Modal -->
                                 <div class="modal fade" id="deletaModal" tabindex="-1" role="dialog" aria-labelledby="deletaModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -77,7 +72,6 @@
                                             <div class="modal-body">
                                                 Are you sure to delete this label?
                                             </div>
-
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                 <form action="" id="deleteForm" method="POST" class="d-inline">

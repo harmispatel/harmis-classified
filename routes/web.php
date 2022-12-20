@@ -4,12 +4,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\{ RoleController, CountryController, DashboardController, PropertieController};
+use App\Http\Controllers\{ThemeController ,RoleController, CountryController, DashboardController, PropertieController};
 use App\Http\Controllers\frontend\{ RegisterController, UserLoginController, PropertyController, PropertyListController, LanguageController};
 // use App\Http\Controllers\Frontend\SearchController;
 
-// Google map
-use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -52,6 +50,8 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     // User Route:
     Route::resource('show_user', 'UserController');
 
+    Route::get('profile' ,[UserController::class, 'adminprofile'])->name('profile');
+
     // Role Routes:
     Route::resource('show_role', 'RoleController');
 
@@ -72,6 +72,9 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
 
     // Labels Routes:
     Route::resource('labels', 'LabelController');
+
+    // Layout/Theme Routes:
+    Route::resource('theme', 'ThemeController');
 
     //Logout Route:
     Route::get("/logout", [LoginController::class, "adminLogout"])->name('adminLogout');
@@ -101,7 +104,6 @@ Route::get('/get-languages',[LanguageController::class,'getLanguages'])->name('g
 // Route::get('delete/property/{id}',[PropertyController::class,'destroy'])->name('deleteProperty');
 
 // Google map api:
-Route::get('google-autocomplete', [GoogleController::class, 'index']);
 Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
 
 

@@ -46,11 +46,11 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputGender">Gender</label>
+                                <label>Gender</label>
                                 <div class="form-check">
-                                    <label class="form-check-label" for="radio1">
-                                    <input type="radio" class="form-check-input {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="radio1" name="gender" value="Female">Female <br>
-                                    <input type="radio" class="form-check-input {{ $errors->has('gender') ? 'is-invalid' : '' }}" id="radio1" name="gender" value="Male">Male
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input {{ $errors->has('gender') ? 'is-invalid' : '' }}" name="gender" value="Female">Female <br>
+                                        <input type="radio" class="form-check-input {{ $errors->has('gender') ? 'is-invalid' : '' }}" name="gender" value="Male">Male
                                     </label><br>
                                 </div>
                                     @if ($errors->has('gender'))

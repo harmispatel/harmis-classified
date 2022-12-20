@@ -97,11 +97,12 @@ class LanguageController extends Controller
                     'code' => $code,
                     'language_label' => serialize($labels),
                     'status' => $status
-                ]);
-                    return back()->with('success', 'New Languages has been Created SuccessFully..');
-                } catch (\Throwable $th) {
-                    return back()->with('error', 'Something Went Wrong!');
-                }
+            ]);
+
+            return back()->with('success', 'New Languages has been Created SuccessFully..');
+            } catch (\Throwable $th) {
+                return back()->with('error', 'Something Went Wrong!');
+            }
         }
         else
         {

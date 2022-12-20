@@ -10,4 +10,8 @@ class State extends Model
     protected $table = "states";
     use HasFactory;
 
+    public function hasOneCountry()
+    {
+        return $this->hasOne(Country::class, 'id','country_id');
+    }
 }

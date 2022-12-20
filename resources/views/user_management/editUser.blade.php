@@ -50,11 +50,11 @@
                     <input type="email" name="email" class="form-control" value="{{$editUserData->email}}" placeholder="Enter Email">
                   </div>
                   <div class="form-group">
-                      <label for="exampleInputGender">Gender</label>
+                      <label>Gender</label>
                     <div class="form-check">
-                        <label class="form-check-label" for="radio1">
-                          <input type="radio" class="form-check-input" id="radio1" name="gender" value="Female" {{ $editUserData->gender == 'Female' ? 'checked' : '' }} >Female <br>
-                          <input type="radio" class="form-check-input" id="radio1" name="gender" value="Male" {{ $editUserData->gender == 'Male' ? 'checked' : '' }} >Male
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="gender" value="Female" {{ $editUserData->gender == 'Female' ? 'checked' : '' }} >Female <br>
+                          <input type="radio" class="form-check-input" name="gender" value="Male" {{ $editUserData->gender == 'Male' ? 'checked' : '' }} >Male
                         </label>
                       </div>
                   </div>
@@ -66,17 +66,23 @@
                     <label for="exampleInputStatus">Role</label>
                     <select class="form-control" name="role">
                         @foreach ($roleIdData as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            <option value="{{$role->id}}" {{ ($role->id == $editUserData->role_id) ? 'selected' : '' }}>{{$role->name}}</option>
                         @endforeach
                     </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input type="password" id="pass" name="password" class="form-control" placeholder="Enter Password">
+                    @if ($errors->has('password'))
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
                   </div>
                   <div class="form-group">
                     <label for="exampleInputStatus">Status</label>
                     <select class="form-control" name="status">
                         <option {{ ($editUserData->status) == '1' ? 'selected' : '' }} value="1">Active</option>
                         <option {{ ($editUserData->status) == '0' ? 'selected' : '' }}  value="0">InActive</option>
-
-                      </select>
+                    </select>
                   </div>
                 </div>
                 <!-- /.card-body -->

@@ -15,7 +15,7 @@ class StateController extends Controller
     public function index()
     {
         try {
-            $showStateData = State::get();
+            $showStateData = State::with('hasOneCountry')->get();
             return view('settings.state',compact('showStateData'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');

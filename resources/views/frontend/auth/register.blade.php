@@ -34,19 +34,27 @@
 
                 <div class="col-md-6">
                     <div class="form-inr">
-                        <form action="{{ route('userRegister') }}" method="POST" id="register">
+                        <form action="{{ route('userRegister') }}" method="POST" id="register" role="form" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="name"><span>{{ __('Name') }}</span></label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" class="form-control" value="{{ old('name') }}" id="name" name="name">
                                 @if ($errors->has('name'))
                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
 
                             <div class="form-group">
+                                <label for="image">{{ __('Image') }}</label>
+                                <input type="file" id="image" name="image" accept="image/*" class="form-control {{ $errors->has('image') ? 'is-invalid' : '' }}">
+                                @if ($errors->has('image'))
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
                                 <label for="mobile">{{ __('Mobile No') }}</label>
-                                <input type="text" class="form-control" id="mobile" name="mobile">
+                                <input type="text" class="form-control" value="{{ old('mobile') }}" id="mobile" name="mobile">
                                 @if ($errors->has('mobile'))
                                     <span class="text-danger">{{ $errors->first('mobile') }}</span>
                                 @endif
@@ -56,7 +64,7 @@
                                 <label for="role">{{ __('Role') }}</label>
                                 <select name="role_id" id="role" class="form-control">
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{__($role->name) }}</option>
+                                        <option value="{{ $role->id }}" {{ (old('role_id') == $role->id) ? 'selected' : '' }}>{{__($role->name) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -71,7 +79,7 @@
 
                             <div class="form-group">
                                 <label for="email">{{ __('Email') }}</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" value="{{ old('email') }}" id="email" name="email">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif

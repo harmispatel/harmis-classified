@@ -124,8 +124,11 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        // dd($id);
         try {
-            $deleteRoleData = Role::where('id',$id)->delete();
+            PermissionRole::where('role_id',$id)->delete();
+            Role::where('id',$id)->delete();
+
             return redirect()->route('show_role.index');
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');

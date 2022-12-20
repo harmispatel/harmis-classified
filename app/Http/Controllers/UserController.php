@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{User, Role, PermissionRole, Permission};
+use App\Models\{Category, User, Role, PermissionRole, Permission, Propertie};
+use App\Traits\{imageRemoveTrait};
 
 
 //Request Class
 use App\Http\Requests\storeUser;
 use Illuminate\Http\Response;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    use imageRemoveTrait;
+
     /**
-     * Display a listing of the User.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the User.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         try {
@@ -44,7 +47,7 @@ class UserController extends Controller
     public function create()
     {
         try {
-            $roleIdData = Role::get();
+            $roleIdData = Role::where('id', '!=', 1)->get();
             return view('user_management.createUser',compact('roleIdData'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
@@ -59,25 +62,24 @@ class UserController extends Controller
      */
     public function store(storeUser $request)
     {
+        try{
+            $addUserData = new User;
+            $addUserData->name      = $request->name;
+            $addUserData->email     = $request->email;
+            $addUserData->gender    = $request->gender;
+            $addUserData->mobile    = $request->mobile;
+            $addUserData->role_id   = $request->role;
+            $addUserData->password  = bcrypt(request('password'));
+            $addUserData->status    = $request->status;
 
-        $addUserData = new User;
-        $addUserData->name = $request->name;
-        $addUserData->email=$request->email;
-        $addUserData->gender=$request->gender;
-        $addUserData->mobile=$request->mobile;
-        $addUserData->role_id=$request->role;
-        $addUserData->password=bcrypt(request('password')) ;
-        $addUserData->status=$request->status;
+            if($request->file('image')){
+                $file = $request->file('image');
+                $multiFile = $this->addSingleImage('userimage',$file, $oldImage = '');
+                $addUserData->image = $multiFile;
+            }
 
-        if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('/userimage'), $filename);
-            $addUserData['image']= $filename;
-        }
+            $addUserData->save();
 
-        $addUserData->save();
-        try {
         } catch (\Throwable $th) {
             return 'The User Cannot be Saved.';
         }
@@ -94,7 +96,7 @@ class UserController extends Controller
     public function edit($id)
     {
         try {
-            $roleIdData = Role::get();
+            $roleIdData = Role::where('id', '!=', 1)->get();
             $editUserData = User::find($id);
 
             return view('user_management.editUser',compact('editUserData','roleIdData'));
@@ -114,18 +116,20 @@ class UserController extends Controller
     {
         try {
             $addUserData = User::find($id);
-            $addUserData->name = $request->name;
-            $addUserData->email=$request->email;
-            $addUserData->gender=$request->gender;
-            $addUserData->mobile=$request->mobile;
-            $addUserData->role_id=$request->role;
-            $addUserData->status=$request->status;
+            $addUserData->name     = $request->name;
+            $addUserData->email    = $request->email;
+            $addUserData->gender   = $request->gender;
+            $addUserData->mobile   = $request->mobile;
+            $addUserData->role_id  = ($request->role == 'Super Admin') ? 1 : $request->role;
+            $addUserData->password = ($request->password != '' && !empty($request->password)) ? bcrypt(request('password')) : $addUserData->password;
+            $addUserData->status   = $request->status;
 
             if($request->file('image')){
-                $file= $request->file('image');
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('/userimage'), $filename);
-                $addUserData['image']= $filename;
+                // new image move to storage
+                $file = $request->file('image');
+                $oldImage = $addUserData->image;
+                $multiFile = $this->addSingleImage('userimage',$file, $oldImage);
+                $addUserData->image = $multiFile;
             }
 
             $addUserData->save();
@@ -144,8 +148,44 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            $deleteUserData = User::where('id',$id)->delete();
-            return redirect ()->route('show_user.index');
+            $user = User::with('properties')->find($id);
+
+            // remove user singel image from storage
+            $oldSingleImage = $user->image;
+            $this->addSingleImage('userimage',$file = '',$oldSingleImage);
+
+            // remove property singel image from storage
+            if (isset($user->properties->image)) {
+                $oldpropertyImage = $user->properties->image;
+                $this->addSingleImage('multiImage',$file = '',$oldpropertyImage);
+            }
+
+             // remove multi image from storage
+            if (isset($user->properties->image)) {
+                $oldMultiProeprty = $user->properties->multiImage;
+                $this->addMultiImage('multiImage', $files = '', $oldMultiProeprty);
+            }
+
+            $data = User::find($id);
+            if ($data) {
+                $data->properties()->delete();
+                $data->delete();
+            }
+
+            return redirect()->route('show_user.index');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
+    }
+
+    /**
+    *  shwo admin profile.
+    **/
+    public function adminprofile()
+    {
+        try {
+            $admindetail = auth()->user();
+            return view('auth.adminprofile', compact('admindetail'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }

@@ -13,8 +13,6 @@
 @section('content')
 
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-
         <!-- Main content -->
         <div style = "padding-top:25px">
             <section class="content">
@@ -30,7 +28,8 @@
                                     <table class="table table-striped table-hover" id="countryTable">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
+                                                <th>State Name</th>
+                                                <th>Country</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -38,6 +37,7 @@
                                             @foreach ($showStateData as $stateData)
                                                 <tr>
                                                     <td>{!!$stateData['name']!!}</td>
+                                                    <td>{{ $stateData->hasOneCountry->name }}</td>
                                                     <td>
                                                         <span class="{{ $stateData['status'] == 0 ? 'badge badge-danger' : 'badge badge-success' }}">
                                                             {{ $stateData['status'] == 0 ? 'Inactive' : 'Active' }}
@@ -47,7 +47,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                {{-- Model --}}
+                                    {{-- Model --}}
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -83,9 +83,9 @@
 @endsection
 
 @section('js')
-<script>
-    $(document).ready( function () {
-        $('#countryTable').DataTable();
-    });
-</script>
+    <script>
+        $(document).ready( function () {
+            $('#countryTable').DataTable();
+        });
+    </script>
 @endsection

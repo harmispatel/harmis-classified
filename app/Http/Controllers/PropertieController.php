@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 // Models
 use App\Models\{Propertie, Category, State, Country, User};
 
-use Illuminate\Http\Response;
+use App\Traits\{imageRemoveTrait};
 
 //Requests Class
 use App\Http\Requests\storePropertie;
@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 
 class PropertieController extends Controller
 {
+    use imageRemoveTrait;
     /**
      * Display a listing of the Property.
      *
@@ -102,20 +103,16 @@ class PropertieController extends Controller
         $addPropertyData->status = $request->status;
 
         if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('/multiImage'), $filename);
-            $addPropertyData['image']= $filename;
+            // new image move to storage
+            $file = $request->file('image');
+            $fileName = $this->addSingleImage('multiImage/',$file);
+            $addPropertyData['image'] = $fileName;
         }
 
         if($request->hasfile('multiImage')) {
-            foreach($request->file('multiImage') as $file)
-            {
-                $multiImage = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path().'/multiImage', $multiImage);
-                $imgData[] = $multiImage;
-            }
-            $addPropertyData->multiImage = implode(" ,",$imgData);
+            $file = $request->file('multiImage');
+            $multiFile = $this->addMultiImage('multiImage/',$file);
+            $addPropertyData->multiImage = $multiFile;
         }
         $addPropertyData->save();
 
@@ -133,6 +130,7 @@ class PropertieController extends Controller
         try {
             $editPropertiesData = Propertie::find($id);
             $categoryId = Category::get();
+            // $userId = User::get();
             $userId = User::where('role_id', '!=', 10 )->get();
             $country = Country::get();
             $state = State::get();
@@ -175,20 +173,19 @@ class PropertieController extends Controller
         $updatePropertyData->status = $request->status;
 
         if($request->file('image')){
-            $file= $request->file('image');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('/multiImage'), $filename);
-            $updatePropertyData['image']= $filename;
+            // new image move to storage
+            $file = $request->file('image');
+            $oldImage = $updatePropertyData->image;
+            $fileName = $this->addSingleImage('multiImage',$file,$oldImage);
+            $updatePropertyData['image'] = $fileName;
         }
 
         if($request->hasfile('multiImage')) {
-            foreach($request->file('multiImage') as $file)
-            {
-                $multiImage = date('YmdHi').$file->getClientOriginalName();
-                $file->move(public_path().'/multiImage', $multiImage);
-                $imgData[] = $multiImage;
-            }
-            $updatePropertyData->multiImage = implode(" ,",$imgData);
+            // new image move to storage
+            $file = $request->file('multiImage');
+            $oldImage = $updatePropertyData->multiImage;
+            $multiFile = $this->addMultiImage('multiImage/',$file, $oldImage);
+            $updatePropertyData->multiImage = $multiFile;
         }
         $updatePropertyData->update();
 
@@ -204,7 +201,17 @@ class PropertieController extends Controller
     public function destroy($id)
     {
         try {
-            $deleteProprtieData = Propertie::find($id)->delete();
+            $deleteProprtieData = Propertie::find($id);
+
+            // remove singel image from storage
+            $oldSingleImage = $deleteProprtieData->image;
+            $this->addSingleImage('multiImage',$file = '',$oldSingleImage);
+
+            // remove multi image from storage
+            $oldMultiImage = $deleteProprtieData->multiImage;
+            $this->addMultiImage('multiImage/',$files = '', $oldMultiImage);
+
+            Propertie::find($id)->delete();
             return redirect()->route('propertie.index');
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');

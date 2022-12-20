@@ -10,6 +10,7 @@ use App\Models\Language;
 
 // request
 use App\Http\Requests\storeCategory;
+use App\Models\Propertie;
 
 class CategoryController extends Controller
 {
@@ -46,11 +47,11 @@ class CategoryController extends Controller
     public function store(storeCategory $request)
     {
         $getLanguage = Language::get();
-        foreach($getLanguage as $languag)
-        {
-            $language_id = $languag->id;
+        // foreach($getLanguage as $languag)
+        // {
+            // $language_id = $languag->id;
             $addCategoryData = Category::create($request->all());
-        }
+        // }
         return redirect('category');
     }
 
@@ -102,7 +103,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $deleteCategoryData = Category::where('id',$id)->delete();
+        Category::where('id',$id)->delete();
+        Propertie::where('category_id', $id)->delete();
         return redirect('category');
     }
 

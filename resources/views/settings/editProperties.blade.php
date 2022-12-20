@@ -61,16 +61,16 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @php
+                            {{-- @php
                                 $user_id = $editPropertiesData->user_id;
                                 $userName = getUserName($user_id);
-                            @endphp
+                            @endphp --}}
                             <div class="form-group">
                                 <label for="exampleInputUser">User</label>
                                 <select class="form-control" name="user_id">
-                                    <option value="{{$userName->id}}" style="display: none" selected>{{$userName->name}}</option>
+                                    {{-- <option value="{{$editPropertiesData->user_id}}" selected>Admin</option> --}}
                                     @foreach ($userId as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                        <option value="{{$user->id}}" {{ ($editPropertiesData->user_id ==  $user->id) ? 'selected' : '' }}>{{$user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -79,7 +79,6 @@
                                 <select class="form-control" name="property_type">
                                     <option {{ ($editPropertiesData->property_type) == '1' ? 'selected' : '' }} value="1">For Rent</option>
                                     <option {{ ($editPropertiesData->property_type) == '2' ? 'selected' : '' }} value="2">For Seles</option>
-                                    {{-- <option value="2">For Sale</option> --}}
                                 </select>
                             </div>
                             <div class="form-group">
@@ -163,7 +162,6 @@
                             @php
                                 $countryId = $editPropertiesData->country_id;
                                 $countryName = getCountryName($countryId);
-                                // prx($countryName);
                             @endphp
                             <div class="form-group">
                                 <label for="exampleInputCountry">Country</label>
@@ -182,7 +180,6 @@
                                 $stateId = $editPropertiesData->state_id;
                                 $stateName = getStateName($stateId, $countryId);
                                 $countryOnState = getCountryOnState($countryId);
-                                // prx($stateName);
                             @endphp
                             <div class="form-group">
                                 <label for="exampleInputState">State</label>
@@ -226,26 +223,28 @@
         </div>
     </section>
 </div>
-        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+@endsection
+
+@section('js')
 <script>
     $(document).ready(function() {
         $('#country').change(function (){
             var countryId  = $(this).val();
 
             $.ajax({
-                    url : "{{ url('getState') }}",
-                    data : {
-                        "_token": "{{ csrf_token() }}",
-                        'countryId' : countryId
-                    },
-                    type : 'post',
-                    dataType : 'json',
-                    success : function(result){
-                        $("#state_id").html('');
-                        $("#state_id").append(result.html);
-                    }
-                });
+                url : "{{ url('getState') }}",
+                data : {
+                    "_token": "{{ csrf_token() }}",
+                    'countryId' : countryId
+                },
+                type : 'post',
+                dataType : 'json',
+                success : function(result){
+                    $("#state_id").html('');
+                    $("#state_id").append(result.html);
+                }
+            });
         });
     });
 
@@ -270,37 +269,26 @@
             height: 400,
             placeholder: 'Property Description...',
         });
+        $("#latitudeArea").addClass("d-none");
+        $("#longtitudeArea").addClass("d-none");
     });
-</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-        src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&libraries=places" ></script>
+    google.maps.event.addDomListener(window, 'load', initialize);
 
-    <script>
-        $(document).ready(function () {
-            $("#latitudeArea").addClass("d-none");
-            $("#longtitudeArea").addClass("d-none");
+    function initialize() {
+        var input = document.getElementById('autocomplete');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function () {
+            var place = autocomplete.getPlace();
+            console.log(place);
+            $('#latitude').val(place.geometry['location'].lat());
+            $('#longitude').val(place.geometry['location'].lng());
+
+            $("#latitudeArea").removeClass("d-none");
+            $("#longtitudeArea").removeClass("d-none");
         });
-        </script>
-    <script>
-        google.maps.event.addDomListener(window, 'load', initialize);
-
-        function initialize() {
-            var input = document.getElementById('autocomplete');
-            var autocomplete = new google.maps.places.Autocomplete(input);
-
-            autocomplete.addListener('place_changed', function () {
-                var place = autocomplete.getPlace();
-                console.log(place);
-                $('#latitude').val(place.geometry['location'].lat());
-                $('#longitude').val(place.geometry['location'].lng());
-
-                $("#latitudeArea").removeClass("d-none");
-                $("#longtitudeArea").removeClass("d-none");
-            });
-        }
-        </script>
+    }
+</script>
 
 @endsection
