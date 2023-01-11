@@ -30,23 +30,25 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                        {{-- @foreach ($getLanguage as $multiLang) --}}
                             <label for="exampleInputName">Name:-</label>
                             <input type="text" name="name" class="form-control" placeholder="Enter Name">
-                        {{-- @endforeach --}}
-                        {{-- @foreach ($getLanguage as $multiLang)
-                            <label for="exampleInputName">Name:-({{$multiLang->name}})</label>
-                            <input type="text" name="name_{{$multiLang->id}}" class="form-control" placeholder="Enter Name">
-                        @endforeach --}}
-                        @if ($errors->any())
-                            <div class="text-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                            @if ($errors->any())
+                                <div class="text-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputName">Amenities</label>
+                            <select class="amenities form-control" name="amenities[]" multiple="multiple">
+                                @foreach ($amenities as $amenity)
+                                    <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputStatus">Status</label>
@@ -77,4 +79,12 @@
         </section>
     </div>
 
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('.amenities').select2();
+        });
+    </script>    
 @endsection

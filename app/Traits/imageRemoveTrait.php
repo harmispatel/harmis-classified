@@ -39,7 +39,7 @@ trait imageRemoveTrait {
     public function addSingleImage($path,$file,$oldImage = null)
     {
         // remove Single image
-        if ($oldImage != '') {
+        if ($oldImage != null) {
             $oldimage_path = public_path().'/'.$path.'/'.$oldImage;
             if (file_exists($oldimage_path)) {
                 unlink($oldimage_path);
@@ -47,9 +47,11 @@ trait imageRemoveTrait {
         }
 
         // add Single image
-        if ($file != '') {
+        if ($file != null) {
             $filename = date('YmdHi').$file->getClientOriginalName();
+            $filename = str_replace(' ','_',$filename);
             $file->move(public_path($path), $filename);
+
             return $filename;
         }
         return null;

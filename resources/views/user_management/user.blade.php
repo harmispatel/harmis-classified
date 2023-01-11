@@ -37,7 +37,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered" id="userTable">
+                            <table class="table table-striped " id="userTable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Image</th>
@@ -54,7 +54,7 @@
                                     @foreach ($showUserData as $userData)
                                         <tr>
                                             <td class="text-center">
-                                                <img src="{{ asset('public/userimage/'.$userData->image) }}" style="height: 100px">
+                                                <img class="rounded-circle" src="{{ (file_exists(public_path('userimage/'.$userData->image)) && !empty($userData->image)) ? asset('public/userimage/'.$userData->image) : asset('public/userimage/usernotfound.jpg') }}" style="width: 100px">
                                             </td>
                                             <td>{{$userData['name']}}</td>
                                             <td>{{$userData['email']}}</td>

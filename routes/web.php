@@ -4,10 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\{ThemeController ,RoleController, CountryController, DashboardController, PropertieController};
-use App\Http\Controllers\frontend\{ RegisterController, UserLoginController, PropertyController, PropertyListController, LanguageController};
-// use App\Http\Controllers\Frontend\SearchController;
-
+use App\Http\Controllers\{AmenitiesController, BlogController, ThemeController ,RoleController, CountryController, DashboardController, FooterController, PropertieController, SliderController};
+use App\Http\Controllers\frontend\{DefaultController, RegisterController, UserLoginController, PropertyController, PropertyListController, LanguageController};
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -20,6 +18,7 @@ use Illuminate\Support\Facades\Artisan;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('config-clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
@@ -37,9 +36,45 @@ Route::group(['middleware' => ['guest']], function () {
 
     Route::post('/register', [RegisterController::class, 'create'])->name('userRegister');
     Route::get('/registerform', [RegisterController::class, 'index'])->name('register');
+
 });
 
+Route::group(['middleware' => ['auth','Agent']], function(){
+    // Agent Property
+    Route::get('/agentproperty', [PropertyController::class,'agentpropertylist'])->name('agentpropertylist');
+    Route::get('/create', [PropertyController::class,'create'])->name('create');
+    Route::get('/addagentProperty', [PropertyController::class,'agentProperty'])->name('addagentProperty');
+    Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
+    Route::get('/editAgentProperty/{id}', [PropertyController::class,'editAgentProperty'])->name('editAgentProperty');
+    Route::post('/updateagentProperty/{id}', [PropertyController::class,'update'])->name('updateagentProperty');
+    Route::delete('/agentpropertydelete/{id}', [PropertyController::class,'destroy'])->name('agentpropertydelete');
+
+    // User Update
+    Route::get('userprofile', [RegisterController::class, 'userprofile'])->name('userprofile');
+    Route::post('userupdate', [RegisterController::class, 'userupdate'])->name('userupdate');
+});
+
+
+Route::get('property-lists', [PropertyListController::class, 'index'])->name('property-lists');
+
+
+// allagent
+Route::get('/allagent', [PropertyController::class,'allagent'])->name('allagent');
+
+// Blog view
+Route::get('/blog/{id}', [DefaultController::class,'showblog'])->name('showblog');
+Route::get('/allblogs', [DefaultController::class,'showAllBlog'])->name('allblogs');
+
+// Contact Us
+Route::get('contactus', [DefaultController::class, 'contactus'])->name('contactus');
+Route::post('contactmail', [DefaultController::class, 'contactusmail'])->name('contactusmail');
+Route::post('agentContact', [DefaultController::class, 'agentContact'])->name('agentContact');
+
+Route::post('/mapproperty', [PropertyController::class, 'mappropertytwo'])->name('mapproperty');
+Route::get('/agentdetail/{id}', [PropertyController::class,'agentdetail'])->name('agentdetail');
 Route::get('/change-language', [LanguageController::class, 'changeLang'])->name('changeLang');
+
+Route::get('property-list', [PropertyController::class, 'propertyList'])->name('PropertyList');
 
 // Dashboard Route:
 Route::group(['middleware' => ['auth', 'check.user']], function () {
@@ -76,6 +111,25 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
     // Layout/Theme Routes:
     Route::resource('theme', 'ThemeController');
 
+    // Slider Routes:
+    Route::resource('sliders', 'SliderController');
+
+    // Blog Routes:
+    Route::resource('blogs', 'BlogController');
+
+    // Amenities Routes:
+    Route::resource('amenities', 'AmenitiesController');
+
+     // Layout/Theme Routes:
+     Route::resource('theme', 'ThemeController');
+     Route::get('activetheme/{id}', [ThemeController::class, 'themeupdate'])->name('activetheme');
+     Route::get('activethemedetails/{id}', [ThemeController::class, 'detailsupdate'])->name('activethemedetails');
+     Route::post('genralsetting', [ThemeController::class, 'genralsetting'])->name('genralsetting');
+    
+    // Footer Routes:
+    Route::get('siteseting', [FooterController::class, 'index'])->name('footerdetails');
+    Route::post('settingsupdate', [FooterController::class, 'update'])->name('settingsupdate');
+
     //Logout Route:
     Route::get("/logout", [LoginController::class, "adminLogout"])->name('adminLogout');
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");
@@ -89,31 +143,22 @@ Route::post('/userlogout', [UserLoginController::class, 'logout'])->name('userLo
 Route::get('/userlogout', [UserLoginController::class, 'userLogout'])->name('userLog');
 
 // Property Routes:
-Route::get('/', [PropertyController::class, 'index'])->name('showProperty');
+Route::get('/{id?}', [PropertyController::class, 'index'])->name('showProperty');
 Route::post('/getpropertybyprice', [PropertyController::class, 'getpropertybyprice'])->name('getpropertybyprice');
 Route::post('/infinitescroll', [PropertyController::class, 'infiniteScroll'])->name('infinitescroll');
 
-Route::get('/create', [PropertyController::class,'create'])->name('create');
-Route::post('/addproperty', [PropertyController::class,'store'])->name('addProperty');
 
 //Language DropDown:
 Route::get('/get-languages',[LanguageController::class,'getLanguages'])->name('get_languages');
 
-// Route::get('editproperty/{id}',[PropertyController::class,'edit'])->name('editProperty');
-// Route::post('upadteproperty/{id}',[PropertyController::class,'update'])->name('updateProperty');
-// Route::get('delete/property/{id}',[PropertyController::class,'destroy'])->name('deleteProperty');
-
 // Google map api:
 Route::post('/propertyrentdata', [PropertyController::class, 'getRent'])->name('getRent');
 
+Route::post('set-language', [App\Http\Controllers\LanguageController::class, 'setLanguage'])->name('set-language');
 
-Route::get('set-language', [App\Http\Controllers\LanguageController::class, 'setLanguage']);
 
-Route::get('property-list', [PropertyController::class, 'propertyList'])->name('PropertyList');
 //list Scroll:
-Route::post('list-scroll', [PropertyListController::class, 'listScroll'])->name('listScroll');
-// list Scroll:
-Route::resource('property-details', 'frontend\PropertyListController');
+Route::post('/list-scroll', [PropertyListController::class, 'listScroll'])->name('listScroll');
 
 Route::get('single-property-details/{id}', [PropertyController::class, 'propertyDetails'])->name('propertyDetails');
 

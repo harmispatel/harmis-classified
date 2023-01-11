@@ -61,10 +61,6 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- @php
-                                $user_id = $editPropertiesData->user_id;
-                                $userName = getUserName($user_id);
-                            @endphp --}}
                             <div class="form-group">
                                 <label for="exampleInputUser">User</label>
                                 <select class="form-control" name="user_id">

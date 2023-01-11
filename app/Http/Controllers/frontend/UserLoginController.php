@@ -37,9 +37,10 @@ class UserLoginController extends Controller
 
             // Login the User
             if (Auth::attempt($credentials)) {
-                return redirect()->route('showProperty');
+                // return redirect()->route('showProperty');
+                return redirect()->back();;
             } else {
-                return back();
+                return redirect()->back();
             }
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');

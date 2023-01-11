@@ -21,7 +21,7 @@
             <div class="dropdown-divider"></div>
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <img src="{{ ( (auth()->user()->image != '') || (auth()->user()->image != null) ) ? asset('public/userimage/'.auth()->user()->image) : asset('public/img/blank_user.png') }}" class="m-0 me-2 img-circle" width="40" height="40">
+                        <img src="{{ ( (auth()->user()->image != '') || (auth()->user()->image != null) ) ? asset('public/userimage/'.auth()->user()->image) : asset('public/img/blank_user.png') }}" class="m-0 me-2 img-circle" width="30" height="30">
                         {{ ucwords(auth()->user()->name) }}
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px; width: 500px; padding: 0">

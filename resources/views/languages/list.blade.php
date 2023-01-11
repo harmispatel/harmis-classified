@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="card-body">
-                                <table class="table table-bordered" id="languageTable">
+                                <table class="table table-striped " id="languageTable">
                                     <thead>
                                         <tr>
                                             <th>Name</th>

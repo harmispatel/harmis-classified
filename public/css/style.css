@@ -831,11 +831,11 @@ a.img-inr{
 }
 
 .input_check{
-    display:none;
+    display:none !important;
 }
 
 .pro_info_box .check_item_input:checked~.check_item_label .input_check{
-    display:block;
+    display:block !important;
 }
 .pro_info_box .check_item_input:checked~.check_item_label .input_uncheck{
     display:none;
@@ -875,7 +875,7 @@ a.img-inr{
 .pro_info.active i{
     transform: rotate(180deg);
 }
-.masonry { 
+.masonry {
     -webkit-column-count: 3;
     -moz-column-count:3;
     column-count: 3;

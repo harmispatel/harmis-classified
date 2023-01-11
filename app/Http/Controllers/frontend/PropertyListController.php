@@ -56,6 +56,12 @@ class PropertyListController extends Controller
         $total = 0;
         $listOfProperty = Propertie::query();
 
+        // // Property on Rent Sels Filter.
+        // $listOfProperty->when(!empty($rentSelsPrice), function() use($listOfProperty, $rentSelsPrice, $total) {
+        //     $listOfProperty->where('property_type', $rentSelsPrice);
+        //     $total += $listOfProperty->where('property_type', $rentSelsPrice)->count();
+        // });
+
         // Property on Rent Sels Filter.
         $listOfProperty->when(!empty($rentSelsPrice), function() use($listOfProperty, $rentSelsPrice, $total) {
             $listOfProperty->where('property_type', $rentSelsPrice);
@@ -85,7 +91,8 @@ class PropertyListController extends Controller
             if (in_array('5+', $bedroom)) {
                 $total += $listOfProperty->where('bedroom', '>=', 5)->orWhereIn('bedroom', $bedroom)->count();
                 $listOfProperty->where('bedroom', '>=', 5)->orWhereIn('bedroom', $bedroom);
-            } else {
+            } 
+            if(!in_array('5+', $bedroom)) {
                 $total += $listOfProperty->whereIn('bedroom', $bedroom)->count();
                 $listOfProperty->whereIn('bedroom', $bedroom);
             }
@@ -105,128 +112,49 @@ class PropertyListController extends Controller
                             ->offset($request['start'])
                             ->get();
 
+
        $html = "";
        $listview = "";
         if ($request->request_page != 'propertyHome') {
             foreach($listOfProperty as $key => $PropertyList)
             {
-                // Property list
-                $html .='<div class="property_list_inr_box post-grid" onclick="myClick('.$start.');">
-                            <div id="property'.$PropertyList->id.'" class="property_detail_inr_info">
-                                <div class="property_list_inr_box_img">
-                                    <div class="property_list_img">
-                                        <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
-                                            <img src="'. asset("public/multiImage/".''.$PropertyList->image).'" alt="">
-                                        </a>
+                $image = (file_exists(public_path('multiImage/'.$PropertyList->image)) && !empty($PropertyList->image)) ? asset('public/multiImage/'.$PropertyList->image) : asset('public/multiImage/pronotfound.jpg');
+                $html .=  '<div class="property-inr-list-item">
+                                <div class="property_inr-list-img">
+                                    <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
+                                        <img src="'. $image .'" class="w-100"/>
+                                    </a>';
+                                    if($PropertyList["property_type"] == 1)
+                                    {
+                                        $html .= '<div class="type-tag">'.__("For Rent").'</div>';
+                                    }
+                                    elseif($PropertyList["property_type"] == 2)
+                                    {
+                                        $html .= '<div class="type-tag">'.__('For Sales').'</div>';;
+                                    }
+                                    else{
+                                        $html .= '';
+                                    }
+                                $html .= '</div>
+                                <div class="property-inr-list-content">
+                                    <h2>'.$PropertyList->name.'</h2>
+                                    <p>'. $PropertyList->address .'</p>
+                                    <div class="property-inr-list-tag">';
+                                      $html .= ($PropertyList->bedroom != 0 && !empty($PropertyList->bedroom)) ? '<span class="badge rounded-pill bg-light-green">'.$PropertyList->bedroom.' '.__("Bedrooms").'</span>' : '';
+                                      $html .= ($PropertyList->bath != 0 && !empty($PropertyList->bath)) ? '<span class="badge rounded-pill bg-light-orange">'.$PropertyList->bath.' '.__("Bathrooms").'</span>' : '';
+                                      $html .= ($PropertyList->building_area != 0 && !empty($PropertyList->building_area)) ?  '<span class="badge rounded-pill bg-light-yellow">'.$PropertyList->building_area .' '.__("Sq.ft").'</span>' : '';
+                                      $html .= ($PropertyList->garage != 0 && !empty($PropertyList->garage)) ?  '<span class="badge rounded-pill bg-light-blue">'.$PropertyList->garage .' '.__("Garage").'</span>' : '';
+                                   $html .= '</div>
+                                    <div class="property-inr-price-category-tag">
+                                        <div class="price-tag">$ '. $PropertyList->price .'</div>
                                     </div>
+                                    <a href="'. route('propertyDetails',$PropertyList->slug) .'" class="btn btn-sm btn-success mt-2">'. __("View Property") .'</a>
                                 </div>
-                                <div class="property_list_inr_box_info">
-                                    <div class="property_detail">
-                                        <div class="sl-item highlighted">
-                                            <div class="property_name">
-                                                <h2>'.$PropertyList->name.'</h2>
-                                            </div>
-                                            <div class="property_detail_inr">';
-                                            $html .=  ($PropertyList->bedroom != 0 && !empty($PropertyList->bedroom)) ? "<span>". __('BedRooms') .":-". $PropertyList->bedroom."</span>" : '';
-                                            $html .= '</div>
-                                            <div class="property_detail_inr">';
-                                            $html .= ($PropertyList->floor != '' && !empty($PropertyList->floor)) ? "<span>". __('Floor').":-".$PropertyList->floor."</span>" : '';
-                                            $html .= '</div>
-                                            <div class="property_detail_inr">
-                                                <span>'. __('Addres') .':-';
-                                                $html .='</span>';
-                                                $html .='<span onclick="myClick('.$start.')">'. $PropertyList->address .'</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
+                            </div>';
                         $start++;
             }
         }
-        else{
-            foreach($listOfProperty as $showProperty)
-            {
-                $url = route('propertyDetails',$showProperty->slug);
-                // Grid view for Home Page
-                $html .='<div class="item" onscroll="getPricewiseProperty()" id="scroll">
-                             <div class="post-item card ">
-                                <a href="'.$url.'" class="img-inr">
-                                    <img src="'.asset("public/multiImage/$showProperty->image").'" class="img-fluid card-img " alt="">
-                                    <div class="img-pri-abo">
-                                        <h3><i class="fa-solid fa-rupee-sign"></i> <strong>. '.$showProperty->price.'</strong></h3>
-                                    </div>
-                                    <div class="re-img">
-                                        <div class="re-text">
-                                            <span>';
-                                                if($showProperty["property_type"] == 1)
-                                                {
-                                                    $html .= __('For Rent');
-                                                }
-                                                elseif($showProperty["property_type"] == 2)
-                                                {
-                                                    $html .= __('For Sales');
-                                                }
-                                                else{
-                                                    $html .= '';
-                                                }
-                                            $html .='</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="card-body jo-card">
-                                    <div class="jo-card-bor">
-                                        <h3 class="card-title mb-1"><a href="#">'.$showProperty->name.'</a></h3>
-                                        <p class="post-item-text font-weight-light font-sm">'. $showProperty->address.'</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>';
 
-                    // List View for Home Page
-                    $listview .='<div class="col-md-4 mb-3 onscroll="getPropertyList()" id="scroll"">
-                        <div class="list_img">
-                            <a href="javascript:void(0)" onclick="myClick('.$start.')" class="img_inr">
-                                <img src="'. asset('public/multiImage/'.$showProperty->image) .'" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <a href="'. route('propertyDetails',$showProperty->slug) .'" class="text-dark" style="text-decoration: none;">
-                            <div class="list_pro_info">
-                                <div class="property_detail">
-                                    <div class="sl-item highlighted">
-                                        <div class="property_name">
-                                            <h2 class="d-inline-block">'. $showProperty->name .'</h2>
-                                            <span class="ms-2">';
-                                            if($showProperty["property_type"] == 1)
-                                            {
-                                                $listview .= __('For Rent');
-                                            }
-                                            elseif($showProperty["property_type"] == 2)
-                                            {
-                                                $listview .= __('For Sales');
-                                            }
-                                            else{
-                                                $listview .= '';
-                                            }
-                                            $listview .='</span>
-                                        </div>';
-                                        $listview .= ($showProperty->floor != '' && !empty($showProperty->floor)) ? '<div class="property_detail_inr"><span>Floor:-</span><span>'.$showProperty->floor.'</span></div>' : '';
-                                        $listview .= ($showProperty->bedroom != '' && !empty($showProperty->bedroom)) ? '<div class="property_detail_inr"><span>Bedroom:-</span><span>'.$showProperty->bedroom.'</span></div>' : '';
-                                        $listview .= ($showProperty->building_area != 0 && !empty($showProperty->building_area)) ? '<div class="property_detail_inr"><span>sq.ft.:-</span><span>'.$showProperty->building_area.'</span></div>' : '';
-                                        $listview .= ($showProperty->price != 0 && !empty($showProperty->price)) ? '<div class="property_detail_inr"><span>Price:-</span><span>'.$showProperty->price.'</span></div>' : '';
-                                        $listview .= '<div class="property_detail_inr">
-                                            <span>Addres:-</span><span onclick="myClick('.$start.')">'. $showProperty->address .'</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>';
-            }
-        }
         if ($request->ajax()) {
             return response()->json([
                 "html" => $html,

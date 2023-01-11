@@ -167,6 +167,8 @@ class UserController extends Controller
             }
 
             $data = User::find($id);
+
+
             if ($data) {
                 $data->properties()->delete();
                 $data->delete();

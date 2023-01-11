@@ -13,6 +13,9 @@
 @section('content')
     <section class="form-main">
         <div class="container">
+            <div class="form-title">
+                <h2>Register</h2>
+            </div>
             <div class="row justify-content-center">
                 <!-- Success Message -->
                 @if (session('success'))
@@ -34,7 +37,7 @@
 
                 <div class="col-md-6">
                     <div class="form-inr">
-                        <form action="{{ route('userRegister') }}" method="POST" id="register" role="form" enctype="multipart/form-data">
+                        {{-- <form action="{{ route('userRegister') }}" method="POST" id="register" role="form" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="name"><span>{{ __('Name') }}</span></label>
@@ -105,7 +108,80 @@
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary">{{ __('Register') }}</button>
                             </div>
-                        </form>
+                        </form> --}}
+                        <div class="login-form-inr mt-2">
+                            <form method="POST" action="{{ route('userRegister') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3 ">
+                                            <label for="name" class="form-label">{{__('Name')}}</label>
+                                            <div class="position-relative">
+                                                <input type="text" value="{{ old('name') }}" name="name" class="form-control" id="name" />
+                                                <i class="fa-solid fa-user input_ic"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 ">
+                                            <label for="name" class="form-label">{{__('Mobile Number')}}</label>
+                                            <div class="position-relative">
+                                                <input type="number" class="form-control" name="mobile" value="{{ old('mobile') }}" id="mobile" />
+                                                <i class="fa-solid fa-phone input_ic"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 ">
+                                            <label for="role" class="form-label">{{__('Role')}}</label>
+                                            <select class="form-select" name="role_id" id="role">
+                                                <option selected>select menu</option>
+                                                @foreach (getuserrole() as $role)
+                                                    <option value="{{ $role->id }}" {{ (old('role_id') == $role->id) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3 ">
+                                            <label for="gendar" class="form-label">{{__('Gendar')}}</label>
+                                            <select class="form-select" name="gender" id="gender">
+                                                <option value="Male">{{ __('Male') }}</option>
+                                                <option value="Female">{{ __('Female') }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 ">
+                                    <label for="image" class="form-label">{{__('Image')}}</label>
+                                    <input type="file" class="form-control image-input" accept="image/*" name="image" value="{{ old('userimage') }}" id="image">
+                                </div>
+                                <div class="mb-3 ">
+                                    <label for="Email" class="form-label">{{__('Email address')}}</label>
+                                    <div class="position-relative">
+                                        <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="Email">
+                                        <i class="fa-solid fa-envelope input_ic"></i>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control" id="password" name="password">
+                                        <i class="fa-solid fa-lock input_ic"></i>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">{{ __('Confirm Password') }}</label>
+                                    <div class="position-relative">
+                                        <input type="password" class="form-control" id="password" name="confirmPassword">
+                                        <i class="fa-solid fa-lock input_ic"></i>
+                                    </div>
+                                </div>
+                                <div class="login-bt">
+                                    <button type="submit" class="btn btn-success w-100">{{__('Register')}}</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

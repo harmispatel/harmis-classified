@@ -28,10 +28,17 @@ Route::get('/get-property-types', [MasterController::class, 'getCategories']);
 
 // Properties
 Route::get('/get-properties', [PropertyController::class, 'getProperties']);
-Route::get('/get-propertie-details/{slug}', [PropertyController::class, 'getPropertiesdetail']);
+Route::post('/get-propertie-details', [PropertyController::class, 'getPropertiesdetail']);
 Route::get('/get-bookmarks', [PropertyController::class, 'getBookmarks']);
 Route::post('/add-to-bookmarks', [PropertyController::class, 'addToBookmarks']);
 Route::delete('/remove-from-bookmarks', [PropertyController::class, 'removeFromBookmarks']);
+
+// Add Property
+Route::post('/add-property', [PropertyController::class, 'addProperty']);
+
+
+// Add Property
+Route::post('/property-Amenities', [PropertyController::class, 'propertyamAnities']);
 
 // Filter Property
 Route::post('/property-filter', [FilterController::class, 'propertyfilter']);

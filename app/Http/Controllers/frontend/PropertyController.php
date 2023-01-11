@@ -4,40 +4,56 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\{Propertie, Country, Category, State};
+use App\Models\{Propertie, Country, Category, State, User};
 
 //use validation Request Class
 use App\Http\Requests\storePropertie;
 use Illuminate\Support\Str;
 
+// Theme Traits
+use App\Traits\{ActiveTheme,imageRemoveTrait};
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redis;
+
 class PropertyController extends Controller
 {
+    use ActiveTheme,imageRemoveTrait;
     /**
      * Display a listing of the Property.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index($id = '')
     {
         try {
-        $category = Category::get();
-            $propertyMaxPrice = Propertie::max('price');
-            $propertyMinPrice = Propertie::min('price');
-            $PropertyMidPrice = Propertie::avg('price');
-            $totalRecords     = Propertie::count();
+            $property = $this->activeTheme();
+            // dd($property['agents']->toArray());
 
-            $property = Propertie::whereBetween('price', [$propertyMinPrice, $propertyMaxPrice, $PropertyMidPrice])
-                                ->with(['hasOneCountry','hasOneState','hasOneCategory'])
-                                ->paginate(6);
+            // if ($property['activeTheme']['id'] == 1) {
+            //     return view('frontend.themes.theme_one', compact('property'));
+            // }
+            // elseif ($property['activeTheme']['id'] == 2) {
+            //     return view('frontend.themes.theme_two', compact('property'));
+            // }
+            // elseif ($property['activeTheme']['id'] == 3) {
+            //     return view('frontend.themes.theme_three', compact('property'));
+            // }
+            // else{
+            //     return view('frontend.themes.theme_one', compact('property'));
+            // }
 
-            return view('frontend.property', compact(
-                'property',
-                'propertyMaxPrice',
-                'propertyMinPrice',
-                'PropertyMidPrice',
-                'totalRecords',
-                'category'
-            ));
+
+            if ($id == 2) {
+                return view('frontend.themes.theme_two', compact('property'));
+            }
+            elseif ($id == 3) {
+                return view('frontend.themes.theme_three', compact('property'));
+            }
+            else{
+                return view('frontend.themes.theme_one', compact('property'));
+            }
+
+
 
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
@@ -49,16 +65,57 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function agentProperty(Request $request)
     {
-        try {
+        // try {
             $countryId = Country::get();
             $categoryId = Category::get();
             return view('frontend.createProperty',compact('categoryId', 'countryId'));
+        // } catch (\Throwable $th) {
+        //     return back()->with('error', 'Page Not Found!');
+        // }
+    }
+
+
+    /**
+     * // Show the form for creating a new Property.
+     * Show the All Logedin Agent Property.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function agentpropertylist(Request $request)
+    {
+        try {
+            $countryId = Country::get();
+            $user_id = auth()->user()->id;
+            $ajentProprtry = Propertie::with(['hasOneCountry','hasOneState','hasOneCategory'])->where('user_id',$user_id)->orderBy('id','DESC')->paginate(10);
+
+            return view('frontend.agentpropertylist',compact('ajentProprtry', 'countryId'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }
     }
+
+
+     /**
+     *  Show the form for edit a Property.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editAgentProperty($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+            $PropertiesData = Propertie::find($id);
+            $categoryId = Category::get();
+            $country = Country::get();
+            $state = State::get();
+            return view('frontend.editagentproperty',compact('PropertiesData', 'categoryId', 'country', 'state'));
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Page Not Found!');
+        }
+    }
+
 
     // Get State.
     public function getState(Request $request)
@@ -112,25 +169,18 @@ class PropertyController extends Controller
             $addPropertyData->status = $request->status;
 
             if($request->file('image')){
-                $file= $request->file('image');
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('multiImage'), $filename);
-                $addPropertyData['image']= $filename;
+                $fileName = $this->addSingleImage('multiImage',$request->file('image'),$oldImage = '');
+                $addPropertyData['image']= $fileName;
             }
 
             if($request->hasfile('multiImage')) {
-                foreach($request->file('multiImage') as $file)
-                {
-                    $multiImage = date('YmdHi').$file->getClientOriginalName();
-                    $file->move(public_path().'/multiImage/', $multiImage);
-                    $imgData[] = $multiImage;
-                }
-                $addPropertyData->multiImage = implode(" ,",$imgData);
+                $multiFile = $this->addMultiImage('multiImage',$request->file('multiImage'), $oldImage = '');
+                $addPropertyData->multiImage = $multiFile;
             }
 
             $addPropertyData->save();
 
-            return redirect('/');
+            return redirect()->route('agentpropertylist');
         } catch (\Throwable $th) {
             return back()->with('error', 'Something went wrong!');
         }
@@ -144,6 +194,7 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
+        $id = Crypt::decrypt($id);
         $editPropertyData = Propertie::find($id);
         return view('frontend.editProperty',compact('editPropertyData'));
     }
@@ -170,31 +221,32 @@ class PropertyController extends Controller
             $updatePropertyData->kitchen = $request->kitchen;
             $updatePropertyData->bath = $request->bath;
             $updatePropertyData->garage = $request->garage;
-            $updatePropertyData->latitude ='latitude';
-            $updatePropertyData->longitude ='longitude';
+            $updatePropertyData->latitude =  $request->longitude;
+            $updatePropertyData->longitude = $request->latitude;
             $updatePropertyData->status = $request->status;
+            $updatePropertyData->description = $request->description;
+            $updatePropertyData->build_year = $request->build_year;
+            $updatePropertyData->building_area = $request->building_area;
+
 
             if($request->file('image')){
-                $file= $request->file('image');
-                $filename= date('YmdHi').$file->getClientOriginalName();
-                $file-> move(public_path('multiImage'), $filename);
-                $updatePropertyData['image']= $filename;
+                $file = $request->image;
+                $oldImage = $updatePropertyData->image;
+                $fileName = $this->addSingleImage('multiImage',$file,$oldImage);
+                $updatePropertyData->image = $fileName;
             }
 
             if($request->hasfile('multiImage')) {
-                foreach($request->file('multiImage') as $file)
-                {
-                    $multiImage = date('YmdHi').$file->getClientOriginalName();
-                    $file->move(public_path().'/multiImage/', $multiImage);
-                    $imgData[] = $multiImage;
-                }
-                $updatePropertyData->multiImage = implode(" ,",$imgData);
+                $file = $request->multiImage;
+                $oldImage = $updatePropertyData->multiImage;
+                $multiFile = $this->addMultiImage('multiImage',$file, $oldImage);
+                $updatePropertyData->multiImage = $multiFile;
             }
-            $updatePropertyData->update();
 
-            return redirect('/property');
+            $updatePropertyData->update();
+            return back()->with('success', 'Property update!');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Page Not Found!');
+            return back()->with('error', 'Something went wrong !');
         }
     }
 
@@ -206,10 +258,11 @@ class PropertyController extends Controller
     */
     public function destroy($id)
     {
+        $id = Crypt::decrypt($id);
         $deleteProprtieData = Propertie::find($id)->delete();
-        return redirect('/property');
+        return redirect()->back()->with('error', 'Property delete successfully !');
     }
-    
+
     // List of Property end Map.
     public function propertyList()
     {
@@ -230,7 +283,61 @@ class PropertyController extends Controller
     {
         $propertyDetails = Propertie::where('slug',$slug)
                         ->with(['hasOneCountry','hasOneState','hasOneCategory', 'hasOneUser'])
-                        ->first();                        
-        return view('frontend.propertiesDetails', compact('propertyDetails'));
+                        ->first();
+
+        // $propertyDetails->category_id
+        $relatedProperties = Propertie::with(['hasOneCountry','hasOneState','hasOneCategory'])->where('property_type',$propertyDetails->property_type)->where('category_id',$propertyDetails->category_id)->latest()->take(6)->get();
+
+        $activeDetails = $this->activeDetailtheme();
+        if ($activeDetails->id == 1) {
+            return view('frontend.propertiesDetails', compact('propertyDetails','relatedProperties'));
+        }
+        elseif ($activeDetails->id == 2) {
+            return view('frontend.propertiesDetails_two', compact('propertyDetails','relatedProperties'));
+        }
+        else{
+            return view('frontend.propertiesDetails', compact('propertyDetails','relatedProperties'));
+        }
+    }
+
+    /**
+    * Show the property for theme two.
+    *
+    * @param  string  $slug
+    * @return \Illuminate\Http\Response
+    */
+    public function mappropertytwo(Request $request)
+    {
+        $property = $this->activeTheme();
+
+
+        // $allproperty = array_merge($property['resentPropertys'], $property['themeTwoRent'], $property['themeTwoSale']);
+        $allproperty = array_merge($property['resentPropertys']->toArray(),$property['themeTwoRent']->toArray(), $property['themeTwoSale']->toArray());
+        $propertyDetails = array_unique($allproperty, SORT_REGULAR);
+        // dd($propertyDetails);
+
+        return response()->json([
+            'propertyList' => $propertyDetails
+        ]);
+    }
+
+
+    /**
+    * Show Agent details.
+    *
+    * @param  string  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function agentdetail($id)
+    {
+        $id = Crypt::decrypt($id);
+        $agent = User::with('properties')->where('id',$id)->first();
+        return view('frontend.agentdetails',compact('agent'));
+    }
+
+    public function allagent()
+    {
+        $agents = User::where('role_id', 9)->latest()->get();
+        return view('frontend.allagent',compact('agents'));
     }
 }

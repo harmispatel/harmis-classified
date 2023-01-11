@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="card-body">
-                                <table class="table table-striped table-hover" id="lableTable">
+                                <table class="table table-striped " id="lableTable">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -52,7 +52,7 @@
                                                     <a href="{{ route('labels.edit', encrypt($label->id)) }}" title="Edit" class="mr-2">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <i class="fa fa-trash text-danger deleteBtn" data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#deletaModal" data-target-id="{{ route('labels.destroy', encrypt($label->id)) }}" title="Delete"></i>
+                                                    <a><i class="fa fa-trash text-danger deleteBtn" data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#deletaModal" data-target-id="{{ route('labels.destroy', encrypt($label->id)) }}" title="Delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

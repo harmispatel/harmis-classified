@@ -7,21 +7,24 @@
 --}}
 @extends('frontend.common.layout')
 @section('content')
-<section class="property-main page-title-bg">
+{{-- <div>
+    <button class="btn btn-primary ms-2 mt-2" id="filter-Propertty">{{__('Filter')}}</button>
+</div> --}}
+<nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
-        <div class="pro_page_title text-center">
-            <h2>Find Your Property</h2>
-        </div>
-        <div class="filter_btn">
-            <div class="filter_btn_group" role="group" aria-label="Basic example">
-                <button id="2" value="2" type="button" class="btn btn-primary propertyType">For Sales</button>
-                <button id="1" value="1" type="button" class="btn btn-primary propertyType">For Rent</button>
-                <button id="0" value="0" type="button" class="btn btn-primary propertyType active">Both</button>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{__('Properties')}}</li>
+      </ol>
+    </div>
+  </nav>
+<section id="filter-section" class="property-main page-title-bg">
+    <div class="container-fluid">
+        <div class="main_search_box p-4">
+            <div class="filter_title">
+                <h2>Property Filtter</h2>
             </div>
-        </div>
-
-        <div class="shadow-lg p-3 mb-5 bg-body rounded">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center mb-2">
                 <div class="col-lg-8 col-md-6">
                     <div class="input-group mb-2">
                         <input class="form-control" id="search" type="text" placeholder="Search For Property... " aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required/>
@@ -31,9 +34,42 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-4">
+            <div class="text-center">
                 <div class="row">
-                    <div class="col-lg-2 col-md-6 mb-md-3">
+                    <div class="col-lg-2 col-md-6">
+                        <div class="pro_info_main">
+                            <div class="pro_info" id="protypeOpen">{{ __('Property Type') }} <i class="fa-solid fa-chevron-down"></i></div>
+                            <div class="pro_info_box" id="protypeDiv">
+                                <div class="pro_info_box_inr" id="protypeClose">
+                                    <div class="form-check check_item_box">
+                                        <input name="protypeInput" class="form-check-input check_item_input propertyType" name="protype" type="radio" value="2" id="protypeInpute1">
+                                        <label class="form-check-label check_item_label" for="protypeInpute1">
+                                            {{__('For Sales')}}
+                                            <i class="fa-solid fa-plus input_uncheck"></i>
+                                            <i class="fa-solid fa-check input_check"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check check_item_box">
+                                        <input name="protypeInput" class="form-check-input check_item_input propertyType" name="protype" type="radio" value="1" id="protypeInpute2">
+                                        <label class="form-check-label check_item_label" for="protypeInpute2">
+                                            {{__('For Rent')}}
+                                            <i class="fa-solid fa-plus input_uncheck"></i>
+                                            <i class="fa-solid fa-check input_check"></i>
+                                        </label>
+                                    </div>
+                                    <div class="form-check check_item_box">
+                                        <input name="protypeInput" class="form-check-input check_item_input propertyType" checked name="protype" type="radio" value="0" id="protypeInpute3">
+                                        <label class="form-check-label check_item_label" for="protypeInpute3">
+                                            {{__('Both')}}
+                                            <i class="fa-solid fa-plus input_uncheck"></i>
+                                            <i class="fa-solid fa-check input_check"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
                         <div class="pro_info_main">
                             <div class="pro_info" id="bedroomOpen">{{ __('Property Bedroom') }} <i class="fa-solid fa-chevron-down"></i></div>
                             <div class="pro_info_box" id="bedroomDiv">
@@ -85,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-6 mb-md-3">
+                    <div class="col-lg-2 col-md-6">
                         <div class="pro_info_main">
                             <div class="pro_info" id="open">{{ __('Property Catrgory') }} <i class="fa-solid fa-chevron-down"></i></div>
                             <div class="pro_info_box" id="categoryDiv">
@@ -107,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-6 mb-md-3">
+                    <div class="col-lg-2 col-md-6">
                         <div class="pro_info_main">
                             <div class="pro_info" id="conditionOpen">{{ __('Property Condition') }} <i class="fa-solid fa-chevron-down"></i></div>
                             <div class="pro_info_box" id="conditionDiv">
@@ -151,7 +187,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-md-3">
+                    <div class="col-lg-2 col-md-6">
                         <div class="pro_info_main">
                             <div class="pro_info" id="floorOpen">{{ __('Property Floor') }} <i class="fa-solid fa-chevron-down"></i></div>
                             <div class="pro_info_box" id="floorDiv">
@@ -219,18 +255,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-md-3">
+                    <div class="col-lg-2 col-md-6">
                         <div class="pro_info_main">
                             <div class="pro_info" id="propertyPriceOpen">{{ __('Property Price Range') }} <i class="fa-solid fa-chevron-down"></i></div>
-                            <div class="pro_info_box" id="priceDiv">
+                            <div class="range_box" id="priceDiv">
                                 <div class="pro_info_box_inr">
                                     <div class="form-check check_item_box">
                                         <form>
-                                            <div class="form-group">
-                                                <div class="d-flex align-items-center">
-                                                    <input type="range" min="{{ $propertyMinPrice }}"max="{{ $propertyMaxPrice }}" name="priceRange" value="{{ $propertyMaxPrice }}" onchange="getPropertyList('filterClick')" class="form-control-range" id="formControlRange">
-                                                    <input class="text-center fw-bold" style="border: none;background:none;" type="text" id="textInput" value="{{$propertyMaxPrice}}">
+                                            {{-- <div class="form-group">
+                                                <div class="">
+                                                    <input type="range" min="{{ $propertyMinPrice }}" max="{{ $propertyMaxPrice }}" name="priceRange" value="{{ $propertyMaxPrice }}" onchange="getPropertyList('filterClick')" class="form-control-range" id="formControlRange">
+                                                    <input class="text-center fw-bold w-100" style="border: none;background:none;" type="text" id="textInput" value="{{$propertyMaxPrice}}">
                                                 </div>
+                                            </div> --}}
+                                            <div class="range-slider">
+                                                <input class="range-slider__range" type="range" min="{{ $propertyMinPrice }}" max="{{ $propertyMaxPrice }}" value="{{ $propertyMaxPrice }}" name="priceRange" onchange="getPropertyList('filterClick')" id="formControlRange">
+                                                <span class="range-slider__value">{{ $propertyMaxPrice }}</span>
+                                                <input class="d-none" type="hidden" id="textInput" value="{{$propertyMaxPrice}}">
                                             </div>
                                         </form>
                                     </div>
@@ -243,33 +284,27 @@
         </div>
     </div>
 </section>
-<div class="container-fluid">
-    <div class="property_list_main">
+<section class="property_list_main">
+    <div class="property_list_title">
+        <h2>{{__('Property List')}}</h2>
+    </div>
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <div id="map" class="w-100" style="height:600px"></div>
+                <div class="propety-map">
+                    <div id="map" class="w-100" style="height:600px"></div>
+                </div>
             </div>
             <div class="col-md-6">
-                <div class="property_list_info">
-                    <div class="d-flex justify-content-between">
-                        <h2>{{ __('Properties') }}</h2>
-                        <b id="property-total"></b>
-                    </div>
-                    <div class="property_list_inr_box post-grid" id="map-property-lists">
-                        <div class="col-md-9 filter-message">
-                            <span class="text-secondary">{{__('Empty Properties')}}</span>
-                        </div>
-                        <div class="row" style="justify-content: center;">
-                            <div class="col-12 ajax-load text-center d-none">
-                                <p><img src="{{asset('public/img/loader.png')}}">{{ __('Load More Post') }}...</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="text-end">
+                    <b id="property-total"></b>
+                </div>
+                <div class="property-inr-listing" id="map-property-lists">
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @endsection
 
@@ -280,7 +315,7 @@
         var page = 1;
         var total = {{ $totalRecords }};
         var recent = 0;
-        var rentSelsPrice = null;
+        var rentSelsPrice = $("input[type='radio']:checked").val();
         var bedroom = 0;
         var markers = []
         var gmarkers = []
@@ -325,7 +360,8 @@
 
         // property listig by property type
         $('.propertyType').click(function () {
-            rentSelsPrice = this.id
+            rentSelsPrice = $(this).val();
+            $(this).addClass('active');
 
             $(this).siblings().removeClass('active')
             $(this).addClass('active');
@@ -340,7 +376,7 @@
             limit = 4;
             $('#map-property-lists').html('');
             getPropertyList('propertyTypeFilter');
-        })
+        });
 
         // Clear Property Badroom Filter
         function clearBedroomFilter(type="") {
@@ -488,7 +524,6 @@
             $.ajax({
                 type: "POST",
                 url: "{{ route('listScroll') }}",
-                dataType: 'json',
                 data: {
                     "_token"            : "{{ csrf_token() }}",
                     "price"             : priceVal,
@@ -513,7 +548,7 @@
                         total = res.total;
                         $('.ajax-load').addClass('d-none');
                         $('#map-property-lists').append(res.html);
-                        $('#property-total').text("{{ __('Total Properties') }} " + res.total);
+                        $('#property-total').text("{{ __('Total Properties') }} :" + res.total);
                         $("#page-pagination").html(res.homePagination)
 
                         // this is from controller to blade Pass Array:
@@ -533,6 +568,7 @@
                             const marker = new google.maps.Marker({
                                 position:{lat:Number(propertyData.latitude), lng:Number(propertyData.longitude)},
                                 content: propertyData.name,
+                                icon: '{{ asset("image/map-icon.png") }}',
                             });
 
                             // open info window when marker is clicked
@@ -546,7 +582,38 @@
                                 }
 
                                 // Map marker click and show propery detail
-                                infoWindow.setContent('<div class="post-item card"><a href="{{ asset("single-property-details") }}/'+ propertyData.slug +'"><img src="public/multiImage/'+ propertyData.image +'"><div class="re-img"><div class="re-text"><span>'+ property_type +'</span></div></div><div class="img-pri-abo"><h3><i class="fa-solid fa-rupee-sign"></i> <strong>'+ propertyData.price +'</strong></h3></div></a></div><div class="pro_inr_map"><h4><b> '+ propertyData.name +'</b></h4></div>');
+                                infoWindow.setContent('<a href="{{ asset("single-property-details") }}/'+ propertyData.slug +'" class="img-inr property_list_card">\
+                                                            <figure class="m-0">\
+                                                                <img src="{{ asset("multiImage") }}/'+ propertyData.image +'" class="img-fluid" alt="" />\
+                                                            </figure>\
+                                                            <div class="property_list-info">\
+                                                                <div class="property_list_inr">\
+                                                                    <span class="prize">$ '+ propertyData.price +'</span>\
+                                                                    <h2>'+ propertyData.name +'</h2>\
+                                                                    <p>'+ propertyData.address +'</p>\
+                                                                </div>\
+                                                            </div>\
+                                                            <div class="property_more_info">\
+                                                                <div class="inner">\
+                                                                    <div class="col">\
+                                                                        <span><i class="fa-solid fa-bed"></i></span>\
+                                                                        <h4>'+ propertyData.bedroom +' Bed</h4>\
+                                                                    </div>\
+                                                                    <div class="col">\
+                                                                        <span><i class="fa-solid fa-bath"></i></span>\
+                                                                        <h4>'+ propertyData.bath +' Bath</h4>\
+                                                                    </div>\
+                                                                    <div class="col">\
+                                                                        <span><i class="fa-solid fa-car"></i></span>\
+                                                                        <h4>'+ propertyData.garage +' Garage</h4>\
+                                                                    </div>\
+                                                                    <div class="col">\
+                                                                        <span><i class="fa-solid fa-object-ungroup"></i></span>\
+                                                                        <h4>'+ propertyData.building_area +' Sq.ft</h4>\
+                                                                    </div>\
+                                                                </div>\
+                                                            </div>\
+                                                        </a>');
                                 infoWindow.open(map, marker);
 
                                 $('.property_detail_inr_info').removeClass("active");
@@ -656,6 +723,12 @@
             $('#bedroomOpen').toggleClass('active');
         })
 
+        // Property Bedroom Dorpdown Open Close.
+        jQuery("#protypeOpen").click(function(){
+            jQuery("#protypeDiv").toggle();
+            $('#protypeOpen').toggleClass('active');
+        })
+
         // Property Price Dorpdown Open Close.
         jQuery("#propertyPriceOpen").click(function(){
             jQuery("#priceDiv").toggle();
@@ -699,6 +772,15 @@
             }
         });
 
+        // Property type Dorpdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('protypeOpen');
+            if (!box.contains(event.target)) {
+                $('#protypeOpen').removeClass('active')
+                jQuery("#protypeDiv").hide();
+            }
+        });
+
         // Price Dorpdown Open Close.
         document.addEventListener('click', function handleClickOutsideBox(event) {
             const box = document.getElementById('propertyPriceOpen');
@@ -729,6 +811,57 @@
             event.stopPropagation();
         });
 
+        $("#protypeDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+
+
+        // $('#filter-Propertty').click(function (e) { 
+        //     e.preventDefault();
+        //     $('#filter-section').toggleClass('d-none ');
+        // });
+
     </script>
+
+
+<script>
+    // I've added annotations to make this easier to follow along at home. Good luck learning and check out my other pens if you found this useful
+
+
+// First let's set the colors of our sliders
+const settings={
+  fill: '#1abc9c',
+  background: '#d7dcdf'
+}
+
+// First find all our sliders
+const sliders = document.querySelectorAll('.range-slider');
+
+// Iterate through that list of sliders
+// ... this call goes through our array of sliders [slider1,slider2,slider3] and inserts them one-by-one into the code block below with the variable name (slider). We can then access each of wthem by calling slider
+Array.prototype.forEach.call(sliders,(slider)=>{
+  // Look inside our slider for our input add an event listener
+//   ... the input inside addEventListener() is looking for the input action, we could change it to something like change
+  slider.querySelector('input').addEventListener('input', (event)=>{
+    // 1. apply our value to the span
+    slider.querySelector('span').innerHTML = event.target.value;
+    // 2. apply our fill to the input
+    applyFill(event.target);
+  });
+  // Don't wait for the listener, apply it now!
+  applyFill(slider.querySelector('input'));
+});
+
+// This function applies the fill to our sliders by using a linear gradient background
+function applyFill(slider) {
+  // Let's turn our value into a percentage to figure out how far it is in between the min and max of our input
+  const percentage = 100*(slider.value-slider.min)/(slider.max-slider.min);
+  // now we'll create a linear gradient that separates at the above point
+  // Our background color will change here
+  const bg = `linear-gradient(90deg, ${settings.fill} ${percentage}%, ${settings.background} ${percentage+0.1}%)`;
+  slider.style.background = bg;
+}
+
+</script>
 
 @endsection

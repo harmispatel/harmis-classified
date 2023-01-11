@@ -105,13 +105,13 @@ class PropertieController extends Controller
         if($request->file('image')){
             // new image move to storage
             $file = $request->file('image');
-            $fileName = $this->addSingleImage('multiImage/',$file);
+            $fileName = $this->addSingleImage('public/multiImage/',$file);
             $addPropertyData['image'] = $fileName;
         }
 
         if($request->hasfile('multiImage')) {
             $file = $request->file('multiImage');
-            $multiFile = $this->addMultiImage('multiImage/',$file);
+            $multiFile = $this->addMultiImage('public/multiImage/',$file);
             $addPropertyData->multiImage = $multiFile;
         }
         $addPropertyData->save();
@@ -184,7 +184,7 @@ class PropertieController extends Controller
             // new image move to storage
             $file = $request->file('multiImage');
             $oldImage = $updatePropertyData->multiImage;
-            $multiFile = $this->addMultiImage('multiImage/',$file, $oldImage);
+            $multiFile = $this->addMultiImage('public/multiImage/',$file, $oldImage);
             $updatePropertyData->multiImage = $multiFile;
         }
         $updatePropertyData->update();
@@ -209,7 +209,7 @@ class PropertieController extends Controller
 
             // remove multi image from storage
             $oldMultiImage = $deleteProprtieData->multiImage;
-            $this->addMultiImage('multiImage/',$files = '', $oldMultiImage);
+            $this->addMultiImage('public/multiImage/',$files = '', $oldMultiImage);
 
             Propertie::find($id)->delete();
             return redirect()->route('propertie.index');

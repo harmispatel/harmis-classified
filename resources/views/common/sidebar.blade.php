@@ -46,10 +46,10 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {{ (Route::currentRouteName() == 'country.index') || (Route::currentRouteName() == 'state.index') || (Route::currentRouteName() == 'propertie.index') || (Route::currentRouteName() == 'category.index') || (Route::currentRouteName() == 'propertie.create') || (Route::currentRouteName() == 'category.create') || (Route::currentRouteName() == 'category.edit') || (Route::currentRouteName() == 'propertie.edit') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Route::currentRouteName() == 'country.index'|| Route::currentRouteName() == 'propertie.index' || Route::currentRouteName() == 'category.index' || Route::currentRouteName() == 'state.index' ? 'active' : '' }}">
+            <li class="nav-item {{ (Route::currentRouteName() == 'country.index') || (Route::currentRouteName() == 'state.index')  ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Route::currentRouteName() == 'country.index'|| Route::currentRouteName() == 'state.index' ? 'active' : '' }}">
                     <i class="nav-icon fas fa-users"></i>
-                    <p>Settings<i class="right fas fa-angle-left"></i></p>
+                    <p>Zones<i class="right fas fa-angle-left"></i></p>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
@@ -64,6 +64,14 @@
                         <p>States</p>
                         </a>
                     </li>
+                </ul>
+            </li>
+            <li class="nav-item {{ (Route::currentRouteName() == 'propertie.index') || (Route::currentRouteName() == 'category.index') || (Route::currentRouteName() == 'propertie.create') || (Route::currentRouteName() == 'category.create') || (Route::currentRouteName() == 'category.edit') || (Route::currentRouteName() == 'propertie.edit') ? 'menu-open' : '' }}">
+                <a href="#" class="nav-link {{ Route::currentRouteName() == 'propertie.index' || Route::currentRouteName() == 'category.index'  ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Property<i class="right fas fa-angle-left"></i></p>
+                </a>
+                <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{route('propertie.index')}}" class="nav-link {{ Route::currentRouteName() == 'propertie.index' ? 'active' : '' }}">
                         <i class="fab fa-critical-role"></i>
@@ -74,6 +82,12 @@
                         <a href="{{route('category.index')}}" class="nav-link {{ Route::currentRouteName() == 'category.index' ? 'active' : '' }}">
                         <i class="fab fa-critical-role"></i>
                         <p>category</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('amenities.index')}}" class="nav-link {{ Route::currentRouteName() == 'amenities.index' ? 'active' : '' }}">
+                        <i class="fab fa-critical-role"></i>
+                        <p>Amenities</p>
                         </a>
                     </li>
                 </ul>
@@ -94,6 +108,24 @@
                 <a href="{{route('theme.index')}}" class="nav-link {{ Route::currentRouteName() == 'theme.index' ? 'active' : '' }}">
                     <i class="fab fa-themeisle"></i>
                     <p>Layout</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('sliders.index')}}" class="nav-link {{ Route::currentRouteName() == 'sliders.index' ? 'active' : '' }}">
+                    <i class="fas fa-sliders-h"></i>
+                    <p>Slider</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('blogs.index')}}" class="nav-link {{ Route::currentRouteName() == 'blogs.index' ? 'active' : '' }}">
+                    <i class="fas fa-blog"></i>
+                    <p>Blogs</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('footerdetails')}}" class="nav-link {{ Route::currentRouteName() == 'footerdetails' ? 'active' : '' }}">
+                    <i class="fas fa-cog"></i>
+                    <p>Setting</p>
                 </a>
             </li>
         </ul>

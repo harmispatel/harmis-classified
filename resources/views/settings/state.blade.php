@@ -25,7 +25,7 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <table class="table table-striped table-hover" id="countryTable">
+                                    <table class="table table-striped " id="countryTable">
                                         <thead>
                                             <tr>
                                                 <th>State Name</th>
@@ -47,30 +47,11 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {{-- Model --}}
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            ...
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <form action="{{ route('show_role.destroy',$stateData->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger" type="submit">Delete</button>
-                                            </form>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
+                                    {{ $showStateData->links() }}
+                                    {{-- <div class="d-flex justify-content-between align-items-center">
+                                        {{ $showStateData->links("pagination::bootstrap-4") }}
+                                        Showing {{ count($showStateData)}} of {{$totalstate}} entries
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -79,13 +60,12 @@
             </section>
         </div>
     </div>
-
 @endsection
 
 @section('js')
     <script>
-        $(document).ready( function () {
-            $('#countryTable').DataTable();
-        });
+        // $(document).ready( function () {
+        //     $('#countryTable').DataTable();
+        // });
     </script>
 @endsection

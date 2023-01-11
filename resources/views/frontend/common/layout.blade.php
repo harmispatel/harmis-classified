@@ -29,7 +29,8 @@
     @include('frontend.common.header')
 
     @yield('content')
-    
+
+    @include('frontend.common.footer')    
     @include('frontend.common.js')
 </body>
 </html>

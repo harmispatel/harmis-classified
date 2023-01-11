@@ -22,7 +22,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
+  <div class="">
     @include('common.header')
 
     @include('common.sidebar')

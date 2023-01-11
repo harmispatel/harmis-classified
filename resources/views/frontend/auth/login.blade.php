@@ -13,10 +13,13 @@
 @section('content')
     <section class="form-main">
         <div class="container">
+            <div class="form-title">
+                <h2>Login</h2>
+            </div>
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-6 mt-3">
                     <div class="form-inr">
-                        <form action="{{ route('userLogin') }}" method="POST" id="loginForm">
+                        {{-- <form action="{{ route('userLogin') }}" method="POST" id="loginForm">
                             @csrf
                             <div class="form-group">
                                 <label for="email">{{__('labels.email')}}</label>
@@ -38,7 +41,32 @@
                                 <button type="submit" class="btn btn-primary">{{__('labels.login')}}</button>
                                 <a href="{{ route('register') }}/" style="text-decoration: none;">{{__('labels.register')}}</a>
                             </div>
-                        </form>
+                        </form> --}}
+                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                            <div class="login-form-inr">
+                                <form action="{{ route('userLogin') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3 position-relative">
+                                        <label for="Email" class="form-label">{{__('Email address')}}</label>
+                                        <div class="position-relative">
+                                            <input type="email" class="form-control" name="email" id="Email">
+                                            <i class="fa-solid fa-user input_ic"></i>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">{{__('Password')}}</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" name="password" id="password">
+                                            <i class="fa-solid fa-lock input_ic"></i>
+                                        </div>
+                                    </div>
+                                    <div class="login-bt">
+                                        <button type="submit" class="btn btn-success w-100">{{__('LOGIN')}}</button>
+                                        <a href="{{ route('register') }}/" class="btn btn-success w-100 mt-2">{{__('REGISTER')}}</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

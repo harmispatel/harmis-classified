@@ -22,7 +22,8 @@
 {{-- DataTable Js --}}
 <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
-
+{{-- Select 2 --}}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 <script src="{{ asset('public/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

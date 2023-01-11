@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\{Permission, Country, State, User, Language};
-// use App\Models\Country;
+use App\Models\{Permission, Country, State, User, Language, Role, Settings};
 
 /**
  * Get User Permission Value by User Permission Id
@@ -56,4 +55,34 @@ function getLang()
 {
     $languageValue = Language::select('id', 'name', 'code')->where('status',1)->get();
     return $languageValue;
+}
+
+/**
+ * Get the Roles Apart from Admin/user Role
+ */
+function getuserrole()
+{
+    $roles = Role::where('id', '!=', 1)->get();
+    return $roles;
+}
+
+/**
+ * Get the  Fontfamily
+ */
+function getfontfamily()
+{
+    $font = Settings::select('value')->where('key','fonts')->first();
+    return $font;
+}
+
+
+/**
+ * Get Front Footer Data
+ */
+
+function footerData(){
+    $footerSetting = Settings::where('group','setting')->where('key','site_settings')->first();
+    $footer = isset($footerSetting->value) ? unserialize($footerSetting->value) : '';
+    $footer = isset($footer['setting_data']) ? $footer['setting_data'] : '';
+    return $footer;
 }

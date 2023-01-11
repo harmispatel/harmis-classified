@@ -27,7 +27,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table class="table table-bordered" id="propertyTable">
+                                <table class="table table-striped " id="propertyTable">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Image</th>
@@ -46,7 +46,7 @@
                                     @foreach ($showPropertiesData as $propertiesData)
                                         <tr>
                                             <td class="text-center">
-                                                <img src="{{ asset('public/multiImage/'.$propertiesData->image) }}" style="height: 100px; width: 100px;">
+                                                <img src="{{ (file_exists(public_path('multiImage/'.$propertiesData->image)) && !empty($propertiesData->image)) ? asset('public/multiImage/'.$propertiesData->image) : asset('public/multiImage/pronotfound.jpg') }}" style="height: 100px; width: 100px;">
                                             </td>
                                             <td>{{$propertiesData['name']}}</td>
                                             <td>{{$propertiesData->hasOneCategory['name']}}</td>

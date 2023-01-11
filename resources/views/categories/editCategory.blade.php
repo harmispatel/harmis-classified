@@ -40,6 +40,15 @@
                         @endif
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputName">Amenities</label>
+                        <select class="amenities form-control" id="amenities" name="amenities[]" multiple="multiple">
+                            @foreach ($amenities as $amenity)
+                                <option value="{{ $amenity->id }}" {{ ($editCategoryData->amenities()->find($amenity->id)) ? 'selected' : '' }}>{{ $amenity->name }}</option>
+                                {{-- {{ (in_array($editCategoryData->id,$category_amenities)) }} --}}
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                             <label for="exampleInputStatus">Status</label>
                             <select class="form-control" name="status">
                                 <option {{ ($editCategoryData->status) == '1' ? 'selected' : '' }} value="1">Active</option>
@@ -58,4 +67,12 @@
         </div>
     </section>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#amenities').select2();
+        });
+    </script>    
 @endsection

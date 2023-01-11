@@ -50,6 +50,11 @@
     right: 1%;
 }
 
+
+.table tbody td{
+    vertical-align: middle;
+}
+
 /* Property Details CSS.. */
 
 

@@ -16,7 +16,9 @@ class FilterController extends Controller
      */
     public function propertyfilter(Request $request)
     {
-        try {   
+
+        // dd($request->all());
+        // try {
             // Get Data from the Request.
             $proPrice = $request->price;
             $rentSelsPic = $request->rentSelsPrice;
@@ -85,9 +87,9 @@ class FilterController extends Controller
 
             $property = $property->get();
 
-            return $this->sendResponse('true', 'Filter detail loaded successfully!', $property , Response::HTTP_OK);
-        } catch (\Throwable $th) {
-            return $this->sendResponse('false', 'Something went wrong, please try later!', [], 500);
-        }
+            return $this->sendResponse(true, 'Filter detail loaded successfully!', $property , Response::HTTP_OK);
+        // } catch (\Throwable $th) {
+        //     return $this->sendResponse(false, 'Something went wrong, please try later!', [], 500);
+        // }
     }
 }

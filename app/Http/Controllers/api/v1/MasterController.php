@@ -20,11 +20,11 @@ class MasterController extends Controller
     {
         try {
             // Get the Active Property Types
-            $categories = Category::select('id', 'name')->where('status', config('global.ACTIVE'))->get();
+            $categories = Category::select('id', 'name')->where('status', 1)->get();
 
-            return $this->sendResponse('true', 'Property Types loaded successfully!', $categories, Response::HTTP_OK);
+            return $this->sendResponse(true, 'Property Types loaded successfully!', $categories, Response::HTTP_OK);
         } catch (\Throwable $e) {
-            return $this->sendResponse('false', 'Something went wrong, please try later!', [], 500);
+            return $this->sendResponse(false, 'Something went wrong, please try later!', [], 500);
         }
     }
 }

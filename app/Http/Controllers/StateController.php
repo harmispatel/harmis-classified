@@ -15,8 +15,9 @@ class StateController extends Controller
     public function index()
     {
         try {
-            $showStateData = State::with('hasOneCountry')->get();
-            return view('settings.state',compact('showStateData'));
+            $totalstate = State::with('hasOneCountry')->count();
+            $showStateData = State::with('hasOneCountry')->paginate(50);
+            return view('settings.state',compact('showStateData','totalstate'));
         } catch (\Throwable $th) {
             return back()->with('error', 'Page Not Found!');
         }

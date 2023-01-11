@@ -10,6 +10,7 @@ use App\Models\Language;
 
 // request
 use App\Http\Requests\storeCategory;
+use App\Models\amenities;
 use App\Models\Propertie;
 
 class CategoryController extends Controller
@@ -33,9 +34,10 @@ class CategoryController extends Controller
     public function create()
     {
         $getLanguage = Language::get();
+        $amenities = amenities::get();
 
         $category = Category::get();
-        return response()->view('categories.createCategory',compact('category','getLanguage'));
+        return response()->view('categories.createCategory',compact('category','getLanguage','amenities'));
     }
 
     /**
@@ -45,25 +47,15 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(storeCategory $request)
-    {
-        $getLanguage = Language::get();
-        // foreach($getLanguage as $languag)
-        // {
-            // $language_id = $languag->id;
-            $addCategoryData = Category::create($request->all());
-        // }
-        return redirect('category');
-    }
+    {     
+        $input = $request->except('_token','amenities');
+        $addCategoryData = new Category;
+        $addCategoryData->name = $request->name;
+        $addCategoryData->status = $request->status;
+        $addCategoryData->save();
+        $addCategoryData->amenities()->sync($request->amenities);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect()->route('category.index');
     }
 
     /**
@@ -74,8 +66,13 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $editCategoryData = Category::find($id);
-        return view('categories.editCategory',compact('editCategoryData'));
+        $editCategoryData = Category::with('category_amenities','amenities')->find($id);
+        // echo '<pre>';
+        // print_r($editCategoryData->toArray());
+        // exit();
+ 
+        $amenities = amenities::get();
+        return view('categories.editCategory',compact('editCategoryData','amenities'));
     }
 
     /**
@@ -90,7 +87,8 @@ class CategoryController extends Controller
         $updateCategoryData = Category::find($id);
         $updateCategoryData->name = $request->name;
         $updateCategoryData->status = $request->status;
-        $updateCategoryData->save();
+        $updateCategoryData->update();
+        $updateCategoryData->amenities()->sync($request->amenities);
 
         return redirect('category');
     }

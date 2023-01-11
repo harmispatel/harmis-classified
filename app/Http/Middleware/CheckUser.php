@@ -19,6 +19,6 @@ class CheckUser
         if(auth()->user()->role_id == 1){
             return $next($request);
         }
-        return back();
+        return redirect()->back();
     }
 }

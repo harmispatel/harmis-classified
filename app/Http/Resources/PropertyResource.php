@@ -14,12 +14,17 @@ class PropertyResource extends JsonResource
      */
     public function toArray($request)
     {
+        $multiple_images = (isset($this->multiImage) && !empty($this->multiImage)) ? explode(',',$this->multiImage) : '';
+        $multiple_images[] = $this->image;
+        
         return [
             'id'                  => $this->id,
             'slug'                => $this->slug,
             'name'                => $this->name,
             'user_id'             => $this->user_id,
             'user'                => $this->hasOneUser->name,
+            'mobile'              => $this->hasOneUser->mobile,
+            'email'               => $this->hasOneUser->email,
             'category_id'         => $this->category_id,
             'category'            => $this->hasOneCategory->name,
             'price'               => $this->price,
@@ -40,7 +45,7 @@ class PropertyResource extends JsonResource
             'address'             => $this->address,
             'latitude'            => $this->latitude,
             'longitude'           => $this->longitude,
-            'image'               => $this->image
+            'image'               => $multiple_images
         ];
     }
 }

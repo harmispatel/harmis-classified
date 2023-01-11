@@ -15,4 +15,26 @@ class Category extends Model
     public $timestamps = true;
 
     use HasFactory;
+
+    public function amenities()
+    {
+        return $this->belongsToMany(amenities::class);
+    }
+
+    public function category_amenities()
+    {
+        return $this->hasMany(AmenitiesCategory::class,'category_id','id');
+    }
+
+
+    public function categoryToProperty()
+    {
+        return $this->hasMany(Propertie::class)->groupBy('property_type');
+        // return $this->hasMany(Propertie::class, 'id','category_id');
+    }
+
+    // public function amenities()
+    // {
+    //     return $this->hasMany(amenities::class,'id','amenities');
+    // }
 }
