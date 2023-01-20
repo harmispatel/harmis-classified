@@ -20,21 +20,21 @@
 <nav aria-label="breadcrumb" class="pt-2">
   <div class="container">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{__('Contact Us')}}</li>
     </ol>
   </div>
 </nav>
 <section class="contact_us_sec">
     <div class="container">
-      <h2>Contact us</h2>
+      <h2>{{__('Contact Us')}}</h2>
     </div>
   </section>
 
   <section class="contact_us_main">
     <div class="container">  
       <div class="contact_title">
-        <h2><span>Contact Information</span></h2>
+        <h2><span>{{__('Contact Information')}}</span></h2>
       </div>
       <div class="row align-items-center">
         <div class="col-md-6">
@@ -44,7 +44,7 @@
                 <li>
                   <div class="contact_icon">
                     <span><i class="fa-solid fa-phone"></i></span>
-                    <p>Mobile : </p>
+                    <p>{{__('Mobile')}} : </p>
                   </div>
                   <div class="contact_detail">
                     <h3>{{ $data['mobile'] }}</h3>
@@ -53,7 +53,7 @@
                 <li>
                   <div class="contact_icon">
                     <span><i class="fa-solid fa-envelope"></i></span>
-                    <p>Email : </p>
+                    <p>{{__('Email')}} : </p>
                   </div>
                   <div class="contact_detail">
                     <h3>{{ $data['email'] }}</h3>
@@ -70,27 +70,27 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="from-group">
-                    <label for="name" class="form-label">Your Name</label>
+                    <label for="name" class="form-label">{{__('Your Name')}}</label>
                     <div class="position-relative">
-                      <input type="text" class="form-control" name="name" placeholder="Enter Your Name" id="name">
+                      <input type="text" class="form-control" name="name" placeholder="{{__('Your Name')}}" id="name">
                       <i class="fa-solid fa-user input_ic"></i>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="from-group">
-                    <label for="number" class="form-label">Your Mobile No.</label>
+                    <label for="number" class="form-label">{{__('Your Mobile No')}}.</label>
                     <div class="position-relative">
-                      <input type="text" class="form-control" name="mobile" placeholder="Enter Your Number" id="number">
+                      <input type="text" class="form-control" name="mobile" placeholder="{{__('Your Mobile No')}}" id="number">
                       <i class="fa-solid fa-phone input_ic"></i>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="from-group">
-                    <label for="email" class="form-label">Your Email</label>
+                    <label for="email" class="form-label">{{__('Your Email')}}</label>
                     <div class="position-relative">
-                      <input type="email" class="form-control" name="email" placeholder="Enter Your Email" id="email">
+                      <input type="email" class="form-control" name="email" placeholder="{{__('Your Email')}}" id="email">
                       <input type="hidden" class="form-control" name="tomail" value="{{ $data['email'] }}" placeholder="Enter Your Email" id="email">
                       <i class="fa-solid fa-envelope input_ic"></i>
                     </div>
@@ -98,16 +98,16 @@
                 </div>
                 <div class="col-md-12">
                   <div class="from-group">
-                    <label for="message" class="form-label">Your message</label>
+                    <label for="message" class="form-label">{{__('Your message')}}</label>
                     <div class="position-relative">
-                      <textarea class="form-control" name="message" placeholder="Enter Your Message" id="message" rows="3"></textarea>
+                      <textarea class="form-control" name="message" placeholder="{{__('Your message')}}" id="message" rows="3"></textarea>
                       <i class="fa-solid fa-message input_ic"></i>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="from-group">
-                    <button class="btn contact_sb_bt">Submit</button>
+                    <button class="btn contact_sb_bt">{{__('Submit')}}</button>
                   </div>
                 </div>
               </div>
@@ -137,7 +137,7 @@
               <li>
                 <div class="contact_icon">
                   <span><i class="fa-solid fa-phone"></i></span>
-                  <p>Address : </p>
+                  <p>{{__('Address')}} : </p>
                 </div>
                 <div class="contact_detail">
                   <h3>{{ isset($data['address']) ? $data['address'] : '' }}</h3>
@@ -146,7 +146,7 @@
               <li>
                 <div class="contact_icon">
                   <span><i class="fa-sharp fa-solid fa-globe"></i></span>
-                  <p>Social : </p>
+                  <p>{{__('Social')}} : </p>
                 </div>
                 <div class="contact_detail">
                   <ul>

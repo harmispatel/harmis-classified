@@ -44,9 +44,17 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputName">Amenities</label>
-                            <select class="amenities form-control" name="amenities[]" multiple="multiple">
+                            <select class="select2 form-control" name="amenities[]" multiple="multiple">
                                 @foreach ($amenities as $amenity)
                                     <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputName">Property Condition</label>
+                            <select class="select2 form-control" name="procondition[]" multiple="multiple">
+                                @foreach ($procondition as $condition)
+                                    <option value="{{ $condition->id }}">{{ $condition->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -84,7 +92,7 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            $('.amenities').select2();
+            $('.select2').select2();
         });
     </script>    
 @endsection

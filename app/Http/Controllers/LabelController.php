@@ -108,14 +108,9 @@ class LabelController extends Controller
     public function destroy($id)
     {
         try {
-            $label = labels::find(decrypt($id));
+            $label = labels::find(decrypt($id))->delete();
 
-            if (!empty($label)) {
-                $label->delete();
-                return back()->with('success', 'Label deleted successfully!');
-            } else {
-                return back()->with('error', 'Record not found!');
-            }
+            return back()->with('success', 'Label deleted successfully!');
         } catch (\Throwable $th) {
             return back()->with('error', 'Something went wrong, please try later.');
         }

@@ -21,6 +21,7 @@ class PropertyListController extends Controller
         $propertyMinPrice  = Propertie::min('price');
         $PropertyMidPrice  = Propertie::avg('price');
         $totalRecords      = Propertie::count();
+        $keyword           = isset($request->search) ? $request->search : '';
 
         return view('frontend.PropertyList', compact(
             'totalRecords',
@@ -28,6 +29,7 @@ class PropertyListController extends Controller
             'propertyMaxPrice',
             'propertyMinPrice',
             'PropertyMidPrice',
+            'keyword'
         ));
     }
 
@@ -39,19 +41,23 @@ class PropertyListController extends Controller
     */
     public function listScroll(Request $request)
     {
+
+        $input = $request->except(['_token']);
+
+        // dd($input);
         $category = Category::get();
         $propertyMinPrice = Propertie::min('price');
 
         // Get Data from the Request.
-        $proPrice = $request->price;
+        $proPrice = isset($input['price']) ? $input['price'] : '';
 
-        $rentSelsPrice = $request->rentSelsPrice;
-        $category_id = $request->category;
-        $property_condition = $request->propertyCondition;
-        $property_floor = $request->propertyFloor;
-        $bedroom = $request->propertyBedRoom;
-        $search = $request->search;
-        $start = ($request->start);
+        $rentSelsPrice = isset($input['rentSelsPrice']) ? $input['rentSelsPrice'] : '';
+        $category_id = isset($input['category_id']) ? $input['category_id'] : '';
+        $property_condition = isset($input['propertyCondition']) ? $input['propertyCondition'] : '';
+        $property_floor = isset($input['propertyFloor']) ? $input['propertyFloor'] : '';
+        $bedroom = isset($input['propertyBedRoom']) ? $input['propertyBedRoom'] : '';
+        $search = isset($input['search']) ? $input['search'] : '';
+        $start = isset($input['start']) ? $input['start'] : '';
 
         $total = 0;
         $listOfProperty = Propertie::query();
@@ -99,8 +105,8 @@ class PropertyListController extends Controller
         });
 
         $listOfProperty->when(!empty($search), function() use($listOfProperty, $search, $total) {
-            $listOfProperty->where('name', 'LIKE', "%{$search}%");
-            $total += $listOfProperty->where('name', 'LIKE', "%{$search}%")->count();
+            $listOfProperty->where('name', 'LIKE', "%{$search}%")->orWhere('address', 'LIKE', "%{$search}%");
+            $total += $listOfProperty->where('name', 'LIKE', "%{$search}%")->orWhere('address', 'LIKE', "%{$search}%")->count();
         });
 
         $start = ($request->start);
@@ -111,7 +117,9 @@ class PropertyListController extends Controller
                             ->limit($request['limit'])
                             ->offset($request['start'])
                             ->get();
-
+        // echo '<pre>';
+        // print_r($listOfProperty);
+        // exit();
 
        $html = "";
        $listview = "";
@@ -126,11 +134,11 @@ class PropertyListController extends Controller
                                     </a>';
                                     if($PropertyList["property_type"] == 1)
                                     {
-                                        $html .= '<div class="type-tag">'.__("For Rent").'</div>';
+                                        $html .= '<div class="type-tag">'.__("for Rent").'</div>';
                                     }
                                     elseif($PropertyList["property_type"] == 2)
                                     {
-                                        $html .= '<div class="type-tag">'.__('For Sales').'</div>';;
+                                        $html .= '<div class="type-tag">'.__('for Sale').'</div>';;
                                     }
                                     else{
                                         $html .= '';

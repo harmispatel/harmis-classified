@@ -52,4 +52,9 @@ class Propertie extends Model
     {
         return $this->belongsTo(Bookmark::class, 'id', 'property_id');
     }
+
+    public function bookmarksPro()
+    {
+        return $this->hasMany(Bookmark::class, 'id', 'property_id');
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\{AmenitiesController, BlogController, ThemeController ,RoleController, CountryController, DashboardController, FooterController, PropertieController, SliderController};
+use App\Http\Controllers\{AmenitiesController, BlogController, ThemeController ,RoleController, CountryController, DashboardController, FooterController, PropertieController, PropertyConditionController, SliderController};
 use App\Http\Controllers\frontend\{DefaultController, RegisterController, UserLoginController, PropertyController, PropertyListController, LanguageController};
 use Illuminate\Support\Facades\Artisan;
 
@@ -55,7 +55,8 @@ Route::group(['middleware' => ['auth','Agent']], function(){
 });
 
 
-Route::get('property-lists', [PropertyListController::class, 'index'])->name('property-lists');
+
+Route::any('property-lists', [PropertyListController::class, 'index'])->name('property-lists');
 
 
 // allagent
@@ -101,6 +102,7 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
 
     //Propertie Route:
     Route::resource('propertie', 'PropertieController');
+    // Route::get('propertie/update/{id}', [PropertieController::class, 'update'])->name('propertie-update');
 
     // Language Routes:
     Route::resource('languages', 'LanguageController');
@@ -119,6 +121,9 @@ Route::group(['middleware' => ['auth', 'check.user']], function () {
 
     // Amenities Routes:
     Route::resource('amenities', 'AmenitiesController');
+
+    // Propery Condition Routes:
+    Route::resource('propertycondition', 'PropertyConditionController');
 
      // Layout/Theme Routes:
      Route::resource('theme', 'ThemeController');

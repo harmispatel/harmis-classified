@@ -90,6 +90,12 @@
                         <p>Amenities</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{route('propertycondition.index')}}" class="nav-link {{ Route::currentRouteName() == 'propertycondition.index' ? 'active' : '' }}">
+                        <i class="fab fa-critical-role"></i>
+                        <p>Property Condition</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-item">

@@ -14,7 +14,7 @@
 <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{__('Profile')}}</li>
       </ol>
     </div>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3 ">
-                                        <label for="name" class="form-label">{{__('Mobile Number')}}</label>
+                                        <label for="name" class="form-label">{{__('Mobile No')}}</label>
                                         <input type="number" class="form-control" name="mobile" value="{{ $userDetail->mobile }}" id="mobile" />
                                     </div>
                                     @if ($errors->has('mobile'))
@@ -79,7 +79,7 @@
                                 <img src="{{ asset('public/userimage/'.$userDetail->image) }}" width="50" alt="Img">
                             </div>
                             <div class="mb-3 ">
-                                <label for="Email" class="form-label">{{__('Email address')}}</label>
+                                <label for="Email" class="form-label">{{__('Email')}}</label>
                                 <input type="email" class="form-control" value="{{ $userDetail->email }}" name="email" id="Email">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
@@ -100,7 +100,7 @@
                                 @endif
                             </div>
                             <div class="login-bt">
-                                <button type="submit" class="btn btn-success w-100">{{__('UPDATE')}}</button>
+                                <button type="submit" class="btn btn-success w-100">{{__('Update')}}</button>
                             </div>
                         </form>
                     </div>

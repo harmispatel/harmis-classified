@@ -17,8 +17,8 @@
 <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('agentpropertylist') }}">{{__('Your Properties')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('agentpropertylist') }}">{{__('My Properties')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{__('Add Properties')}}</li>
       </ol>
     </div>
@@ -38,7 +38,7 @@
                                         @csrf
                                         <div class="card-body">
                                         <div class="form-group">
-                                            <label for="exampleInputName" class="mb-2">{{__('Property Name')}}</label>
+                                            <label for="exampleInputName" class="mb-2">{{__('PROPERTY') .' '. __('Name')}}</label>
                                             <input type="text" name="name" class="form-control mb-2 {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Enter Name">
                                             @if ($errors->has('name'))
                                                 <span class="text-danger">{{ $errors->first('name') }}</span>
@@ -96,7 +96,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputBedroom" class="mb-2">{{__('Number Of Bedrooms')}}</label>
+                                            <label for="exampleInputBedroom" class="mb-2">{{__('Number Of BedRooms')}}</label>
                                             <input type="number" name="bedroom" class="form-control mb-2 {{ $errors->has('bedroom') ? 'is-invalid' : '' }}" placeholder="Enter Number of Bedroom">
                                             @if ($errors->has('bedroom'))
                                                 <span class="text-danger">{{ $errors->first('bedroom') }}</span>
@@ -105,14 +105,14 @@
 
 
                                         <div class="form-group">
-                                            <label for="exampleInputBedroom" class="mb-2">{{__('Kitchen')}}</label>
+                                            <label for="exampleInputBedroom" class="mb-2">{{__('kitchen')}}</label>
                                             <input type="number" name="kitchen" class="form-control mb-2 {{ $errors->has('kitchen') ? 'is-invalid' : '' }}" placeholder="Enter Number of Kitchen">
                                             @if ($errors->has('kitchen'))
                                                 <span class="text-danger">{{ $errors->first('kitchen') }}</span>
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label for="exampleInputBedroom" class="mb-2">{{__('Bath')}}</label>
+                                            <label for="exampleInputBedroom" class="mb-2">{{__('Bathroom')}}</label>
                                             <input type="number" name="bath" class="form-control mb-2 {{ $errors->has('bath') ? 'is-invalid' : '' }}" placeholder="Enter Number of Bath">
                                             @if ($errors->has('bath'))
                                                 <span class="text-danger">{{ $errors->first('bath') }}</span>
@@ -138,7 +138,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="exampleInputPrice" class="mb-2">{{__('Building Area (In SQFT.)')}}</label>
+                                            <label for="exampleInputPrice" class="mb-2">{{__('Building Area') .' '. __('Sq.ft')}}</label>
                                             <input type="number" name="building_area" class="form-control mb-2 {{ $errors->has('building_area') ? 'is-invalid' : '' }}" placeholder="Enter Building Area">
                                             @if ($errors->has('building_area'))
                                                 <span class="text-danger">{{ $errors->first('building_area') }}</span>
@@ -151,7 +151,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="exampleInputCountry" class="mb-2">{{__('Country')}}</label>
+                                            <label for="exampleInputCountry" class="mb-2">{{__('country')}}</label>
                                             <select id="country" class="form-control mb-2 {{ $errors->has('country') ? 'is-invalid' : '' }}" name="country_id">
                                                 <option value="">-- Select Country --</option>
                                                 @foreach ($countryId as $country)

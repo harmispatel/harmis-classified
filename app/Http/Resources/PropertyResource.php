@@ -14,8 +14,12 @@ class PropertyResource extends JsonResource
      */
     public function toArray($request)
     {
+        // Multi Image string to Array   
         $multiple_images = (isset($this->multiImage) && !empty($this->multiImage)) ? explode(',',$this->multiImage) : '';
         $multiple_images[] = $this->image;
+
+        // Get Bookmark Property 
+        $bookmarks = (!empty($this->bookmarks->property_id) && !empty($this->bookmarks->device_token) && ($this->bookmarks->device_token == $request->device_token) && ($this->bookmarks->property_id == $this->id)) ? true : false;
         
         return [
             'id'                  => $this->id,
@@ -45,6 +49,7 @@ class PropertyResource extends JsonResource
             'address'             => $this->address,
             'latitude'            => $this->latitude,
             'longitude'           => $this->longitude,
+            'is_bookmarks'        => $bookmarks,
             'image'               => $multiple_images
         ];
     }

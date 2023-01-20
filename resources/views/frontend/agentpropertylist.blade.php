@@ -11,14 +11,14 @@
 
 @extends('frontend.common.layout')
 
-@section('title', 'Add Properties')
+@section('title', 'Properties')
 
 @section('content')
 <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{__('Your Properties')}}</li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{__('My Properties')}}</li>
       </ol>
     </div>
   </nav>  
@@ -28,7 +28,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="text-end mr-3 mb-2 mt-2">
-                            <a href="{{ route('addagentProperty') }}" class="btn btn-primary">Add Propertys</a>
+                            <a href="{{ route('addagentProperty') }}" class="btn btn-primary">{{__('Add Propertys')}}</a>
                         </div>
                         <section class="content">
                             <div class="container-fluid">
@@ -36,23 +36,23 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h3 class="card-title">List Properties</h3>
+                                                <h3 class="card-title">{{__('List Properties')}}</h3>
                                             </div>
                                             <!-- /.card-header -->
                                             <div class="card-body">
                                                 <table class="table table-striped " id="propertyTable">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-center">Image</th>
-                                                        <th>Name</th>
-                                                        <th>Category</th>
-                                                        <th>Price</th>
-                                                        <th>Type</th>
-                                                        <th>country</th>
-                                                        <th>State</th>
-                                                        <th>Address</th>
-                                                        <th>Status</th>
-                                                        <th class="text-right">Actions</th>
+                                                        <th class="text-center">{{__('Image')}}</th>
+                                                        <th>{{__('Name')}}</th>
+                                                        <th>{{__('Category')}}</th>
+                                                        <th>{{__('Price')}}</th>
+                                                        <th>{{__('Type')}}</th>
+                                                        <th>{{__('country')}}</th>
+                                                        <th>{{__('State')}}</th>
+                                                        <th>{{__('Address')}}</th>
+                                                        <th>{{__('Status')}}</th>
+                                                        <th class="text-right">{{__('Actions')}}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

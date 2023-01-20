@@ -7,29 +7,36 @@
 --}}
 
 @extends('frontend.common.layout')
+@section('title', 'Property Details')
 
 @section('content')
 
-<body class="aa-price-range">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">Library</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Data</li>
-    </ol>
-  </nav>
+  <nav aria-label="breadcrumb" class="pt-2">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{__('Property Detail')}}</li>
+      </ol>
+    </div>
+  </nav> 
   
   <section class="section">
     <div class="container">
       <div class="property_details_title">
-        <div class="property_details_title_inr">
-          <h3>{{ $propertyDetails->name }}</h3>
-          <p><i class="fa-solid fa-location-dot me-2"></i> {{$propertyDetails->address}}</p>
-          <label>{{($propertyDetails->property_type == 1) ? 'For Rent' : 'For Sale' }}</label>
-        </div>
-        <div class="property_details_title_inr text-end">
-          <h3>$ {{ $propertyDetails->price }}</h3>
-          <p><i class="fa-solid fa-object-ungroup me-2"></i> {{ $propertyDetails->building_area }} Sq ft</p>
+        <div class="row">
+          <div class="col-lg-9 col-md-8">
+            <div class="property_details_title_inr">
+              <h3>{{ $propertyDetails->name }}</h3>
+              <p><i class="fa-solid fa-location-dot me-2"></i> {{$propertyDetails->address}}</p>
+              <label>{{($propertyDetails->property_type == 1) ? __('for Rent') : __('for Sale') }}</label>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            <div class="property_details_title_inr text-end">
+              <h3>$ {{ $propertyDetails->price }}</h3>
+              <p><i class="fa-solid fa-object-ungroup me-2"></i> {{ $propertyDetails->building_area }} {{__('Sq.ft')}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -96,7 +103,7 @@
                         <i class="fa-solid fa-object-ungroup"></i>
                         <div class="overview_text_info">
                           <h4>{{($propertyDetails->building_area != 0) ? $propertyDetails->building_area : 0}}</h4>
-                          <span>{{__('Square Ft')}}.</span>
+                          <span>{{__('Sq.ft')}}.</span>
                         </div>
                       </div>
                     </div>
@@ -105,7 +112,7 @@
                         <i class="fa-solid fa-bed"></i>
                         <div class="overview_text_info">
                           <h4>{{$propertyDetails->bedroom}}</h4>
-                          <span>{{__('Bedroom')}}</span>
+                          <span>{{__('Bedrooms')}}</span>
                         </div>
                       </div>
                     </div>
@@ -123,7 +130,7 @@
                         <i class="fa-solid fa-kitchen-set"></i>
                         <div class="overview_text_info">
                           <h4>{{$propertyDetails->kitchen}}</h4>
-                          <span>{{__('Kitchen')}}</span>
+                          <span>{{__('kitchen')}}</span>
                         </div>
                       </div>
                     </div>
@@ -139,10 +146,14 @@
                 </div>
             </div>
         </div>
+        @php
+            $userimg = isset($propertyDetails->hasOneUser['image']) ? $propertyDetails->hasOneUser['image'] : '';
+        @endphp
         <div class="col-md-4">
           <div class="agent-info">
             <div class="agent-img">
-              <img src="{{asset('public/userimage/'.$propertyDetails->hasOneUser['image'])}}" />
+              {{-- <img src="{{asset('public/userimage/'.$propertyDetails->hasOneUser['image'])}}" /> --}}
+              <img src="{{ (file_exists(public_path('userimage/'.$userimg)) && !empty($userimg)) ? asset('public/userimage/'.$userimg) : asset('public/userimage/usernotfound.jpg') }}" />
             </div>
             <div class="agent-info-inr">
               <h3>{{ $propertyDetails->hasOneUser['name'] }}</h3>
@@ -162,46 +173,47 @@
       </div>
     </div>
   </section>
-  <section class="agent-property">
-    <div class="container">
-        <div class="row">
-            @foreach ($relatedProperties as $property)
-                <div class="col-md-6">
-                    <div class="property-inr-list-item">
-                        <div class="property_inr-list-img">
-                            <a href="javascript:void(0)" onclick="#" class="img_inr">
-                                <img src="{{ (file_exists(public_path('multiImage/'.$property->image)) && !empty($property->image)) ? asset('public/multiImage/'.$property->image) : asset('public/multiImage/pronotfound.jpg') }}" class="w-100"/>
-                            </a>
-                            @if($property["property_type"] == 1)
-                                <div class="type-tag">{{__("For     Rent")}}</div>
-                            @elseif($property["property_type"] == 2)
-                                <div class="type-tag">{{__("For Sales")}}</div>
-                            @else
-                                    {{ "" }}
-                            @endif
-                            </div>
-                            <div class="property-inr-list-content">
-                            <h2>{{$property->name}}</h2>
-                            <p>{{$property->address}}</p>
-                            <div class="property-inr-list-tag">
-                                {{-- {{ ($property->bedroom != 0 && !empty($property->bedroom)) ? '<span class="badge rounded-pill bg-light-green">'.$property->bedroom. ' '.__("Bedrooms").'</span>' : ""}}
-                                {{ ($property->bath != 0 && !empty($property->bath)) ? '<span class="badge rounded-pill bg-light-orange">'.$property->bath. ' ' .__("Bathrooms").'</span>' : }}
-                                {{ ($property->building_area != 0 && !empty($property->building_area)) ?  '<span class="badge rounded-pill bg-light-yellow">'.$property->building_area . ' '.__("Sq.ft").'</span>' : ""}}
-                                {{ ($property->garage != 0 && !empty($property->garage)) ?  '<span class="badge rounded-pill bg-light-blue">'.$property->garage . ' ' .__("Garage").'</span>' : ""}} --}}
-                            </div>
-                            <div class="property-inr-price-category-tag">
-                                <div class="price-tag">$  {{$property->price}}</div>
-                            </div>
-                            <a href="{{ route('propertyDetails',$property->slug)}}" class="btn btn-sm btn-primary mt-2">{{ __("View Property")}}</a>
-                        </div>
-                    </div>
-                </div>       
-            @endforeach
-        </div>
-    </div>
-</section>
 
-</body>
+  @if (count($relatedProperties) > 0)
+    <section class="agent-property">
+      <div class="container">
+          <div class="row">
+              @foreach ($relatedProperties as $property)
+                  <div class="col-md-6">
+                      <div class="property-inr-list-item">
+                          <div class="property_inr-list-img">
+                              <a href="javascript:void(0)" onclick="#" class="img_inr">
+                                  <img src="{{ (file_exists(public_path('multiImage/'.$property->image)) && !empty($property->image)) ? asset('public/multiImage/'.$property->image) : asset('public/multiImage/pronotfound.jpg') }}" class="w-100"/>
+                              </a>
+                              @if($property["property_type"] == 1)
+                                  <div class="type-tag">{{__("for Rent")}}</div>
+                              @elseif($property["property_type"] == 2)
+                                  <div class="type-tag">{{__("for Sales")}}</div>
+                              @else
+                                      {{ "" }}
+                              @endif
+                              </div>
+                              <div class="property-inr-list-content">
+                              <h2>{{$property->name}}</h2>
+                              <p>{{$property->address}}</p>
+                              <div class="property-inr-list-tag">
+                                  {{-- {{ ($property->bedroom != 0 && !empty($property->bedroom)) ? '<span class="badge rounded-pill bg-light-green">'.$property->bedroom. ' '.__("Bedrooms").'</span>' : ""}}
+                                  {{ ($property->bath != 0 && !empty($property->bath)) ? '<span class="badge rounded-pill bg-light-orange">'.$property->bath. ' ' .__("Bathrooms").'</span>' : }}
+                                  {{ ($property->building_area != 0 && !empty($property->building_area)) ?  '<span class="badge rounded-pill bg-light-yellow">'.$property->building_area . ' '.__("Sq.ft").'</span>' : ""}}
+                                  {{ ($property->garage != 0 && !empty($property->garage)) ?  '<span class="badge rounded-pill bg-light-blue">'.$property->garage . ' ' .__("Garage").'</span>' : ""}} --}}
+                              </div>
+                              <div class="property-inr-price-category-tag">
+                                  <div class="price-tag">$  {{$property->price}}</div>
+                              </div>
+                              <a href="{{ route('propertyDetails',$property->slug)}}" class="btn btn-sm btn-primary mt-2">{{ __("View Property")}}</a>
+                          </div>
+                      </div>
+                  </div>       
+              @endforeach
+          </div>
+      </div>
+    </section>
+  @endif
 
 @endsection
 

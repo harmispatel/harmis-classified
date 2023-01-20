@@ -14,7 +14,7 @@
     <section class="form-main">
         <div class="container">
             <div class="form-title">
-                <h2>Login</h2>
+                <h2>{{__('Login')}}</h2>
             </div>
             <div class="row justify-content-center align-items-center">
                 <div class="col-md-6 mt-3">
@@ -47,7 +47,7 @@
                                 <form action="{{ route('userLogin') }}" method="POST">
                                     @csrf
                                     <div class="mb-3 position-relative">
-                                        <label for="Email" class="form-label">{{__('Email address')}}</label>
+                                        <label for="Email" class="form-label">{{__('Email')}}</label>
                                         <div class="position-relative">
                                             <input type="email" class="form-control" name="email" id="Email">
                                             <i class="fa-solid fa-user input_ic"></i>

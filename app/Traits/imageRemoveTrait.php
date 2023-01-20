@@ -51,7 +51,6 @@ trait imageRemoveTrait {
             $filename = date('YmdHi').$file->getClientOriginalName();
             $filename = str_replace(' ','_',$filename);
             $file->move(public_path($path), $filename);
-
             return $filename;
         }
         return null;

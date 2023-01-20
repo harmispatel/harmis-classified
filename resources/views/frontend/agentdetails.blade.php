@@ -18,7 +18,7 @@
   <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
         <li class="breadcrumb-item"><a href="{{ route('allagent') }}">{{__('Agent')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{__('Agent Detail')}}</li>
       </ol>
@@ -63,43 +63,43 @@
                   <div class="col-md-12">
                     <div class="from-group">
                       <input type="hidden" name="toemail" value="{{ $agent->email }}">
-                      <label for="name" class="form-label">Your Name</label>
+                      <label for="name" class="form-label">{{__('Your Name')}}</label>
                       <div class="position-relative">
-                        <input type="text" class="form-control" name="name" placeholder="Enter Your Name" id="name">
+                        <input type="text" class="form-control" name="name" placeholder="{{__('Your Name')}}" id="name">
                         <i class="fa-solid fa-user input_ic"></i>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="from-group">
-                      <label for="number" class="form-label">Your Mobile No.</label>
+                      <label for="number" class="form-label">{{__('Your Mobile No')}}</label>
                       <div class="position-relative">
-                        <input type="text" class="form-control" name="mobile" placeholder="Enter Your Number" id="number">
+                        <input type="text" class="form-control" name="mobile" placeholder="{{__('Your Mobile No')}}" id="number">
                         <i class="fa-solid fa-phone input_ic"></i>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="from-group">
-                      <label for="email" class="form-label">Your Email</label>
+                      <label for="email" class="form-label">{{__('Your Email')}}</label>
                       <div class="position-relative">
-                        <input type="email" class="form-control" name="email" placeholder="Enter Your Email" id="email">
+                        <input type="email" class="form-control" name="email" placeholder="{{__('Your Email')}}" id="email">
                         <i class="fa-solid fa-envelope input_ic"></i>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="from-group">
-                      <label for="message" class="form-label">Your message</label>
+                      <label for="message" class="form-label">{{__('Your message')}}</label>
                       <div class="position-relative">
-                        <textarea class="form-control" name="message" placeholder="Enter Your Message" id="message" rows="3"></textarea>
+                        <textarea class="form-control" name="message" placeholder="{{__('Your message')}}" id="message" rows="3"></textarea>
                         <i class="fa-solid fa-message input_ic"></i>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="from-group">
-                      <button class="btn agent_sb_bt">Submit</button>
+                      <button class="btn agent_sb_bt">{{__('Submit')}}</button>
                     </div>
                   </div>
                 </form>
@@ -121,9 +121,9 @@
                                     <img src="{{ (file_exists(public_path('multiImage/'.$property->image)) && !empty($property->image)) ? asset('public/multiImage/'.$property->image) : asset('public/multiImage/pronotfound.jpg') }}" class="w-100"/>
                                 </a>
                                 @if($property["property_type"] == 1)
-                                    <div class="type-tag">{{__("For     Rent")}}</div>
+                                    <div class="type-tag">{{__("for Rent")}}</div>
                                 @elseif($property["property_type"] == 2)
-                                    <div class="type-tag">{{__("For Sales")}}</div>
+                                    <div class="type-tag">{{__("for Sale")}}</div>
                                 @else
                                         {{ "" }}
                                 @endif

@@ -21,7 +21,7 @@
 <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{__('Blogs')}}</li>
       </ol>
     </div>
@@ -30,7 +30,7 @@
         <section class="property_sec blog_sec blog_list_main">
             <div class="container">
                 <div class="section_title">
-                    <h2>Our Property Blog</h2>
+                    <h2>{{__('Our Property Blog')}}</h2>
                 </div>
                 <div class="row">
                     @foreach ($blogs as $blog)

@@ -7,6 +7,7 @@
 --}}
 
 @extends('frontend.common.layout')
+@section('title', 'Home')
 @php
     $property_agents = isset($property['agents']) ? $property['agents'] : [];
     $blogs = isset($property['blogs']) ? $property['blogs'] : [];
@@ -21,8 +22,29 @@
             <div class="swiper-wrapper">
                 @foreach ($property['sliders'] as $slider)
                     <div class="swiper-slide">
-                        <strong class="title text-uppercase">{{ $slider->title }}</strong>
-                        <strong class="sub-title text-capitalize">{{ $slider->description }}</strong>
+                        <div id="filter-section" class="property-main page-title-bg">
+                            <div class="container-fluid">
+                                <div class="main_search_box p-4">
+                                    <div class="filter_title">
+                                        <h2>{{__('Search Property')}}</h2>
+                                    </div>
+                                    <div class="row justify-content-center mb-2">
+                                        <div class="col-md-10">
+                                            <form action="{{ route('property-lists') }}" method="post">
+                                                @csrf
+                                                @method('post')
+                                                <div class="input-group mb-2">
+                                                    <input class="form-control" id="search" type="text" placeholder="{{__('Search Property')}}..." aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required/>
+                                                    <button class="btn btn-success" type="submit">{{__('Search')}}</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>        
+                            </div>
+                        </div>
+                        <!--<strong class="title text-uppercase">{{ $slider->title }}</strong>-->
+                        <!--<strong class="sub-title text-capitalize">{{ $slider->description }}</strong>-->
                         <img class="img-fluid" style="background-image: url('{{asset('public/slider_image/'.$slider->image)}}')" />
                     </div>                    
                 @endforeach
@@ -37,8 +59,8 @@
     <section class="property_sec" id="test">
         <div class="container">
             <div class="section_title">
-                <span>Featured</span>
-                <h2>Recently New Added</h2>
+                <span>{{__('New')}}</span>
+                <h2>{{__('Recently New Added')}}</h2>
             </div>
             <div class="row">
                 @forelse ($property['resentPropertys'] as $resentProperty)
@@ -51,25 +73,25 @@
                             <div class="listing_content">
                                 <div class="listing_title">
                                     <h2>{{ $resentProperty->name }}</h2>
-                                    <p>{{ substr($resentProperty->address,0,50) }}...</p>
+                                    <p>{{ (strlen($resentProperty->address) < 60) ? substr($resentProperty->address,0,60) : substr($resentProperty->address,0,60).'...' }}</p>
                                 </div>
                                 <div class="listing_fea">
                                     <ul>
                                         <li class="mb-2">
                                             <span class=""><i class="fa-solid fa-object-ungroup"></i></span>
-                                            <h4> {{$resentProperty->building_area}} Square foot</h4>
+                                            <h4> {{$resentProperty->building_area}} {{__('Sq.ft')}}</h4>
                                         </li>
                                         <li class="mb-2">
                                             <span class=""><i class="fa-solid fa-bed "></i></span>
-                                            <h4>{{ $resentProperty->bedroom }} Bedrooms</h4>
+                                            <h4>{{ $resentProperty->bedroom }} {{__('Bedrooms')}}</h4>
                                         </li>
                                         <li>
                                             <span class=""><i class="fa-solid fa-bath"></i></span>
-                                            <h4>{{$resentProperty->bath}} Bathrooms</h4>
+                                            <h4>{{$resentProperty->bath}} {{__('Bathrooms')}}</h4>
                                         </li>
                                         <li>
                                             <span class=""><i class="fa-solid fa-car"></i></span>
-                                            <h4>{{$resentProperty->garage}} Garages</h4>
+                                            <h4>{{$resentProperty->garage}} {{__('Garage')}}</h4>
                                         </li>
                                     </ul>
                                 </div>
@@ -84,7 +106,7 @@
                 @endforelse
             </div>
             <div class="view-bt text-center">
-                <a href="{{ route('property-lists') }}" class="btn view-bt-inr">View More</a>
+                <a href="{{ route('property-lists') }}" class="btn view-bt-inr">{{__('View More')}}</a>
             </div>
         </div>
     </section>
@@ -94,7 +116,8 @@
         <section class="property_sec property_sec_bg">
             <div class="container">
                 <div class="section_title">
-                    <h2>{{ $key }} for Sale</h2>
+                    <span>{{ $key }}</span>
+                    <h2>{{ $key }} {{__('for Sale')}}</h2>
                 </div>
                 <div class="row">
                     @forelse ($item[0] as $property)
@@ -108,25 +131,25 @@
                                         <div class="listing_content">
                                             <div class="listing_title">
                                                 <h2>{{ $data['name'] }}</h2>
-                                                <p>{{ substr($data['address'],0,50) }}...</p>
+                                                <p>{{ (strlen($data['address']) < 60) ? substr($data['address'],0,60) : substr($data['address'],0,60).'...' }}</p>
                                             </div>
                                             <div class="listing_fea">
                                                 <ul>
                                                     <li class="mb-2">
                                                         <span class=""><i class="fa-solid fa-object-ungroup"></i></span>
-                                                        <h4> {{$data['building_area']}} Square foot</h4>
+                                                        <h4> {{$data['building_area']}} {{__('Sq.ft')}}</h4>
                                                     </li>
                                                     <li class="mb-2">
                                                         <span class=""><i class="fa-solid fa-bed "></i></span>
-                                                        <h4>{{ $data['bedroom'] }} Bedrooms</h4>
+                                                        <h4>{{ $data['bedroom'] }} {{__('Bedrooms')}}</h4>
                                                     </li>
                                                     <li>
                                                         <span class=""><i class="fa-solid fa-bath"></i></span>
-                                                        <h4>{{$data['bath']}} Bathrooms</h4>
+                                                        <h4>{{$data['bath']}} {{__('Bathrooms')}}</h4>
                                                     </li>
                                                     <li>
                                                         <span class=""><i class="fa-solid fa-car"></i></span>
-                                                        <h4>{{$data['garage']}} Garages</h4>
+                                                        <h4>{{$data['garage']}} {{__('Garage')}}</h4>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -145,14 +168,15 @@
                     @endforelse
                 </div>
                 <div class="view-bt text-center">
-                    <a href="{{ route('property-lists') }}" class="btn view-bt-inr">View More</a>
+                    <a href="{{ route('property-lists') }}" class="btn view-bt-inr">{{__('View More')}}</a>
                 </div>
             </div>
         </section>
         <section class="property_sec">
             <div class="container">
                 <div class="section_title">
-                    <h2>{{ $key }} for Rent</h2>
+                    <span>{{ $key }}</span>
+                    <h2>{{ $key }} {{__('for Rent')}}</h2>
                 </div>
                 <div class="row">
                     @forelse ($item[0] as $property)
@@ -167,25 +191,25 @@
                                         <div class="listing_content">
                                             <div class="listing_title">
                                                 <h2>{{ $data['name'] }}</h2>
-                                                <p>{{ substr($data['address'],0,50) }}...</p>
+                                                <p>{{ (strlen($data['address']) < 60) ? substr($data['address'],0,60) : substr($data['address'],0,60).'...' }}</p>
                                             </div>
                                             <div class="listing_fea">
                                                 <ul>
                                                     <li class="mb-2">
                                                         <span class=""><i class="fa-solid fa-object-ungroup"></i></span>
-                                                        <h4> {{$data['building_area']}} Square foot</h4>
+                                                        <h4> {{$data['building_area']}} {{__('Sq.ft')}}</h4>
                                                     </li>
                                                     <li class="mb-2">
                                                         <span class=""><i class="fa-solid fa-bed "></i></span>
-                                                        <h4>{{ $data['bedroom'] }} Bedrooms</h4>
+                                                        <h4>{{ $data['bedroom'] }} {{__('Bedrooms')}}</h4>
                                                     </li>
                                                     <li>
                                                         <span class=""><i class="fa-solid fa-bath"></i></span>
-                                                        <h4>{{$data['bath']}} Bathrooms</h4>
+                                                        <h4>{{$data['bath']}} {{__('Bathrooms')}}</h4>
                                                     </li>
                                                     <li>
                                                         <span class=""><i class="fa-solid fa-car"></i></span>
-                                                        <h4>{{$data['garage']}} Garages</h4>
+                                                        <h4>{{$data['garage']}} {{__('Garage')}}</h4>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -204,7 +228,7 @@
                     @endforelse
                 </div>
                 <div class="view-bt text-center">
-                    <a href="{{ route('property-lists') }}" class="btn view-bt-inr">View More</a>
+                    <a href="{{ route('property-lists') }}" class="btn view-bt-inr">{{__('View More')}}</a>
                 </div>
             </div>
         </section>
@@ -214,7 +238,7 @@
     <section class="property_sec property_sec_bg agent-slider">
         <div class="container">
             <div class="section_title">
-                <span>{{__('Agent')}}</span>
+                <span>{{__('Agents')}}</span>
                 <h2>{{__('Meet Our Agent')}}</h2>
             </div>
             <div class="agent-swiper position-relative">
@@ -239,7 +263,7 @@
                 <div class="swiper-pagination"></div>
             </div>
             <div class="view-bt text-center">
-                <a href="{{ route('allagent') }}" class="btn view-bt-inr">View More</a>
+                <a href="{{ route('allagent') }}" class="btn view-bt-inr">{{__('View More')}}</a>
             </div>
         </div>
     </section>
@@ -248,8 +272,8 @@
         <section class="property_sec blog_sec">
             <div class="container">
                 <div class="section_title">
-                    <span>Blog</span>
-                    <h2>Our Property Blog</h2>
+                    <span>{{__('Blog')}}</span>
+                    <h2>{{__('Our Property Blog')}}</h2>
                 </div>
                 <div class="row">
                     @foreach ($blogs as $blog)
@@ -276,7 +300,7 @@
                     @endforeach
                 </div>
                 <div class="view-bt text-center">
-                    <a href="{{ url('allblogs') }}" class="btn view-bt-inr">View More</a>
+                    <a href="{{ url('allblogs') }}" class="btn view-bt-inr">{{__('View More')}}</a>
                 </div>
             </div>
         </section>
@@ -285,8 +309,8 @@
     <section class="app_section">
         <div class="container">
             <div class="section_title">
-                <span>App</span>
-                <h2>Download Our App</h2>
+                <span>{{__('App')}}</span>
+                <h2>{{__('Download Our App')}}</h2>
             </div>
             <div class="row align-itmes-center">
                 <div class="col-md-6">
@@ -306,5 +330,130 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            $('.property_detail_inr_info').click(function(){
+                $('.property_detail_inr_info').removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+
+        // Category Dropdown Open Close.
+        jQuery("#open").click(function(){
+            jQuery("#categoryDiv").toggle();
+            $('#open').toggleClass('active');
+        })
+        // Property Condition Dorpdown Open Close.
+        jQuery("#conditionOpen").click(function(){
+            jQuery("#conditionDiv").toggle();
+            $('#conditionOpen').toggleClass('active');
+        })
+        // Property Floor Dorpdown Open Close.
+        jQuery("#floorOpen").click(function(){
+            jQuery("#floorDiv").toggle();
+            $('#floorOpen').toggleClass('active');
+        })
+
+        // Property Bedroom Dorpdown Open Close.
+        jQuery("#bedroomOpen").click(function(){
+            jQuery("#bedroomDiv").toggle();
+            $('#bedroomOpen').toggleClass('active');
+        })
+
+        // Property Bedroom Dorpdown Open Close.
+        jQuery("#protypeOpen").click(function(){
+            jQuery("#protypeDiv").toggle();
+            $('#protypeOpen').toggleClass('active');
+        })
+
+        // Property Price Dorpdown Open Close.
+        jQuery("#propertyPriceOpen").click(function(){
+            jQuery("#priceDiv").toggle();
+            $('#propertyPriceOpen').toggleClass('active');
+        })
+
+
+        // Category Dropdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('open');
+            if (!box.contains(event.target)) {
+                jQuery("#categoryDiv").hide();
+                $('#open').removeClass("active");
+            }
+        });
+
+        // Property Condition Dropdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('conditionOpen');
+            if (!box.contains(event.target)) {
+                jQuery("#conditionDiv").hide();
+                $('#conditionOpen').removeClass("active");
+            }
+        });
+
+        // Property Floor Dorpdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('floorOpen');
+            if (!box.contains(event.target)) {
+                jQuery("#floorDiv").hide();
+                $('#floorOpen').removeClass("active");
+            }
+        });
+
+        // Property badroom Dorpdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('bedroomOpen');
+            if (!box.contains(event.target)) {
+                $('#bedroomOpen').removeClass('active')
+                jQuery("#bedroomDiv").hide();
+            }
+        });
+
+        // Property type Dorpdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('protypeOpen');
+            if (!box.contains(event.target)) {
+                $('#protypeOpen').removeClass('active')
+                jQuery("#protypeDiv").hide();
+            }
+        });
+
+        // Price Dorpdown Open Close.
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            const box = document.getElementById('propertyPriceOpen');
+            if (!box.contains(event.target)) {
+                jQuery("#priceDiv").hide();
+                $('#propertyPriceOpen').removeClass("active");
+            }
+        });
+
+        // Search filter events stop
+        $("#bedroomDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+
+        $("#categoryDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+
+        $("#conditionDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+
+        $("#floorDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+
+        $("#priceDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+
+        $("#protypeDiv").on("click", function(event){
+            event.stopPropagation();
+        });
+    </script>
 @endsection
 

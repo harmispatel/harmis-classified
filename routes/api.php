@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\{
     MasterController,
     PropertyController,
-    FilterController
+    FilterController,
+    ZoneController
 };
 
 /*
@@ -27,9 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/get-property-types', [MasterController::class, 'getCategories']);
 
 // Properties
-Route::get('/get-properties', [PropertyController::class, 'getProperties']);
+// Route::get('/get-properties', [PropertyController::class, 'getProperties']);
+Route::post('/get-properties', [PropertyController::class, 'getProperties']);
 Route::post('/get-propertie-details', [PropertyController::class, 'getPropertiesdetail']);
-Route::get('/get-bookmarks', [PropertyController::class, 'getBookmarks']);
+Route::post('/get-bookmarks', [PropertyController::class, 'getBookmarks']);
 Route::post('/add-to-bookmarks', [PropertyController::class, 'addToBookmarks']);
 Route::delete('/remove-from-bookmarks', [PropertyController::class, 'removeFromBookmarks']);
 
@@ -37,8 +39,15 @@ Route::delete('/remove-from-bookmarks', [PropertyController::class, 'removeFromB
 Route::post('/add-property', [PropertyController::class, 'addProperty']);
 
 
-// Add Property
-Route::post('/property-Amenities', [PropertyController::class, 'propertyamAnities']);
+// Property Amenitys
+Route::post('/property-Amenities', [PropertyController::class, 'propertyAmenities']);
+
+// Property Condition
+Route::post('/property-condition', [PropertyController::class, 'propertyCondition']);
+
+// Zones
+Route::post('/country-list', [ZoneController::class, 'country']);
+Route::post('/state-list', [ZoneController::class, 'state']);
 
 // Filter Property
 Route::post('/property-filter', [FilterController::class, 'propertyfilter']);

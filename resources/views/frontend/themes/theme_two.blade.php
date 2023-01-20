@@ -39,7 +39,7 @@
         <div class="container">
             <div class="section_title text-center">
                 <!-- <span>Featured</span> -->
-                <h2>Recently Added Property</h2>
+                <h2>{{__('Recently New Added')}}</h2>
             </div>
             <div class="row">
                 <!-- post item : minimal -->
@@ -67,7 +67,7 @@
                                     <ul class="">
                                         <li class="">
                                             <i class="fa-solid fa-object-ungroup"></i>
-                                            <span>{{ $resent->building_area }} sq ft</span>
+                                            <span>{{ $resent->building_area }} {{ __('Sq.ft') }}</span>
                                         </li>
                                         <li class="">
                                             <i class="fa-solid fa-bath"></i>
@@ -91,7 +91,7 @@
                 @endforelse
             </div>
             <div class="view-bt text-center">
-                <a href="{{ route('property-lists') }}" class="btn view-bt-inr">View More</a>
+                <a href="{{ route('property-lists') }}" class="btn view-bt-inr">{{__('View More')}}</a>
             </div>
         </div>
     </section>
@@ -102,7 +102,7 @@
         <div class="container">
             <div class="section_title text-center">
                 <!-- <span>Sale</span> -->
-                <h2>Properties for Sale</h2>
+                <h2>{{__('Properties')}} {{__('for Sale')}}</h2>
             </div>
             <div class="row">
                 <!-- post item : minimal -->
@@ -129,7 +129,7 @@
                                     <ul class="">
                                         <li class="">
                                             <i class="fa-solid fa-object-ungroup"></i>
-                                            <span>{{ $sale->building_area }} sq ft</span>
+                                            <span>{{ $sale->building_area }} {{ __('Sq.ft') }}</span>
                                         </li>
                                         <li class="">
                                             <i class="fa-solid fa-bath"></i>
@@ -153,7 +153,7 @@
                 @endforelse
             </div>
             <div class="view-bt text-center">
-                <a href="{{ route('property-lists') }}" class="btn view-bt-inr">View More</a>
+                <a href="{{ route('property-lists') }}" class="btn view-bt-inr">{{__('View More')}}</a>
             </div>
         </div>
     </section>
@@ -164,7 +164,7 @@
         <div class="container">
             <div class="section_title text-center">
                 <!-- <span>Rent</span> -->
-                <h2>Properties for Rent</h2>
+                <h2>{{__('Properties')}} {{__('for Rent')}}</h2>
             </div>
             <div class="row">
                 <!-- post item : minimal -->
@@ -191,7 +191,7 @@
                                     <ul class="">
                                         <li class="">
                                             <i class="fa-solid fa-object-ungroup"></i>
-                                            <span>{{ $rent->building_area }} sq ft</span>
+                                            <span>{{ $rent->building_area }} {{ __('Sq.ft') }}</span>
                                         </li>
                                         <li class="">
                                             <i class="fa-solid fa-bath"></i>
@@ -215,7 +215,7 @@
                 @endforelse
             </div>
             <div class="view-bt text-center">
-                <a href="{{ route('property-lists') }}"    class="btn view-bt-inr">View More</a>
+                <a href="{{ route('property-lists') }}"    class="btn view-bt-inr">{{__('View More')}}</a>
             </div>
         </div>
     </section>
@@ -247,7 +247,7 @@
                 @endforeach
             </div>
             <div class="view-bt text-center mt-5">
-                <a href="{{ route('allagent') }}" class="btn view-bt-inr">View More</a>
+                <a href="{{ route('allagent') }}" class="btn view-bt-inr">{{__('View More')}}</a>
             </div>
         </div>
     </section>
@@ -256,8 +256,8 @@
         <section class="property_sec blog_sec">
             <div class="container">
                 <div class="section_title">
-                    <span>Blog</span>
-                    <h2>Our Property Blog</h2>
+                    <span>{{__('Blog')}}</span>
+                    <h2>{{__('Our Property Blog')}}</h2>
                 </div>
                 <div class="row">
                     @foreach ($blogs as $blog)
@@ -284,7 +284,7 @@
                     @endforeach
                 </div>
                 <div class="view-bt text-center">
-                    <a href="{{ url('allblogs') }}" class="btn view-bt-inr">View More</a>
+                    <a href="{{ url('allblogs') }}" class="btn view-bt-inr">{{__('View More')}}</a>
                 </div>
             </div>
         </section>
@@ -293,8 +293,8 @@
     <section class="app_section">
         <div class="container">
             <div class="section_title">
-                <span>App</span>
-                <h2>Download Our App</h2>
+                <span>{{('App')}}</span>
+                <h2>{{__('Download Our App')}}</h2>
             </div>
             <div class="row align-itmes-center">
                 <div class="col-md-6">

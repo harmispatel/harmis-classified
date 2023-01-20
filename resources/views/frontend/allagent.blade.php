@@ -17,7 +17,7 @@
 <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{__('Agents')}}</li>
       </ol>
     </div>

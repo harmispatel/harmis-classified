@@ -21,6 +21,11 @@ class Category extends Model
         return $this->belongsToMany(amenities::class);
     }
 
+    public function propertycondition()
+    {
+        return $this->belongsToMany(PropertyCondition::class);
+    }
+
     public function category_amenities()
     {
         return $this->hasMany(AmenitiesCategory::class,'category_id','id');

@@ -6,6 +6,7 @@
     ----------------------------------------------------------------------------------------------
 --}}
 @extends('frontend.common.layout')
+@section('title', 'Property List')
 @section('content')
 {{-- <div>
     <button class="btn btn-primary ms-2 mt-2" id="filter-Propertty">{{__('Filter')}}</button>
@@ -13,7 +14,7 @@
 <nav aria-label="breadcrumb" class="pt-2">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('Home')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('showProperty') }}">{{__('HOME')}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{__('Properties')}}</li>
       </ol>
     </div>
@@ -22,15 +23,14 @@
     <div class="container-fluid">
         <div class="main_search_box p-4">
             <div class="filter_title">
-                <h2>Property Filtter</h2>
+                <h2>{{__('Property Filter')}}</h2>
             </div>
             <div class="row justify-content-center mb-2">
-                <div class="col-lg-8 col-md-6">
+                <div class="col-lg-8 col-md-10">
                     <div class="input-group mb-2">
-                        <input class="form-control" id="search" type="text" placeholder="Search For Property... " aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required/>
-                        <div class="input-group-append">
-                            <button class="btn btn-success" onclick="getPropertyList('filterClick')" type="submit">Search</button>
-                        </div>
+                        <input class="form-control" id="search" type="text" placeholder="{{__('Search Property')}}... " aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ isset($keyword) ? $keyword : '' }}" name="search" required/>
+                        {{-- <input class="form-control" id="search" type="text" placeholder="{{__('Search Property')}}... " aria-label="Example text with button addon" aria-describedby="button-addon1" name="search" required/> --}}
+                        <button class="btn btn-success" onclick="getPropertyList('filterClick')" type="submit">{{__('Search')}}</button>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                                     <div class="form-check check_item_box">
                                         <input name="protypeInput" class="form-check-input check_item_input propertyType" name="protype" type="radio" value="2" id="protypeInpute1">
                                         <label class="form-check-label check_item_label" for="protypeInpute1">
-                                            {{__('For Sales')}}
+                                            {{__('for Sale')}}
                                             <i class="fa-solid fa-plus input_uncheck"></i>
                                             <i class="fa-solid fa-check input_check"></i>
                                         </label>
@@ -52,7 +52,7 @@
                                     <div class="form-check check_item_box">
                                         <input name="protypeInput" class="form-check-input check_item_input propertyType" name="protype" type="radio" value="1" id="protypeInpute2">
                                         <label class="form-check-label check_item_label" for="protypeInpute2">
-                                            {{__('For Rent')}}
+                                            {{__('for Rent')}}
                                             <i class="fa-solid fa-plus input_uncheck"></i>
                                             <i class="fa-solid fa-check input_check"></i>
                                         </label>
@@ -281,6 +281,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+            
         </div>
     </div>
 </section>
@@ -515,7 +517,6 @@
             var propertyBedRoom = bedroomInput;
             var propertyFloor = floorInput;
             var category = categoryInput;
-
             var search = $('#search').val();
             var selectPrice = parseFloat($('input[name="priceRange"]').val());
             var afterTwoZero = selectPrice.toFixed(2);
@@ -531,7 +532,7 @@
                     "ajaxId"            : ajaxId,
                     "page"              : page,
                     "rentSelsPrice"     : rentSelsPrice,
-                    "category"          : category,
+                    "category_id"       : category,
                     "propertyCondition" : propertyCondition,
                     "propertyFloor"     : propertyFloor,
                     "propertyBedRoom"   : propertyBedRoom,
@@ -568,23 +569,23 @@
                             const marker = new google.maps.Marker({
                                 position:{lat:Number(propertyData.latitude), lng:Number(propertyData.longitude)},
                                 content: propertyData.name,
-                                icon: '{{ asset("image/map-icon.png") }}',
+                                icon: '{{ asset("public/image/map-icon3.svg") }}',
                             });
 
                             // open info window when marker is clicked
                             marker.addListener("click", () => {
                                 var property_type = propertyData.property_type;
                                 if(propertyData.property_type == 1){
-                                    property_type = "For Rent";
+                                    property_type = "{{__('for Rent')}}";
                                 }
                                 else{
-                                    property_type = "For Sales";
+                                    property_type = "{{__('for Sale')}}";
                                 }
 
                                 // Map marker click and show propery detail
                                 infoWindow.setContent('<a href="{{ asset("single-property-details") }}/'+ propertyData.slug +'" class="img-inr property_list_card">\
                                                             <figure class="m-0">\
-                                                                <img src="{{ asset("multiImage") }}/'+ propertyData.image +'" class="img-fluid" alt="" />\
+                                                                <img src="{{ asset("public/multiImage") }}/'+ propertyData.image +'" class="img-fluid" alt="" />\
                                                             </figure>\
                                                             <div class="property_list-info">\
                                                                 <div class="property_list_inr">\

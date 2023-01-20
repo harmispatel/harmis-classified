@@ -24,15 +24,37 @@ class PropertyController extends Controller
     /**
      * Property Listing
      */
-    public function getProperties()
+    public function getProperties(Request $request)
     {
+        // echo '<pre>';
+        // print_r($request->all());
+        // exit();
         try {
+            $catId = isset($request->categoryId) ? $request->categoryId :'';
+            $offSet = isset($request->offset) ? $request->offset :'';
+            $prosearch = isset($request->keyword) ? $request->keyword :'';
+            $token = isset($request->deviceToken) ? $request->deviceToken : '';
+
             // Get the Active Properties
             $properties = Propertie::where('status', 1)
-                                    ->with(['hasOneUser', 'hasOneCategory', 'hasOneState', 'hasOneCountry'])
+                                    ->when($catId, function($q) use($catId) {
+                                        $q->where('category_id',$catId);
+                                    })
+                                    ->when($prosearch, function($q) use($prosearch) {
+                                        $q->where('name', 'LIKE', "%{$prosearch}%")->orWhere('description', 'LIKE', "%{$prosearch}%");
+                                    })
+                                    ->with(['hasOneUser', 'hasOneCategory', 'hasOneState', 'hasOneCountry','bookmarks'])
                                     ->orderBy('id', 'desc')
+                                    ->limit(10)
+                                    ->offset($offSet)
                                     ->get();
 
+            // dd($properties->toArray());
+            // $properties = Propertie::where('status', 1)
+            //                         ->with(['hasOneUser', 'hasOneCategory', 'hasOneState', 'hasOneCountry'])
+            //                         ->orderBy('id', 'desc')
+            //                         ->get();
+            // dd($properties->toArray());
             return $this->sendResponse(true, 'Properties loaded successfully!', PropertyResource::collection($properties), Response::HTTP_OK);
         } catch (\Throwable $e) {
             return $this->sendResponse(false, 'Something went wrong, please try later!', [], 500);
@@ -60,9 +82,10 @@ class PropertyController extends Controller
         try {
             // Get the Specific Bookmarked Properties
             $bookmarks = Propertie::whereHas('bookmarks', function($query) use($request) {
-                                        $query->where('device_token', $request->device_token);
+                                        $query->where('device_token', $request->deviceToken);
                                     })->get();
 
+            // dd($bookmarks->toArray());
             return $this->sendResponse(true, 'Bookmarked Properties loaded successfully!', PropertyResource::collection($bookmarks), Response::HTTP_OK);
         } catch (\Throwable $e) {
             return $this->sendResponse(false, 'Something went wrong, please try later!', [], 500);
@@ -148,7 +171,7 @@ class PropertyController extends Controller
         try {
             $id = $request->id;
             $propertyDetails = Propertie::where('id',$id)
-                        ->with(['hasOneUser', 'hasOneCategory', 'hasOneState', 'hasOneCountry'])
+                        ->with(['hasOneUser', 'hasOneCategory', 'hasOneState', 'hasOneCountry','bookmarks'])
                         ->first();
 
             return $this->sendResponse(true, 'Propertie detail loaded successfully!', new PropertyResource($propertyDetails), Response::HTTP_OK);
@@ -160,7 +183,7 @@ class PropertyController extends Controller
     /**
      * property amenities
      */
-    public function propertyamAnities(Request $request)
+    public function propertyAmenities(Request $request)
     {
         $category = Category::where('id',$request->category_id)->with('amenities')->first();
 
@@ -179,7 +202,31 @@ class PropertyController extends Controller
         }
         
         return $this->sendResponse(true, 'Propertie amenities loaded successfully!', $data, Response::HTTP_OK);
+    }
 
-        exit();
+
+    /**
+     * property Condition
+     */
+    public function propertyCondition(Request $request)
+    {
+        $category = Category::where('id',$request->category_id)->with('propertycondition')->first();
+
+        $data['category_id'] = $category->id;
+
+        if($category)
+        {
+            foreach($category->propertycondition as $condition)
+            {
+                $name = isset($condition->name) ? $condition->name : '';
+                $mydata['name'] = $name;
+                $mydata['id'] = $condition->id;
+                // $mydata['icon'] = (isset($condition->icon) && !empty($condition->icon)) ? asset('amenities_icon/'.$condition->icon) : '';
+                $data['condition'][] = $mydata;
+            }
+        }
+        
+        return $this->sendResponse(true, 'Propertie condition loaded successfully!', $data, Response::HTTP_OK);
+
     }
 }

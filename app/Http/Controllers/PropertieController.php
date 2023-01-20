@@ -105,13 +105,13 @@ class PropertieController extends Controller
         if($request->file('image')){
             // new image move to storage
             $file = $request->file('image');
-            $fileName = $this->addSingleImage('public/multiImage/',$file);
+            $fileName = $this->addSingleImage('multiImage/',$file);
             $addPropertyData['image'] = $fileName;
         }
 
         if($request->hasfile('multiImage')) {
             $file = $request->file('multiImage');
-            $multiFile = $this->addMultiImage('public/multiImage/',$file);
+            $multiFile = $this->addMultiImage('multiImage/',$file);
             $addPropertyData->multiImage = $multiFile;
         }
         $addPropertyData->save();
@@ -149,47 +149,51 @@ class PropertieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updatePropertyData = Propertie::find($id);
-        $updatePropertyData->name = $request->name;
-        $updatePropertyData->slug = Str::slug($request->name);
-        $updatePropertyData->category_id = $request->category_id;
-        $updatePropertyData->user_id = $request->user_id;
-        $updatePropertyData->property_type = $request->property_type;
-        $updatePropertyData->property_condition = $request->property_condition;
-        $updatePropertyData->floor = $request->floor;
-        $updatePropertyData->bedroom = $request->bedroom;
-        $updatePropertyData->kitchen = $request->kitchen;
-        $updatePropertyData->bath = $request->bath;
-        $updatePropertyData->garage = $request->garage;
-        $updatePropertyData->build_year = $request->build_year;
-        $updatePropertyData->building_area = $request->building_area;
-        $updatePropertyData->description = $request->description;
-        $updatePropertyData->price = $request->price;
-        $updatePropertyData->country_id = $request->country_id;
-        $updatePropertyData->state_id = $request->state_id;
-        $updatePropertyData->address = $request->address;
-        $updatePropertyData->longitude = $request->longitude;
-        $updatePropertyData->latitude = $request->latitude;
-        $updatePropertyData->status = $request->status;
+        try {
+            $updatePropertyData = Propertie::find($id);
+            $updatePropertyData->name = $request->name;
+            $updatePropertyData->slug = Str::slug($request->name);
+            $updatePropertyData->category_id = $request->category_id;
+            $updatePropertyData->user_id = $request->user_id;
+            $updatePropertyData->property_type = $request->property_type;
+            $updatePropertyData->property_condition = $request->property_condition;
+            $updatePropertyData->floor = $request->floor;
+            $updatePropertyData->bedroom = $request->bedroom;
+            $updatePropertyData->kitchen = $request->kitchen;
+            $updatePropertyData->bath = $request->bath;
+            $updatePropertyData->garage = $request->garage;
+            $updatePropertyData->build_year = $request->build_year;
+            $updatePropertyData->building_area = $request->building_area;
+            $updatePropertyData->description = $request->description;
+            $updatePropertyData->price = $request->price;
+            $updatePropertyData->country_id = $request->country_id;
+            $updatePropertyData->state_id = $request->state_id;
+            $updatePropertyData->address = $request->address;
+            $updatePropertyData->longitude = $request->longitude;
+            $updatePropertyData->latitude = $request->latitude;
+            $updatePropertyData->status = $request->status;
 
-        if($request->file('image')){
-            // new image move to storage
-            $file = $request->file('image');
-            $oldImage = $updatePropertyData->image;
-            $fileName = $this->addSingleImage('multiImage',$file,$oldImage);
-            $updatePropertyData['image'] = $fileName;
+            if($request->file('image')){
+                // new image move to storage
+                $file = $request->file('image');
+                $oldImage = $updatePropertyData->image;
+                $fileName = $this->addSingleImage('multiImage',$file,$oldImage);
+                $updatePropertyData['image'] = $fileName;
+            }
+
+            if($request->hasfile('multiImage')) {
+                // new images move to storage
+                $file = $request->file('multiImage');
+                $oldImage = $updatePropertyData->multiImage;
+                $multiFile = $this->addMultiImage('multiImage/',$file, $oldImage);
+                $updatePropertyData->multiImage = $multiFile;
+            }
+            $updatePropertyData->update();
+
+            return redirect()->route('propertie.edit')->with('success', 'Property update successfully');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Something went wrong!');
         }
-
-        if($request->hasfile('multiImage')) {
-            // new image move to storage
-            $file = $request->file('multiImage');
-            $oldImage = $updatePropertyData->multiImage;
-            $multiFile = $this->addMultiImage('public/multiImage/',$file, $oldImage);
-            $updatePropertyData->multiImage = $multiFile;
-        }
-        $updatePropertyData->update();
-
-        return redirect('propertie');
     }
 
     /**
@@ -209,12 +213,12 @@ class PropertieController extends Controller
 
             // remove multi image from storage
             $oldMultiImage = $deleteProprtieData->multiImage;
-            $this->addMultiImage('public/multiImage/',$files = '', $oldMultiImage);
+            $this->addMultiImage('multiImage/',$files = '', $oldMultiImage);
 
             Propertie::find($id)->delete();
             return redirect()->route('propertie.index');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Page Not Found!');
+            return back()->with('error', 'Something went wrong!');
         }
     }
 

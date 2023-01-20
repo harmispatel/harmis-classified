@@ -52,7 +52,7 @@
                                                     <a href="{{ route('labels.edit', encrypt($label->id)) }}" title="Edit" class="mr-2">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a><i class="fa fa-trash text-danger deleteBtn" data-bs-toggle="modal" style="cursor: pointer;" data-bs-target="#deletaModal" data-target-id="{{ route('labels.destroy', encrypt($label->id)) }}" title="Delete"></i></a>
+                                                    <a><i class="fa fa-trash text-danger deleteBtn" data-toggle="modal" style="cursor: pointer;" data-target="#deletaModal" data-target-id="{{ route('labels.destroy', encrypt($label->id)) }}" title="Delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -60,7 +60,7 @@
                                 </table>
 
                                 <!-- Modal -->
-                                <div class="modal fade" id="deletaModal" tabindex="-1" role="dialog" aria-labelledby="deletaModalLabel" aria-hidden="true">
+                                {{-- <div class="modal fade" id="deletaModal" tabindex="-1" role="dialog" aria-labelledby="deletaModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -82,6 +82,29 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="modal fade" id="deletaModal" tabindex="-1" role="dialog" aria-labelledby="deletaModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deletaModalLabel">Delete User</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure to delete this lable?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <form id="deleteForm" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -95,17 +118,15 @@
 @endsection
 
 @section('js')
-<script>
-    $(document).ready(function () {
-        $('#lableTable').DataTable();
-
-
-        // delete lable
-        $(".deleteBtn").click(function () {
+    <script>
+        $(".deleteBtn").click(function(){
             var url = $(this).attr("data-target-id")
-            $("#deleteForm").attr('action', url)
+            $("#deleteForm").attr('action',url)
         });
-    });
-
-</script>
+    </script>
+    <script>
+        $(document).ready( function () {
+            $('#lableTable').DataTable();
+        });
+    </script>
 @endsection

@@ -10,8 +10,7 @@ use App\Models\Language;
 
 // request
 use App\Http\Requests\storeCategory;
-use App\Models\amenities;
-use App\Models\Propertie;
+use App\Models\{amenities, AmenitiesCategory, categoryPropertyCondition, CategoryPropertyCondition as ModelsCategoryPropertyCondition, Propertie, PropertyCondition};
 
 class CategoryController extends Controller
 {
@@ -35,9 +34,10 @@ class CategoryController extends Controller
     {
         $getLanguage = Language::get();
         $amenities = amenities::get();
+        $procondition = PropertyCondition::get();
 
         $category = Category::get();
-        return response()->view('categories.createCategory',compact('category','getLanguage','amenities'));
+        return response()->view('categories.createCategory',compact('category','getLanguage','amenities','procondition'));
     }
 
     /**
@@ -54,6 +54,7 @@ class CategoryController extends Controller
         $addCategoryData->status = $request->status;
         $addCategoryData->save();
         $addCategoryData->amenities()->sync($request->amenities);
+        $addCategoryData->propertycondition()->sync($request->procondition);
 
         return redirect()->route('category.index');
     }
@@ -66,13 +67,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $editCategoryData = Category::with('category_amenities','amenities')->find($id);
-        // echo '<pre>';
-        // print_r($editCategoryData->toArray());
-        // exit();
- 
+        $editCategoryData = Category::with('amenities','propertycondition')->find($id);
         $amenities = amenities::get();
-        return view('categories.editCategory',compact('editCategoryData','amenities'));
+        $procondition = PropertyCondition::get();
+        return view('categories.editCategory',compact('editCategoryData','amenities','procondition'));
     }
 
     /**
@@ -89,6 +87,7 @@ class CategoryController extends Controller
         $updateCategoryData->status = $request->status;
         $updateCategoryData->update();
         $updateCategoryData->amenities()->sync($request->amenities);
+        $updateCategoryData->propertycondition()->sync($request->procondition);
 
         return redirect('category');
     }
@@ -101,8 +100,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::where('id',$id)->delete();
         Propertie::where('category_id', $id)->delete();
+        AmenitiesCategory::where('category_id', $id)->delete();
+        ModelsCategoryPropertyCondition::where('category_id', $id)->delete();
+        Category::where('id',$id)->delete();
         return redirect('category');
     }
 

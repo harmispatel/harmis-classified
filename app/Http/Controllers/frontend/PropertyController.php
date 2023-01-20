@@ -286,13 +286,11 @@ class PropertyController extends Controller
                         ->first();
 
         // $propertyDetails->category_id
-        $relatedProperties = Propertie::with(['hasOneCountry','hasOneState','hasOneCategory'])->where('property_type',$propertyDetails->property_type)->where('category_id',$propertyDetails->category_id)->latest()->take(6)->get();
+        // Related Properties
+        $relatedProperties = Propertie::with(['hasOneCountry','hasOneState','hasOneCategory'])->where('slug','!=',$slug)->where('property_type',$propertyDetails->property_type)->where('category_id',$propertyDetails->category_id)->latest()->take(6)->get();
 
         $activeDetails = $this->activeDetailtheme();
-        if ($activeDetails->id == 1) {
-            return view('frontend.propertiesDetails', compact('propertyDetails','relatedProperties'));
-        }
-        elseif ($activeDetails->id == 2) {
+        if ($activeDetails->id == 2) {
             return view('frontend.propertiesDetails_two', compact('propertyDetails','relatedProperties'));
         }
         else{

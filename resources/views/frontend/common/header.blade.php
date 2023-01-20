@@ -29,11 +29,11 @@
                             <a class="nav-link active" aria-current="page" href="{{ route('showProperty',1) }}" id="navbarDropdown1">{{__('Home')}}</a>
                         </li> --}}
                         <li class="nav-item dropdown">
-                            <a class="nav-link active dropdown-toggle" aria-current="page" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home</a>
+                            <a class="nav-link active dropdown-toggle" aria-current="page" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ __('HOME') }}</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                <li><a class="dropdown-item" href="{{ route('showProperty',1) }}">Home</a></li>
-                                <li><a class="dropdown-item" href="{{ route('showProperty',2) }}">Home2</a></li>
-                                <li><a class="dropdown-item" href="{{ route('showProperty',3) }}">Home3</a></li>
+                                <li><a class="dropdown-item" href="{{ route('showProperty',1) }}">{{ __('HOME') }}</a></li>
+                                <li><a class="dropdown-item" href="{{ route('showProperty',2) }}">{{ __('HOME') }} 2</a></li>
+                                <li><a class="dropdown-item" href="{{ route('showProperty',3) }}">{{ __('HOME') }} 3</a></li>
                             </ul>
                         </li>
                         {{-- <li class="nav-item">
@@ -67,8 +67,8 @@
                                                 $roleId = $role['role_id'];
                                             @endphp
                                             @if ($roleId == 9)
-                                                <li><a href="{{ route('agentpropertylist')}}">{{__('My Property')}}</a></li>
-                                                <li><a href="{{ route('addagentProperty')}}">{{__('Add Property')}}</a></li>
+                                                <li><a href="{{ route('agentpropertylist')}}">{{__('My Properties')}}</a></li>
+                                                <li><a href="{{ route('addagentProperty')}}">{{__('Add Propertys')}}</a></li>
                                             @endif
                                         @endauth
                                             <li onclick="event.preventDefault();document.getElementById('logout-user').submit();"><a>{{__('Logout')}}</a></li>

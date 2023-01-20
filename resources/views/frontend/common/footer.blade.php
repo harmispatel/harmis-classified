@@ -33,26 +33,26 @@
             </div>
             <div class="col-lg-2 col-md-6 mb-md-4">
                 <div class="footer_link">
-                    <h2>Quick Links</h2>
+                    <h2>{{__('Quick Links')}}</h2>
                     <ul>
                         <li>
-                            <a href="#">Property List</a>
+                            <a href="#">{{ __('Property List') }}</a>
                         </li>
                         <li>
-                            <a href="#">Our Agent</a>
+                            <a href="#">{{__('Our Agent')}}</a>
                         </li>
                         <li>
-                            <a href="#">Contact Us</a>
+                            <a href="#">{{__('Contact Us')}}</a>
                         </li>
                         <li>
-                            <a href="#">Our Blog</a>
+                            <a href="#">{{__('Our Blog')}}</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="find_us">
-                    <h2>Find Us</h2>
+                    <h2>{{__('Find Us')}}</h2>
                     <ul>
                         <li>
                             <a href="{{ isset($data['iosapplink']) ? $data['iosapplink'] : '#' }}" target="_blank"><img src="{{ asset('public/assets/images/playstore.png')}}" class="w-100"/></a>
@@ -65,7 +65,7 @@
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="footer_contact">
-                    <h2>Contact Us</h2>
+                    <h2>{{__('Contact Us')}}</h2>
                     <ul>
                         <li>
                             <span><i class="fa-solid fa-location-crosshairs"></i></span>

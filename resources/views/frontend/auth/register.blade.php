@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3 ">
-                                            <label for="name" class="form-label">{{__('Mobile Number')}}</label>
+                                            <label for="name" class="form-label">{{__('Mobile No')}}</label>
                                             <div class="position-relative">
                                                 <input type="number" class="form-control" name="mobile" value="{{ old('mobile') }}" id="mobile" />
                                                 <i class="fa-solid fa-phone input_ic"></i>
@@ -135,7 +135,7 @@
                                         <div class="mb-3 ">
                                             <label for="role" class="form-label">{{__('Role')}}</label>
                                             <select class="form-select" name="role_id" id="role">
-                                                <option selected>select menu</option>
+                                                <option selected>{{__('Select menu')}}</option>
                                                 @foreach (getuserrole() as $role)
                                                     <option value="{{ $role->id }}" {{ (old('role_id') == $role->id) ? 'selected' : '' }}>{{ $role->name }}</option>
                                                 @endforeach
@@ -157,7 +157,7 @@
                                     <input type="file" class="form-control image-input" accept="image/*" name="image" value="{{ old('userimage') }}" id="image">
                                 </div>
                                 <div class="mb-3 ">
-                                    <label for="Email" class="form-label">{{__('Email address')}}</label>
+                                    <label for="Email" class="form-label">{{__('Email')}}</label>
                                     <div class="position-relative">
                                         <input type="email" class="form-control" value="{{ old('email') }}" name="email" id="Email">
                                         <i class="fa-solid fa-envelope input_ic"></i>

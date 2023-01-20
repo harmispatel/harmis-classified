@@ -31,8 +31,8 @@
                         <div class="swiper-slide"><img src="{{asset('public/slider_image/'.$slider->image)}}" alt=""></div>
                     @endforeach
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                {{-- <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div> --}}
             </div>
 
             <div class="swiper-container gallery-thumbs">
@@ -58,11 +58,11 @@
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="sale-tab" data-value="2" data-bs-toggle="tab" data-bs-target="#sale" type="button"
-                        role="tab" aria-controls="sale" aria-selected="false">{{__('For Sale')}}</button>
+                        role="tab" aria-controls="sale" aria-selected="false">{{__('for Sale')}}</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="rent-tab" data-value="1" data-bs-toggle="tab" data-bs-target="#rent" type="button"
-                    role="tab" aria-controls="rent" aria-selected="false">{{__('For Rent')}}</button>
+                    role="tab" aria-controls="rent" aria-selected="false">{{__('for Rent')}}</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -97,7 +97,7 @@
                                             </div>
                                             <div class="col">
                                                 <span><i class="fa-solid fa-object-ungroup"></i></span>
-                                                <h4>{{$recent->bulding_area}} Sq.ft</h4>
+                                                <h4>{{$recent->bulding_area}} {{__('Sq.ft')}}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                         </div>
                                         <div class="col">
                                             <span><i class="fa-solid fa-object-ungroup"></i></span>
-                                            <h4>{{$sale->bulding_area}} Sq.ft</h4>
+                                            <h4>{{$sale->bulding_area}} {{__('Sq.ft')}}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@
                                         </div>
                                         <div class="col">
                                             <span><i class="fa-solid fa-object-ungroup"></i></span>
-                                            <h4>{{$rent->bulding_area}} Sq.ft</h4>
+                                            <h4>{{$rent->bulding_area}} {{__('Sq.ft')}}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
             </div>
         </div>
         <div class="view-bt text-center">
-            <a href="{{ route('property-lists') }}" class="btn view-bt-inr">View More</a>
+            <a href="{{ route('property-lists') }}" class="btn view-bt-inr">{{__('View More')}}</a>
         </div>
     </div>
 </section>
@@ -212,7 +212,7 @@
 <section class="our_agent property_sec_bg">
     <div class="container-fluid">
         <div class="section_title text-center">
-            <h2>{{__('Our Agent')}}</h2>
+            <h2>{{__('Meet Our Agent')}}</h2>
         </div>
         <div class="our_agent_main">
             <div class="row">
@@ -236,7 +236,7 @@
             </div>
         </div>
         <div class="view-bt text-center">
-            <a href="{{ route('allagent') }}" class="btn view-bt-inr">View More</a>
+            <a href="{{ route('allagent') }}" class="btn view-bt-inr">{{__('View More')}}</a>
         </div>
     </div>
 </section>
@@ -245,8 +245,8 @@
         <section class="property_sec blog_sec">
             <div class="container">
                 <div class="section_title">
-                    <span>Blog</span>
-                    <h2>Our Property Blog</h2>
+                    <span>{{__('Blog')}}</span>
+                    <h2>{{__('Our Property Blog')}}</h2>
                 </div>
                 <div class="row">
                     @foreach ($blogs as $blog)
@@ -273,7 +273,7 @@
                     @endforeach
                 </div>
                 <div class="view-bt text-center">
-                    <a href="{{ url('allblogs') }}" class="btn view-bt-inr">View More</a>
+                    <a href="{{ url('allblogs') }}" class="btn view-bt-inr">{{__('View More')}}</a>
                 </div>
             </div>
         </section>
@@ -282,8 +282,8 @@
     <section class="app_section">
         <div class="container">
             <div class="section_title">
-                <span>App</span>
-                <h2>Download Our App</h2>
+                <span>{{__('App')}}</span>
+                <h2>{{__('Download Our App')}}</h2>
             </div>
             <div class="row align-itmes-center">
                 <div class="col-md-6">
@@ -315,172 +315,163 @@
 @endsection
 
 @section('js')
-    <script type="text/javascript">
-        var markers = []
-        var gmarkers = []
-        var map;
-        var markerCluster;
-        function getPropertyList() {
-            // document.getElementById('textInput').value = afterTwoZero;
-            $.ajax({
-                type: "get",
-                url: "{{ route('mapproperty') }}",
-                dataType: 'json',
-                success: function(res) {
-                    if (res) {
-                        recent = res.records;
-                        total = res.total;
+<script type="text/javascript">
+    var markers = []
+    var gmarkers = []
+    var map;
+    var markerCluster;
+    function getPropertyList() {
+        // document.getElementById('textInput').value = afterTwoZero;
+        $.ajax({
+            type: "POST",
+            url: "{{ route('mapproperty') }}",
+            data: {
+                "_token" : "{{ csrf_token() }}",
+            },
+            dataType: 'json',
+            success: function(res) {
+                if (res) {
+                    recent = res.records;
+                    total = res.total;
 
-                        // this is from controller to blade Pass Array:
-                        if(markerCluster){
-                            markerCluster.removeMarkers(markers);
-                        }
-                        var listPro = res.propertyList;
+                    // this is from controller to blade Pass Array:
+                    if(markerCluster){
+                        markerCluster.removeMarkers(markers);
+                    }
+                    var listPro = res.propertyList;
 
-                        let proarr = [];
-                        $.each(listPro, function (index, value) {
-                            proarr.push(value);
+                    let proarr = [];
+                    $.each(listPro, function (index, value) {
+                        proarr.push(value);
+                    });
+
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: "",
+                        disableAutoPan: true,
+                    });
+
+                    // console.log(listPro);
+                    let markersajax = proarr.map((propertyData, i) => {
+                        if (infoWindow) infoWindow.close();
+
+                        // Show map marker on google map.
+                        const marker = new google.maps.Marker({
+                            position:{lat:Number(propertyData.latitude), lng:Number(propertyData.longitude)},
+                            content: propertyData.name,
                         });
 
-                        const infoWindow = new google.maps.InfoWindow({
-                            content: "",
-                            disableAutoPan: true,
+                        // open info window when marker is clicked
+                        marker.addListener("click", () => {
+                            var property_type = propertyData.property_type;
+                            if(propertyData.property_type == 1){
+                                property_type = "For Rent";
+                            }
+                            else{
+                                property_type = "For Sales";
+                            }
+
+
+                            // Map marker click and show propery detail
+                            infoWindow.setContent('<a href="{{ asset("single-property-details") }}/'+ propertyData.slug +'" class="property_list">\
+                                                        <div class="property_image">\
+                                                            <div class="property_image_container">\
+                                                                <img src="{{asset("/multiImage")}}/'+ propertyData.image +'" class="img-fluid w-100" alt="">\
+                                                            </div>\
+                                                            <div class="property_tags">\
+                                                                <div class="property_tag property_bg_green me-2">'+ propertyData.has_one_category.name +'</div>\
+                                                                <div class="property_tag property_bg_purple me-2">$ '+ propertyData.price +'</div>\
+                                                                <div class="property_tag property_bg_purple">'+ property_type +'</div>\
+                                                            </div>\
+                                                        </div>\
+                                                        <div class="property_list_content m-0">\
+                                                            <div class="property_list_content_title">\
+                                                                <div class="property_list_info">\
+                                                                    <h2>'+ propertyData.name +'</h2>\
+                                                                </div>\
+                                                            </div>\
+                                                        </div>\
+                                                    </a>');
+                            infoWindow.open(map, marker);
+
+                            $('.property_detail_inr_info').removeClass("active");
+                            $('#property'+propertyData.id).addClass("active");
+
+                            // map marker click scrolling property list and showing top selected property.
+                            // document.getElementById('map-property-lists').getElementsByClassName('active')[0].scrollIntoView({behavior: "smooth"})
+                            infoWindow.addListener('closeclick', ()=>{
+                                $('.property_detail_inr_info').removeClass('active');
+                            });
+                            $('.gm-ui-hover-effect').on('click', function(){
+                                $('.property_detail_inr_info').removeClass('active');
+                            });
                         });
-
-                        // console.log(listPro);
-                        let markersajax = proarr.map((propertyData, i) => {
-                            if (infoWindow) infoWindow.close();
-
-                            // Show map marker on google map.
-                            const marker = new google.maps.Marker({
-                                position:{lat:Number(propertyData.latitude), lng:Number(propertyData.longitude)},
-                                content: propertyData.name,
-                            });
-
-                            // open info window when marker is clicked
-                            marker.addListener("click", () => {
-                                var property_type = propertyData.property_type;
-                                if(propertyData.property_type == 1){
-                                    property_type = "For Rent";
-                                }
-                                else{
-                                    property_type = "For Sales";
-                                }
-
-                                // Map marker click and show propery detail
-                                infoWindow.setContent('<a href="{{ asset("single-property-details") }}/'+ propertyData.slug +'" class="img-inr property_list_card">\
-                                                            <figure class="m-0">\
-                                                                <img src="assets/images/house1.png" class="img-fluid" alt="" />\
-                                                            </figure>\
-                                                            <div class="property_list-info">\
-                                                            <div class="property_list_inr">\
-                                                                <span class="prize">$ '+ propertyData.price +'</span>\
-                                                                <h2>'+ propertyData.name +'</h2>\
-                                                                <p>'+ propertyData.address +'</p>\
-                                                            </div>\
-                                                            </div>\
-                                                            <div class="property_more_info">\
-                                                            <div class="inner">\
-                                                                <div class="col">\
-                                                                <span><i class="fa-solid fa-bed"></i></span>\
-                                                                <h4>'+ propertyData.bedroom +' Bed</h4>\
-                                                                </div>\
-                                                                <div class="col">\
-                                                                <span><i class="fa-solid fa-bath"></i></span>\
-                                                                <h4>'+ propertyData.bath +' Bath</h4>\
-                                                                </div>\
-                                                                <div class="col">\
-                                                                <span><i class="fa-solid fa-car"></i></span>\
-                                                                <h4>'+ propertyData.garage +' Garage</h4>\
-                                                                </div>\
-                                                                <div class="col">\
-                                                                <span><i class="fa-solid fa-object-ungroup"></i></span>\
-                                                                <h4>'+ propertyData.building_area +' Sq.ft</h4>\
-                                                                </div>\
-                                                            </div>\
-                                                            </div>\
-                                                        </a>');
-                                infoWindow.open(map, marker);
-
-                                $('.property_detail_inr_info').removeClass("active");
-                                $('#property'+propertyData.id).addClass("active");
-
-                                // map marker click scrolling property list and showing top selected property.
-                                // document.getElementById('map-property-lists').getElementsByClassName('active')[0].scrollIntoView({behavior: "smooth"})
-                                infoWindow.addListener('closeclick', ()=>{
-                                    $('.property_detail_inr_info').removeClass('active');
-                                });
-                                $('.gm-ui-hover-effect').on('click', function(){
-                                    $('.property_detail_inr_info').removeClass('active');
-                                });
-                            });
-                            markers.push(marker);
-                            return marker;
+                        markers.push(marker);
+                        return marker;
+                    });
+                    if(markers.length > 0 && map){
+                        markerCluster = new MarkerClusterer(map, markers, {
+                            imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
                         });
-                        if(markers.length > 0 && map){
-                            markerCluster = new MarkerClusterer(map, markers, {
-                                imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-                            });
-                        }
                     }
                 }
-            });
-        }
-
-        // Call Current Location Function:
-        function initMap() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError)
-                    getPropertyList("load");
-                } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
             }
+        });
+    }
+
+    // Call Current Location Function:
+    function initMap() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError)
+                getPropertyList("load");
+            } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
         }
+    }
 
-        // marker Cluster position
-        function showPosition(position) {
-            return new Promise(function(resolve, reject) {
-                // Get latitude ande longitude:
-                lat = position.coords.latitude;
-                lon = position.coords.longitude;
+    // marker Cluster position
+    function showPosition(position) {
+        return new Promise(function(resolve, reject) {
+            // Get latitude ande longitude:
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
 
-                if(!map){
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 5,
-                        center: new google.maps.LatLng(lat, lon)
-                    });
-                    markerCluster = new MarkerClusterer(map, markers, {
-                        imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
-                    });
-                }
-                resolve({map})
-            });
-        }
-
-        // show map errors
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    // x.innerHTML = "User denied the request for Geolocation."
-                    console.log("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable."
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out."
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred."
-                    break;
+            if(!map){
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 5,
+                    center: new google.maps.LatLng(lat, lon)
+                });
+                markerCluster = new MarkerClusterer(map, markers, {
+                    imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m'
+                });
             }
-        }
+            resolve({map})
+        });
+    }
 
-        // google map marker click event
-        function myClick(id) {
-            google.maps.event.trigger(markers[id], 'click');
+    // show map errors
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                // x.innerHTML = "User denied the request for Geolocation."
+                console.log("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "Location information is unavailable."
+                break;
+            case error.TIMEOUT:
+                x.innerHTML = "The request to get user location timed out."
+                break;
+            case error.UNKNOWN_ERROR:
+                x.innerHTML = "An unknown error occurred."
+                break;
         }
+    }
 
-    </script>
+    // google map marker click event
+    function myClick(id) {
+        google.maps.event.trigger(markers[id], 'click');
+    }
+
+</script>
 @endsection
 

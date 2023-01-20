@@ -265,6 +265,16 @@ a {
     font-size:16px;
     color:#000;
 }
+/* home 1 */
+
+.home-slide #filter-section{
+    width:900px;
+}
+.home-slide #filter-section .main_search_box{
+     padding:50px;
+     background-color:rgb(255 255 255 / 50%);
+}
+
 
 .home-slide {
     position: relative;
@@ -401,7 +411,7 @@ a {
 /*      Featured Real start        */
 
 .property_sec {
-    padding: 60px;
+    padding: 60px 0;
 }
 
 .property_sec_bg {
@@ -443,6 +453,10 @@ a {
     color: #58bb47;
     background-color: transparent;
     border: 1px solid #58bb47;
+}
+/* agent page*/
+.agent_list_main{
+    background-color:rgba(20, 107, 184, 15%);
 }
 
 /* property details */
@@ -643,8 +657,8 @@ a {
 }
 
 .property_details_title {
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     margin-bottom: 20px;
     padding: 20px;
     background-color: #fff;
@@ -904,7 +918,7 @@ a {
 }
 
 .property_list_content {
-    background-color: #05af78;
+    /*background-color: #05af78;*/
     margin-bottom: 30px;
 }
 
@@ -931,7 +945,8 @@ a {
 .property_info {
     background: #ecf6ff;
     padding: 20px;
-    margin-top: 2px;
+    /*margin-top: 2px;*/
+    border-top:2px solid #05af78;
 }
 
 .property_info ul {
@@ -1415,7 +1430,7 @@ a {
 /* agent_detail_page */
 
 .agent_detail_main ,.agent-property{
-    padding:40px;
+    padding:40px 0;
 }
 
 .agent_detail_inr,.agent_contact_info {
@@ -1427,7 +1442,7 @@ a {
 
 .agent_img img{
     height:200px;
-    border-radius:10px;
+    border-radius:10px 10px 0 0;
 }
 
 .agent_info h2{
@@ -1489,7 +1504,7 @@ a {
     color: #58bb47;
 }
 
-.agent_contact_info .row .col-md-12:nth-of-type(4) .from-group .input_ic{
+.agent_contact_info .row .col-md-12:nth-of-type(4) .from-group .input_ic,.contact_detail_form .row .col-md-12:nth-of-type(4) .from-group .input_ic{
     top: 10px;
     transform: translate(0 , 0);
 }
@@ -1502,7 +1517,7 @@ a {
     background: rgb(196 239 221 / 20%)
 }
 
-.agent_sb_bt{
+.agent_sb_bt,.contact_sb_bt{
     background-color: #05af78;
     font-size:18px;
     font-weight:600;
@@ -1581,6 +1596,7 @@ a {
 
 .property_agent_img img{
     border-radius:100%;
+    height:100%;
 }
 
 .property_agent_title h2{
@@ -1731,7 +1747,7 @@ a {
 
 .contact_detail_form .form-control {
     border: none;
-    padding: 10px;
+    padding: 5px;
     padding-left: 30px;
     border-radius: 5px;
     margin-bottom:10px;
@@ -2228,18 +2244,80 @@ a {
     transform: rotate(180deg);
 }
 
+.breadcrumb{
+    padding:20px 0;
+    margin:0;
+}
+
+
+/* Map property */
+.gm-style-iw{
+    width:350px;
+    padding:15px !important;
+}
+.gm-style-iw .gm-style-iw-d{
+    width:100%;
+    overflow:unset !important;
+}
 
 @media (max-width: 991px) {
+    
+    .home-slide #filter-section{
+        width:500px;
+    }
+    
+    .property_sec{
+        padding:30px 0;
+    }
 
+    /* property list */
+    .pro_info_main{
+        margin-bottom:15px;
+    }
+    .property-inr-list-item{
+        display: block !important;
+    }
+
+    .property_inr-list-img{
+        margin:0;
+        margin-bottom:20px;
+    }
+
+    .property_inr-list-img img{
+        width:100% !important;
+    }
 
 }
 
 @media (max-width: 767px) {
+    
+    /* home */
+    
+    .home-slide #filter-section {
+        width: 100%;
+    }
+    .home-slide #filter-section .main_search_box{
+        padding:20px !important;
+    }
+    .home-slide #filter-section .main_search_box .filter_title h2{
+        font-size:15px;
+        margin-bottom:10px;
+    }
+    .home-slide #filter-section .main_search_box .input-group{
+        margin:0 !important;
+    }
 
     .home-slide .swiper-slide img,
     .home-slide .swiper-slide,
-    .home-slide .swiper {
-        height: 550px;
+    .home-slide .swiper,
+    .home-slide2 .gallery-slider .swiper-slide,
+    .pro-details-slide .swiper,
+    .pro-details-slide .swiper-slide img{
+        height: 250px;
+    }
+    .home-slide2 .gallery-thumbs .swiper-slide{
+        width:60px;
+        height:60px;
     }
 
     .home-slide .swiper-slide .title {
@@ -2259,13 +2337,13 @@ a {
         top: 90%;
     }
 
-    .property_sec {
-        padding: 50px 0;
-        margin: 0px;
+    .property_sec,.blog_detail_main {
+        padding: 20px 0;
+        margin: 0;
     }
 
     .section_title {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .proprety_img img {
@@ -2276,9 +2354,51 @@ a {
     .center-img {
         margin: 0;
     }
-
+    
+    .property_sec .view-bt{
+        margin:0;
+    }
+    .agent-slider .view-bt{
+        margin-top:20px;
+    }
+    .property_agent_inr{
+        border-radius:160px 160px 10px 10px;
+        margin-bottom:15px;
+    }
+    .property_agent{
+        padding:20px;
+    }
+     .property_agent .view-bt{
+         margin-top:20px !important;
+     }
+    .blog_post,.property_list_content{
+        margin-bottom:20px;
+    }
+    .application_info{
+        padding:0;
+    }
+    .theme3_listing .nav-tabs .nav-item{
+        margin-right:15px;
+    }
+    .theme3_listing .nav-tabs .nav-item:last-child{
+        margin:0;
+    }
+    .theme3_listing .nav-tabs .nav-link{
+        padding:7px 15px !important;
+        font-size:16px;
+    }
+    
 
     /* detail page */
+    .property_details_title{
+        display:block;
+    }
+    .property_details_title_inr p{
+        font-size:16px;
+    }
+    .about_property{
+        padding:20px 0;
+    }
     .price-ul li {
         margin-right: 10px;
     }
@@ -2299,5 +2419,53 @@ a {
 
     .property-details-main .swiper-slide {
         transform: scale(1);
+    }
+    .blog_detail_inr{
+        padding:0;
+    }
+    
+    /* property list */
+    .range_box,.pro_info_box{
+        min-width:100%;
+    }
+    
+    /* contact us */
+    .contact_us_sec{
+        min-height:200px;
+    }
+    .contact_us_sec h2,.section_title h2{
+        font-size:25px;
+    }
+    .contact_us_main, .our_location{
+        padding:20px 0;
+    }
+    .contact_title h2{
+        margin-bottom:20px;
+    }
+    .contact_title h2 span,.blog_detail_title h2,.application_info h3,.property_details_title_inr h3{
+        font-size:20px;
+    }
+    .contact_detail h3{
+        font-size:15px;
+    }
+    .contact_info_inr ul li{
+        margin-bottom:15px;
+    }
+    
+    /* agent detail */
+    .agent_detail_main, .agent-property{
+        padding:20px 0;
+    }
+    .agent_img,.agent_detail_inr{
+        margin-bottom:15px;
+    }
+    
+    /* footer */
+    
+    .footer{
+        padding:20px;
+    }
+    .logo_wigets,.footer_link,.find_us{
+        margin-bottom:20px;
     }
 }
